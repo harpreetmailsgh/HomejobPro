@@ -52,9 +52,19 @@ export class MemStorage implements IStorage {
       services = services.filter(service => service.rating >= filters.minRating!);
     }
 
+    if (filters.maxRating !== undefined) {
+      services = services.filter(service => service.rating <= filters.maxRating!);
+    }
+
     if (filters.companyName) {
       services = services.filter(service => 
         service.title.toLowerCase().includes(filters.companyName!.toLowerCase())
+      );
+    }
+
+    if (filters.phone) {
+      services = services.filter(service => 
+        service.phone.toLowerCase().includes(filters.phone!.toLowerCase())
       );
     }
 
@@ -68,6 +78,9 @@ export class MemStorage implements IStorage {
         break;
       case 'name_asc':
         services.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case 'reviews_desc':
+        services.sort((a, b) => b.reviews - a.reviews);
         break;
     }
 
@@ -126,6 +139,12 @@ export class MemStorage implements IStorage {
       if (sheetsData.length === 0) {
         this.populateWithSampleData();
       } else {
+        // Log available columns for debugging
+        const firstRow = sheetsData[0];
+        if (firstRow) {
+          console.log('Available Google Sheets columns:', Object.keys(firstRow));
+        }
+
         // Convert Google Sheets data to our Service format
         const services = sheetsData.map((row, index) => ({
           id: parseInt(row['S no']) || index + 1,

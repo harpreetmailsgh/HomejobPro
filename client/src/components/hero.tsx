@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import SearchBar from "@/components/search-bar";
+import SearchBar from "./search-bar";
 
 const services = ['Plumber', 'Electrician', 'HVAC Technician', 'Landscaper', 'Home Services'];
 

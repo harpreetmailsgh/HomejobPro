@@ -16,12 +16,10 @@ interface FiltersSidebarProps {
 export default function FiltersSidebar({ filters, onFiltersChange, industries, cities }: FiltersSidebarProps) {
   const [localFilters, setLocalFilters] = useState(filters);
 
-  const handleApplyFilters = () => {
-    onFiltersChange(localFilters);
-  };
-
   const handleFilterChange = (key: keyof SearchFilters, value: any) => {
-    setLocalFilters(prev => ({ ...prev, [key]: value, page: 1 }));
+    const newFilters = { ...localFilters, [key]: value, page: 1 };
+    setLocalFilters(newFilters);
+    onFiltersChange(newFilters); // Apply filters immediately
   };
 
   return (
@@ -80,17 +78,34 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
         {/* Rating Filter */}
         <div className="mb-6">
           <Label className="block text-sm font-medium text-gray-700 mb-2">
-            Minimum Rating: {localFilters.minRating?.toFixed(1) || '1.0'}
+            Rating Range: {localFilters.minRating?.toFixed(1) || '1.0'} - {localFilters.maxRating?.toFixed(1) || '5.0'}
           </Label>
-          <Slider
-            value={[localFilters.minRating || 1]}
-            onValueChange={(value) => handleFilterChange('minRating', value[0])}
-            min={1}
-            max={5}
-            step={0.1}
-            className="w-full"
-            data-testid="rating-slider"
-          />
+          <div className="space-y-2">
+            <div>
+              <Label className="text-xs text-gray-500">Minimum Rating</Label>
+              <Slider
+                value={[localFilters.minRating || 1]}
+                onValueChange={(value) => handleFilterChange('minRating', value[0])}
+                min={1}
+                max={5}
+                step={0.1}
+                className="w-full"
+                data-testid="min-rating-slider"
+              />
+            </div>
+            <div>
+              <Label className="text-xs text-gray-500">Maximum Rating</Label>
+              <Slider
+                value={[localFilters.maxRating || 5]}
+                onValueChange={(value) => handleFilterChange('maxRating', value[0])}
+                min={1}
+                max={5}
+                step={0.1}
+                className="w-full"
+                data-testid="max-rating-slider"
+              />
+            </div>
+          </div>
           <div className="flex justify-between text-sm text-gray-500 mt-1">
             <span>1.0</span>
             <span>5.0</span>
@@ -110,14 +125,24 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
             data-testid="company-name-filter"
           />
         </div>
+
+        {/* Phone Number Search */}
+        <div className="mb-6">
+          <Label className="block text-sm font-medium text-gray-700 mb-2">
+            Phone Number
+          </Label>
+          <Input
+            type="text"
+            placeholder="Search by phone number"
+            value={localFilters.phone || ""}
+            onChange={(e) => handleFilterChange('phone', e.target.value || undefined)}
+            data-testid="phone-filter"
+          />
+        </div>
         
-        <Button 
-          onClick={handleApplyFilters}
-          className="w-full bg-blue-grey hover:bg-blue-grey-700 text-white transition-colors"
-          data-testid="apply-filters-button"
-        >
-          Apply Filters
-        </Button>
+        <div className="text-center text-sm text-gray-500 mt-4">
+          Filters are applied automatically as you make changes
+        </div>
       </div>
     </aside>
   );

@@ -109,6 +109,7 @@ export default function Search() {
                   <SelectContent>
                     <SelectItem value="rating_desc">Rating (High to Low)</SelectItem>
                     <SelectItem value="rating_asc">Rating (Low to High)</SelectItem>
+                    <SelectItem value="reviews_desc">Most Reviews</SelectItem>
                     <SelectItem value="name_asc">Name (A-Z)</SelectItem>
                   </SelectContent>
                 </Select>

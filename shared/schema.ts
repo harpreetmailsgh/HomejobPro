@@ -18,8 +18,10 @@ export const searchFiltersSchema = z.object({
   industry: z.string().optional(),
   city: z.string().optional(),
   minRating: z.number().min(0).max(5).optional(),
+  maxRating: z.number().min(0).max(5).optional(),
   companyName: z.string().optional(),
-  sortBy: z.enum(['rating_desc', 'rating_asc', 'name_asc']).default('rating_desc'),
+  phone: z.string().optional(),
+  sortBy: z.enum(['rating_desc', 'rating_asc', 'name_asc', 'reviews_desc']).default('rating_desc'),
   page: z.number().min(1).default(1),
   limit: z.number().min(1).max(50).default(20)
 });

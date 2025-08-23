@@ -72,6 +72,13 @@ export default function Footer() {
                   Terms of Service
                 </a>
               </li>
+              <li>
+                <Link href="/settings">
+                  <span className="hover:text-white transition-colors cursor-pointer" data-testid="footer-link-settings">
+                    Settings
+                  </span>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
