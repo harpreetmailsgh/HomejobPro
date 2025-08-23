@@ -29,6 +29,33 @@ const featuredServices = [
     rating: 4.7,
     jobs: "800+",
     category: "HVAC%20Technician"
+  },
+  {
+    id: 4,
+    title: "Landscaping Services",
+    description: "Transform your outdoor space with professional landscaping and design.",
+    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop&crop=center",
+    rating: 4.6,
+    jobs: "650+",
+    category: "Landscaper"
+  },
+  {
+    id: 5,
+    title: "Garden Maintenance",
+    description: "Keep your garden beautiful year-round with expert care and maintenance.",
+    image: "https://images.unsplash.com/photo-1416838375725-e834a83f62b7?w=400&h=300&fit=crop&crop=center",
+    rating: 4.5,
+    jobs: "530+",
+    category: "Landscaper"
+  },
+  {
+    id: 6,
+    title: "House Cleaning",
+    description: "Professional house cleaning services for a spotless home.",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&crop=center",
+    rating: 4.8,
+    jobs: "920+",
+    category: "Cleaner"
   }
 ];
 
@@ -41,35 +68,37 @@ export default function FeaturedServices() {
           <p className="text-xl text-gray-600">Popular home services trusted by thousands of homeowners</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {featuredServices.map((service) => (
-            <div key={service.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-              <img 
-                src={service.image} 
-                alt={service.title}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-6">
-                <div className="flex items-center mb-3">
-                  <div className="flex items-center">
-                    <Star className="w-4 h-4 fill-current text-yellow-400 mr-1" />
-                    <span className="text-sm font-semibold text-gray-800">{service.rating}</span>
+        <div className="featured-services-container overflow-hidden">
+          <div className="featured-services-track animate-scroll">
+            {[...featuredServices, ...featuredServices].map((service, index) => (
+              <div key={`${service.id}-${index}`} className="featured-service-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex-shrink-0">
+                <img 
+                  src={service.image} 
+                  alt={service.title}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <div className="flex items-center mb-3">
+                    <div className="flex items-center">
+                      <Star className="w-4 h-4 fill-current text-yellow-400 mr-1" />
+                      <span className="text-sm font-semibold text-gray-800">{service.rating}</span>
+                    </div>
+                    <span className="text-gray-500 text-sm ml-3">{service.jobs} jobs completed</span>
                   </div>
-                  <span className="text-gray-500 text-sm ml-3">{service.jobs} jobs completed</span>
+                  
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
+                  <p className="text-gray-600 mb-4">{service.description}</p>
+                  
+                  <Link href={`/search?industry=${service.category}`}>
+                    <Button className="w-full bg-blue-grey hover:bg-blue-grey-700 text-white flex items-center justify-center">
+                      Find Professionals
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </Link>
                 </div>
-                
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
-                <p className="text-gray-600 mb-4">{service.description}</p>
-                
-                <Link href={`/search?industry=${service.category}`}>
-                  <Button className="w-full bg-blue-grey hover:bg-blue-grey-700 text-white flex items-center justify-center">
-                    Find Professionals
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

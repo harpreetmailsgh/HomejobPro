@@ -168,17 +168,24 @@
     align-items: center;
   }
   
-  /* Responsive grid improvements - 4 cards per row */
+  /* Responsive grid improvements - 3 cards per row */
   .results-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
     width: 100%;
+    justify-items: center;
   }
   
-  @media (max-width: 1200px) {
+  .results-grid > * {
+    width: 100%;
+    max-width: 380px;
+  }
+  
+  @media (max-width: 1024px) {
     .results-grid {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
     }
   }
   
@@ -198,6 +205,46 @@
   @media (max-width: 480px) {
     .results-grid {
       grid-template-columns: 1fr;
+    }
+  }
+  
+  /* Swirl animation for rotating text */
+  .swirl-animation {
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform-origin: center;
+  }
+  
+  /* Featured services scrolling animation */
+  .featured-services-container {
+    width: 100%;
+    position: relative;
+  }
+  
+  .featured-services-track {
+    display: flex;
+    gap: 2rem;
+    width: fit-content;
+  }
+  
+  .featured-service-card {
+    width: 320px;
+    min-width: 320px;
+  }
+  
+  .animate-scroll {
+    animation: scroll-right-to-left 30s linear infinite;
+  }
+  
+  .animate-scroll:hover {
+    animation-play-state: paused;
+  }
+  
+  @keyframes scroll-right-to-left {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-50%);
     }
   }
 }

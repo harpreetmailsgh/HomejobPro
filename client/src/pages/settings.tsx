@@ -78,6 +78,11 @@ export default function Settings() {
       resultsPerPage: parseInt(resultsPerPage)
     };
     
+    // Add search placeholders to settings if provided
+    if (searchPlaceholderText.trim()) {
+      settings.searchPlaceholders = searchPlaceholderText.split('\n').filter(line => line.trim());
+    }
+    
     localStorage.setItem('homejobspro-settings', JSON.stringify(settings));
     
     // Apply CSS custom properties for real-time theme changes
@@ -145,14 +150,20 @@ export default function Settings() {
             >
               Global Settings
             </Button>
-            <Button
-              variant={settingsType === "page" ? "default" : "outline"} 
-              onClick={() => setSettingsType("page")}
-              className={settingsType === "page" ? "bg-blue-grey hover:bg-blue-grey-700" : ""}
-              data-testid="page-settings-tab"
-            >
-              Page Specific
-            </Button>
+            <div className="relative">
+              <Select value={settingsType === "page" ? "page" : ""} onValueChange={(value) => setSettingsType(value)}>
+                <SelectTrigger className="w-48" data-testid="page-settings-select">
+                  <SelectValue placeholder="Page Specific Settings" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="home">Home Page</SelectItem>
+                  <SelectItem value="search">Search Page</SelectItem>
+                  <SelectItem value="faq">FAQ Page</SelectItem>
+                  <SelectItem value="header">Header Component</SelectItem>
+                  <SelectItem value="footer">Footer Component</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
 

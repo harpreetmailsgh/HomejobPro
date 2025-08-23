@@ -42,25 +42,25 @@ export default function HowItWorks() {
         
         <div className="relative">
           {/* Connection Line */}
-          <div className="hidden md:block absolute top-20 left-1/2 transform -translate-x-1/2 w-3/4 h-0.5 bg-gray-300"></div>
+          <div className="hidden md:block absolute top-16 left-0 right-0 h-0.5 bg-gray-300 mx-16"></div>
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {steps.map((step, index) => {
               const IconComponent = step.icon;
               return (
-                <div key={step.id} className="text-center relative">
+                <div key={step.id} className="text-center relative flex flex-col items-center">
                   {/* Step Number */}
-                  <div className="relative mx-auto mb-4">
+                  <div className="relative mb-4 flex items-center justify-center">
                     <div className={`w-16 h-16 ${step.color} rounded-full flex items-center justify-center shadow-lg z-10 relative`}>
                       <IconComponent className="w-8 h-8 text-white" />
                     </div>
-                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center text-sm font-bold text-gray-700 shadow">
+                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center text-sm font-bold text-gray-700 shadow z-20">
                       {step.id}
                     </div>
                   </div>
                   
                   <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{step.description}</p>
+                  <p className="text-gray-600 leading-relaxed max-w-xs">{step.description}</p>
                 </div>
               );
             })}

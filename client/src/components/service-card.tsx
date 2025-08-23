@@ -1,13 +1,16 @@
+import { useState } from "react";
 import { Star, MapPin, Phone, ExternalLink, Navigation } from "lucide-react";
 import { Service } from "@shared/schema";
 import { getImageForIndustry } from "@/lib/google-sheets";
 import { Button } from "@/components/ui/button";
+import AddressPopup from "./address-popup";
 
 interface ServiceCardProps {
   service: Service;
 }
 
 export default function ServiceCard({ service }: ServiceCardProps) {
+  const [showAddressPopup, setShowAddressPopup] = useState(false);
   const imageUrl = getImageForIndustry(service.industry);
   
   const renderStars = (rating: number) => {
@@ -67,48 +70,66 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           </span>
         </div>
         
-        <p className="text-gray-600 mb-3 flex items-center">
-          <MapPin className="w-4 h-4 text-blue-grey mr-2" />
-          <span data-testid={`service-address-${service.id}`}>{service.address}</span>
-        </p>
-        
-        <p className="text-gray-600 mb-4 flex items-center">
-          <Phone className="w-4 h-4 text-blue-grey mr-2" />
-          <a 
-            href={`tel:${service.phone}`} 
-            className="text-blue-grey hover:text-blue-grey-700 transition-colors"
-            data-testid={`service-phone-${service.id}`}
-          >
-            {service.phone}
-          </a>
-        </p>
-        
-        <div className="flex space-x-2">
-          {service.website && (
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex space-x-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowAddressPopup(true)}
+              className="p-2 hover:bg-gray-100"
+              data-testid={`service-address-${service.id}`}
+            >
+              <MapPin className="w-5 h-5 text-blue-grey" />
+            </Button>
+            
             <Button
               asChild
-              className="flex-1 bg-blue-grey hover:bg-blue-grey-700 text-white transition-colors"
-              data-testid={`service-website-${service.id}`}
+              variant="ghost"
+              size="sm"
+              className="p-2 hover:bg-gray-100"
+              data-testid={`service-phone-${service.id}`}
             >
-              <a href={service.website} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="w-4 h-4 mr-2" />
-                Web
+              <a href={`tel:${service.phone}`}>
+                <Phone className="w-5 h-5 text-green-600" />
               </a>
             </Button>
-          )}
-          {service.googleMapsLink && (
-            <Button
-              asChild
-              className="flex-1 bg-orange-primary hover:bg-orange-primary-600 text-white transition-colors"
-              data-testid={`service-maps-${service.id}`}
-            >
-              <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer">
-                <Navigation className="w-4 h-4 mr-2" />
-                Google
-              </a>
-            </Button>
-          )}
+          </div>
+          
+          <div className="flex space-x-2">
+            {service.website && (
+              <Button
+                asChild
+                variant="ghost"
+                size="sm"
+                className="p-2 hover:bg-gray-100"
+                data-testid={`service-website-${service.id}`}
+              >
+                <a href={service.website} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="w-5 h-5 text-blue-grey" />
+                </a>
+              </Button>
+            )}
+            {service.googleMapsLink && (
+              <Button
+                asChild
+                variant="ghost"
+                size="sm"
+                className="p-2 hover:bg-gray-100"
+                data-testid={`service-maps-${service.id}`}
+              >
+                <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer">
+                  <Navigation className="w-5 h-5 text-orange-primary" />
+                </a>
+              </Button>
+            )}
+          </div>
         </div>
+        
+        <AddressPopup 
+          address={service.address}
+          isOpen={showAddressPopup}
+          onClose={() => setShowAddressPopup(false)}
+        />
       </div>
     </div>
   );

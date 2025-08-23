@@ -37,9 +37,20 @@ export class MemStorage implements IStorage {
     }
 
     if (filters.industry) {
-      services = services.filter(service => 
-        service.industry.toLowerCase().includes(filters.industry!.toLowerCase())
-      );
+      services = services.filter(service => {
+        const industry = service.industry.toLowerCase();
+        const filterIndustry = filters.industry!.toLowerCase();
+        
+        // Handle both singular and plural forms
+        return industry.includes(filterIndustry) || 
+               filterIndustry.includes(industry) ||
+               (filterIndustry === 'plumbers' && industry === 'plumber') ||
+               (filterIndustry === 'electricians' && industry === 'electrician') ||
+               (filterIndustry === 'hvac technicians' && industry === 'hvac technician') ||
+               (filterIndustry === 'landscapers' && industry === 'landscaper') ||
+               (filterIndustry === 'cleaners' && industry === 'cleaner') ||
+               (filterIndustry === 'handymen' && industry === 'handyman');
+      });
     }
 
     if (filters.city) {
@@ -277,7 +288,27 @@ export class MemStorage implements IStorage {
 
   async getUniqueIndustries(): Promise<string[]> {
     const services = Array.from(this.services.values()).filter(s => !s.duplicate);
-    return Array.from(new Set(services.map(s => s.industry))).sort();
+    const industries = new Set<string>();
+    
+    services.forEach(service => {
+      if (service.industry) {
+        // Convert singular to plural form for better UX
+        let industry = service.industry;
+        if (industry === 'Plumber') industry = 'Plumbers';
+        else if (industry === 'Electrician') industry = 'Electricians';
+        else if (industry === 'HVAC Technician') industry = 'HVAC Technicians';
+        else if (industry === 'Landscaper') industry = 'Landscapers';
+        else if (industry === 'Cleaner') industry = 'Cleaners';
+        else if (industry === 'Handyman') industry = 'Handymen';
+        else if (!industry.endsWith('s') && !industry.includes('Service')) {
+          industry = industry + 's';
+        }
+        
+        industries.add(industry);
+      }
+    });
+    
+    return Array.from(industries).sort();
   }
 
   async getUniqueCities(): Promise<string[]> {

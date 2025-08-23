@@ -4,20 +4,46 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocation } from "wouter";
 
-const searchPlaceholders = [
-  "Find a plumber near you...",
-  "Search for electricians...", 
-  "Looking for HVAC service?",
-  "Find home repair experts...",
-  "Search landscapers...",
-  "Need a handyman?",
+const ontarioCities = [
+  "Toronto", "Ottawa", "Mississauga", "Brampton", "Hamilton", "London", "Markham", "Vaughan", "Windsor", "Kitchener", "Richmond Hill", "Burlington", "Oakville", "Oshawa", "Barrie", "St. Catharines", "Cambridge", "Waterloo", "Guelph", "Kingston"
 ];
+
+const getRandomCity = () => ontarioCities[Math.floor(Math.random() * ontarioCities.length)];
 
 export default function EnhancedSearchBar() {
   const [, setLocation] = useLocation();
   const [query, setQuery] = useState("");
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [isPlaceholderVisible, setIsPlaceholderVisible] = useState(true);
+  const [searchPlaceholders, setSearchPlaceholders] = useState([
+    `Find a plumber in ${getRandomCity()}...`,
+    `Search for electricians in ${getRandomCity()}...`, 
+    `Looking for HVAC service in ${getRandomCity()}?`,
+    `Find home repair experts in ${getRandomCity()}...`,
+    `Search landscapers in ${getRandomCity()}...`,
+    `Need a handyman in ${getRandomCity()}?`,
+  ]);
+
+  // Load custom placeholders from settings
+  useEffect(() => {
+    const loadSettings = () => {
+      const savedSettings = localStorage.getItem('homejobspro-settings');
+      if (savedSettings) {
+        try {
+          const settings = JSON.parse(savedSettings);
+          if (settings.searchPlaceholders && Array.isArray(settings.searchPlaceholders)) {
+            setSearchPlaceholders(settings.searchPlaceholders);
+          }
+        } catch (error) {
+          console.error('Error loading settings:', error);
+        }
+      }
+    };
+
+    loadSettings();
+    window.addEventListener('settingsChanged', loadSettings);
+    return () => window.removeEventListener('settingsChanged', loadSettings);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -29,7 +55,7 @@ export default function EnhancedSearchBar() {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [searchPlaceholders.length]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,11 +75,11 @@ export default function EnhancedSearchBar() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full pl-14 pr-6 py-6 text-lg border-none bg-transparent focus:ring-0 focus:outline-none"
+            className="w-full pl-14 pr-4 py-6 text-lg border-none bg-transparent focus:ring-0 focus:outline-none"
             data-testid="search-input"
           />
           <div 
-            className={`absolute left-14 top-1/2 transform -translate-y-1/2 text-lg text-gray-400 pointer-events-none transition-opacity duration-300 ${
+            className={`absolute left-14 top-1/2 transform -translate-y-1/2 text-lg text-black pointer-events-none transition-opacity duration-300 ${
               query || !isPlaceholderVisible ? 'opacity-0' : 'opacity-100'
             }`}
             data-testid="search-placeholder"
@@ -63,7 +89,7 @@ export default function EnhancedSearchBar() {
         </div>
         <Button
           type="submit"
-          className="bg-orange-primary hover:bg-orange-primary-600 text-white px-8 py-6 rounded-full mr-2 flex items-center space-x-2 shadow-lg hover:shadow-xl transition-all"
+          className="bg-orange-primary hover:bg-orange-primary-600 text-white px-8 py-6 rounded-full m-1 flex items-center space-x-2 shadow-lg hover:shadow-xl transition-all"
           data-testid="search-button"
         >
           <Sparkles className="w-5 h-5" />
