@@ -160,6 +160,34 @@
     position: sticky;
     top: 100px;
   }
+  
+  /* Ensure hero section is visible */
+  .hero-section {
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Responsive grid improvements */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    .results-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .filter-sidebar {
+      position: static;
+      height: auto;
+      margin-bottom: 2rem;
+    }
+  }
 }
 
 @keyframes fadeInUp {

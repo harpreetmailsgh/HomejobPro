@@ -21,30 +21,30 @@ export default function Footer() {
             <ul className="space-y-2 text-gray-300">
               <li>
                 <Link href="/search?industry=Plumber">
-                  <a className="hover:text-white transition-colors" data-testid="footer-link-plumbing">
+                  <span className="hover:text-white transition-colors cursor-pointer" data-testid="footer-link-plumbing">
                     Plumbing
-                  </a>
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link href="/search?industry=Electrician">
-                  <a className="hover:text-white transition-colors" data-testid="footer-link-electrical">
+                  <span className="hover:text-white transition-colors cursor-pointer" data-testid="footer-link-electrical">
                     Electrical
-                  </a>
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link href="/search?industry=HVAC%20Technician">
-                  <a className="hover:text-white transition-colors" data-testid="footer-link-hvac">
+                  <span className="hover:text-white transition-colors cursor-pointer" data-testid="footer-link-hvac">
                     HVAC
-                  </a>
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link href="/search?industry=Landscaper">
-                  <a className="hover:text-white transition-colors" data-testid="footer-link-landscaping">
+                  <span className="hover:text-white transition-colors cursor-pointer" data-testid="footer-link-landscaping">
                     Landscaping
-                  </a>
+                  </span>
                 </Link>
               </li>
             </ul>

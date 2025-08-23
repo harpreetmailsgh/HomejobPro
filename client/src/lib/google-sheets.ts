@@ -30,22 +30,18 @@ export const getImageForIndustry = (industry: string): string => {
 };
 
 export const fetchGoogleSheetsData = async (): Promise<GoogleSheetsRow[]> => {
-  if (!GOOGLE_SHEETS_API_KEY) {
-    console.warn('Google Sheets API key not found. Using fallback method.');
-    return [];
-  }
-
   try {
-    const response = await fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1!A:J?key=${GOOGLE_SHEETS_API_KEY}`
-    );
+    // Use CSV export URL for public Google Sheets
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
+    
+    const response = await fetch(csvUrl);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
-    const rows = data.values;
+    const csvText = await response.text();
+    const rows = csvText.split('\n').map(row => row.split(',').map(cell => cell.replace(/"/g, '').trim()));
 
     if (!rows || rows.length === 0) {
       return [];
@@ -53,7 +49,7 @@ export const fetchGoogleSheetsData = async (): Promise<GoogleSheetsRow[]> => {
 
     // First row contains headers
     const headers = rows[0];
-    const dataRows = rows.slice(1);
+    const dataRows = rows.slice(1).filter(row => row.length > 1 && row[0]); // Filter out empty rows
 
     return dataRows.map((row: string[]) => {
       const rowData: any = {};

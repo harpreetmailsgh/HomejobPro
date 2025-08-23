@@ -151,7 +151,7 @@ export default function Search() {
                     <p className="text-gray-600">Try adjusting your search criteria or filters.</p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8" data-testid="results-grid">
+                  <div className="results-grid mb-8" data-testid="results-grid">
                     {searchResults.services.map((service) => (
                       <ServiceCard key={service.id} service={service} />
                     ))}

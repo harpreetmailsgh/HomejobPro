@@ -94,13 +94,30 @@ export class MemStorage implements IStorage {
 
   async syncFromGoogleSheets(): Promise<void> {
     try {
-      // Import the Google Sheets utility
-      const { fetchGoogleSheetsData } = await import('../client/src/lib/google-sheets');
+      // Fetch data directly from Google Sheets CSV export
+      const SHEET_ID = '1dZ_sckZb9L6eXjymMk4gBUFC-mbTIIKydA2W_LZ0Yu8';
+      const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
       
-      // Try to fetch from Google Sheets, fallback to sample data
       let sheetsData = [];
       try {
-        sheetsData = await fetchGoogleSheetsData();
+        const response = await fetch(csvUrl);
+        if (response.ok) {
+          const csvText = await response.text();
+          const rows = csvText.split('\n').map(row => row.split(',').map(cell => cell.replace(/"/g, '').trim()));
+          
+          if (rows && rows.length > 1) {
+            const headers = rows[0];
+            const dataRows = rows.slice(1).filter(row => row.length > 1 && row[0]); // Filter out empty rows
+            
+            sheetsData = dataRows.map((row: string[]) => {
+              const rowData: any = {};
+              headers.forEach((header: string, index: number) => {
+                rowData[header] = row[index] || '';
+              });
+              return rowData;
+            });
+          }
+        }
       } catch (error) {
         console.warn('Could not fetch from Google Sheets, using sample data:', error);
       }

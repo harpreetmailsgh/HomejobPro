@@ -20,7 +20,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="bg-gradient-to-br from-blue-grey to-blue-grey-800 text-white py-20">
+    <section className="hero-section bg-gradient-to-br from-blue-grey to-blue-grey-800 text-white py-20">
       <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl md:text-6xl font-bold mb-8 animate-fade-in-up">
           I am looking for{' '}
