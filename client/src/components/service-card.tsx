@@ -1,0 +1,109 @@
+import { Star, MapPin, Phone, ExternalLink, Navigation } from "lucide-react";
+import { Service } from "@shared/schema";
+import { getImageForIndustry } from "@/lib/google-sheets";
+import { Button } from "@/components/ui/button";
+
+interface ServiceCardProps {
+  service: Service;
+}
+
+export default function ServiceCard({ service }: ServiceCardProps) {
+  const imageUrl = getImageForIndustry(service.industry);
+  
+  const renderStars = (rating: number) => {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+    const stars = [];
+
+    for (let i = 0; i < fullStars; i++) {
+      stars.push(
+        <Star key={i} className="w-4 h-4 fill-current text-yellow-400" />
+      );
+    }
+    
+    if (hasHalfStar) {
+      stars.push(
+        <div key="half" className="relative">
+          <Star className="w-4 h-4 text-gray-300" />
+          <div className="absolute inset-0 w-1/2 overflow-hidden">
+            <Star className="w-4 h-4 fill-current text-yellow-400" />
+          </div>
+        </div>
+      );
+    }
+    
+    const remainingStars = 5 - Math.ceil(rating);
+    for (let i = 0; i < remainingStars; i++) {
+      stars.push(
+        <Star key={`empty-${i}`} className="w-4 h-4 text-gray-300" />
+      );
+    }
+
+    return stars;
+  };
+
+  return (
+    <div className="bg-white rounded-xl shadow-md overflow-hidden card-hover" data-testid={`service-card-${service.id}`}>
+      <img 
+        src={imageUrl} 
+        alt={`${service.industry} professional tools and equipment`}
+        className="w-full h-48 object-cover"
+        data-testid={`service-image-${service.id}`}
+      />
+      <div className="p-6">
+        <h3 className="text-xl font-semibold text-gray-800 mb-2" data-testid={`service-title-${service.id}`}>
+          {service.title}
+        </h3>
+        
+        <div className="flex items-center mb-3">
+          <div className="flex items-center star-rating">
+            {renderStars(service.rating)}
+          </div>
+          <span className="ml-2 text-gray-600" data-testid={`service-rating-${service.id}`}>
+            {service.rating.toFixed(1)}
+          </span>
+          <span className="ml-1 text-gray-500">
+            (<span data-testid={`service-reviews-${service.id}`}>{service.reviews}</span> reviews)
+          </span>
+        </div>
+        
+        <p className="text-gray-600 mb-3 flex items-center">
+          <MapPin className="w-4 h-4 text-blue-grey mr-2" />
+          <span data-testid={`service-address-${service.id}`}>{service.address}</span>
+        </p>
+        
+        <p className="text-gray-600 mb-4 flex items-center">
+          <Phone className="w-4 h-4 text-blue-grey mr-2" />
+          <span data-testid={`service-phone-${service.id}`}>{service.phone}</span>
+        </p>
+        
+        <div className="flex space-x-2">
+          {service.website && (
+            <Button
+              asChild
+              className="flex-1 bg-blue-grey hover:bg-blue-grey-700 text-white transition-colors"
+              data-testid={`service-website-${service.id}`}
+            >
+              <a href={service.website} target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="w-4 h-4 mr-2" />
+                Visit Website
+              </a>
+            </Button>
+          )}
+          {service.googleMapsLink && (
+            <Button
+              asChild
+              className="flex-1 bg-orange-primary hover:bg-orange-primary-600 text-white transition-colors"
+              data-testid={`service-maps-${service.id}`}
+            >
+              <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer">
+                <Navigation className="w-4 h-4 mr-2" />
+                View on Maps
+              </a>
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
