@@ -1,0 +1,11 @@
+Create a full-featured home services directory website titled "Homejobspro.com". The site connects to this public Google Sheet as its database: https://docs.google.com/spreadsheets/d/1dZ_sckZb9L6eXjymMk4gBUFC-mbTIIKydA2W_LZ0Yu8/edit?usp=sharing. Automatically sync and update the site data whenever the sheet changes. The sheet columns are: S no, Title (company name), Rating, Reviews, Phone, Industry (service type like Plumber), Address, Website, Google Maps Link, duplicate.
+
+Homepage: Hero section with centered text "I am looking for [service]" where [service] dynamically rotates every few seconds through: Plumber, Electrician, HVAC Technician, Landscaper, Home Services. Below it, a large search bar for users to enter a service (e.g., "Plumber"). Use blue-grey (#607D8B) and orange (#FF5722) color scheme for buttons, accents, and backgrounds; suggest improvements if better.
+
+Search functionality: Searching a service queries the sheet's Industry column (case-insensitive, partial matches) and displays matching entries as cards.
+
+Results page: Grid of cards, styled exactly like tours on https://alsdestinations-indiatours.vercel.app/ (image top, title, details below, responsive). Each card shows: Company Title, Rating (with stars), Reviews count, Phone, Address, links to Website and Google Maps. For images, use relevant Unsplash photos (e.g., plumbing tools for Plumber; fetch dynamically or assign placeholders like https://unsplash.com/photos/person-swimming-in-ocean-with-fish for variety).
+
+Filters: Sidebar with options to filter results by city (extract/parse from Address or Google Maps Link latitude/longitude), Google Rating (slider min-max), company Name (text search), Industry (dropdown of unique values from sheet).
+
+Additional features: Sort by rating descending default. Pagination if >20 results. Footer with site title and sheet sync note. Responsive design, SEO-friendly with meta tags. Ensure real-time sheet integration without manual refresh. Build everything in one generation.
