@@ -35,6 +35,9 @@ export default function Settings() {
   const [cardsPerRow, setCardsPerRow] = useState("4");
   const [enableFilters, setEnableFilters] = useState(true);
   const [resultsPerPage, setResultsPerPage] = useState("20");
+  const [searchPlaceholderText, setSearchPlaceholderText] = useState("");
+  const [backgroundImage, setBackgroundImage] = useState("");
+  const [heroAnimation, setHeroAnimation] = useState("swirl");
   
   // Load saved settings on component mount
   useEffect(() => {
@@ -55,6 +58,11 @@ export default function Settings() {
         setCardsPerRow(settings.cardsPerRow || "4");
         setEnableFilters(settings.enableFilters !== undefined ? settings.enableFilters : true);
         setResultsPerPage(settings.resultsPerPage ? settings.resultsPerPage.toString() : "20");
+        if (settings.searchPlaceholders && Array.isArray(settings.searchPlaceholders)) {
+          setSearchPlaceholderText(settings.searchPlaceholders.join('\n'));
+        }
+        setBackgroundImage(settings.backgroundImage || "");
+        setHeroAnimation(settings.heroAnimation || "swirl");
       } catch (error) {
         console.error('Error loading settings:', error);
       }
@@ -62,7 +70,7 @@ export default function Settings() {
   }, []);
   
   const handleSaveSettings = () => {
-    const settings = {
+    const settings: any = {
       heroTitle,
       heroSubtitle,
       siteTitle,
@@ -75,7 +83,9 @@ export default function Settings() {
       backgroundGradient,
       cardsPerRow,
       enableFilters,
-      resultsPerPage: parseInt(resultsPerPage)
+      resultsPerPage: parseInt(resultsPerPage),
+      backgroundImage,
+      heroAnimation
     };
     
     // Add search placeholders to settings if provided
@@ -250,6 +260,22 @@ export default function Settings() {
                 />
               </div>
             </div>
+            <div className="mt-4">
+              <Label className="block text-sm font-medium mb-2">Hero Text Animation</Label>
+              <Select value={heroAnimation} onValueChange={setHeroAnimation}>
+                <SelectTrigger data-testid="hero-animation-select">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="swirl">Swirl Rotate</SelectItem>
+                  <SelectItem value="flash">Flash</SelectItem>
+                  <SelectItem value="fade">Fade</SelectItem>
+                  <SelectItem value="slide">Slide</SelectItem>
+                  <SelectItem value="bounce">Bounce</SelectItem>
+                  <SelectItem value="zoom">Zoom</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </section>
 
           {/* Color Theme Settings */}
@@ -305,6 +331,32 @@ export default function Settings() {
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+            <div className="mt-4">
+              <Label className="block text-sm font-medium mb-2">Hero Background Image URL</Label>
+              <Input
+                value={backgroundImage}
+                onChange={(e) => setBackgroundImage(e.target.value)}
+                placeholder="https://example.com/hero-background.jpg"
+                data-testid="background-image-input"
+              />
+              <p className="text-xs text-gray-500 mt-1">Optional: Add a background image URL for the hero section</p>
+            </div>
+          </section>
+
+          {/* Search Settings */}
+          <section>
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">Search Settings</h2>
+            <div>
+              <Label className="block text-sm font-medium mb-2">Search Placeholder Text</Label>
+              <Textarea
+                value={searchPlaceholderText}
+                onChange={(e) => setSearchPlaceholderText(e.target.value)}
+                placeholder={`Find a plumber in Toronto...\nSearch for electricians in Ottawa...\nLooking for HVAC service in Mississauga?\nFind home repair experts in Brampton...`}
+                rows={6}
+                data-testid="search-placeholders-input"
+              />
+              <p className="text-xs text-gray-500 mt-1">One placeholder per line. Include Ontario city names for local search feel.</p>
             </div>
           </section>
 

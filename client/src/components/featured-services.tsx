@@ -70,7 +70,7 @@ export default function FeaturedServices() {
         
         <div className="featured-services-container overflow-hidden">
           <div className="featured-services-track animate-scroll">
-            {[...featuredServices, ...featuredServices].map((service, index) => (
+            {[...featuredServices, ...featuredServices, ...featuredServices].map((service, index) => (
               <div key={`${service.id}-${index}`} className="featured-service-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex-shrink-0">
                 <img 
                   src={service.image} 

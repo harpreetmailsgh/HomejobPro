@@ -8,6 +8,7 @@ export default function Hero() {
   const [heroSubtitle, setHeroSubtitle] = useState("Find trusted professionals for all your home service needs");
   const [services, setServices] = useState(['Plumber', 'Electrician', 'HVAC Technician', 'Landscaper', 'Home Services']);
   const [rotationSpeed, setRotationSpeed] = useState(3000);
+  const [backgroundImage, setBackgroundImage] = useState("");
 
   // Load settings from localStorage and listen for changes
   useEffect(() => {
@@ -20,6 +21,7 @@ export default function Hero() {
           setHeroSubtitle(settings.heroSubtitle || "Find trusted professionals for all your home service needs");
           setServices(Array.isArray(settings.rotatingServices) ? settings.rotatingServices : ['Plumber', 'Electrician', 'HVAC Technician', 'Landscaper', 'Home Services']);
           setRotationSpeed(settings.rotationSpeed || 3000);
+          setBackgroundImage(settings.backgroundImage || "");
           
           // Update document title
           if (settings.siteTitle) {
@@ -54,8 +56,20 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [services.length, rotationSpeed]);
 
+  const heroStyle = backgroundImage 
+    ? { 
+        backgroundImage: `linear-gradient(rgba(96, 125, 139, 0.8), rgba(96, 125, 139, 0.9)), url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }
+    : {};
+
   return (
-    <section className="hero-section bg-gradient-to-br from-blue-grey to-blue-grey-800 text-white py-20">
+    <section 
+      className="hero-section bg-gradient-to-br from-blue-grey to-blue-grey-800 text-white py-20"
+      style={heroStyle}
+    >
       <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl md:text-6xl font-bold mb-8 animate-fade-in-up">
           {heroTitle}{' '}

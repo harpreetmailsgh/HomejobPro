@@ -37,20 +37,9 @@ export class MemStorage implements IStorage {
     }
 
     if (filters.industry) {
-      services = services.filter(service => {
-        const industry = service.industry.toLowerCase();
-        const filterIndustry = filters.industry!.toLowerCase();
-        
-        // Handle both singular and plural forms
-        return industry.includes(filterIndustry) || 
-               filterIndustry.includes(industry) ||
-               (filterIndustry === 'plumbers' && industry === 'plumber') ||
-               (filterIndustry === 'electricians' && industry === 'electrician') ||
-               (filterIndustry === 'hvac technicians' && industry === 'hvac technician') ||
-               (filterIndustry === 'landscapers' && industry === 'landscaper') ||
-               (filterIndustry === 'cleaners' && industry === 'cleaner') ||
-               (filterIndustry === 'handymen' && industry === 'handyman');
-      });
+      services = services.filter(service => 
+        service.industry.toLowerCase() === filters.industry!.toLowerCase()
+      );
     }
 
     if (filters.city) {
@@ -164,7 +153,7 @@ export class MemStorage implements IStorage {
           reviews: parseInt(row['Reviews']) || 0,
           phone: row['Phone'] || '',
           industry: row['Industry'] || '',
-          address: row['Address'] || '',
+          address: row['Complete address'] || row['Address'] || '',
           website: row['Website'] || undefined,
           googleMapsLink: row['Google Maps Link'] || undefined,
           duplicate: row['duplicate']?.toLowerCase() === 'true' || false
@@ -292,19 +281,8 @@ export class MemStorage implements IStorage {
     
     services.forEach(service => {
       if (service.industry) {
-        // Convert singular to plural form for better UX
-        let industry = service.industry;
-        if (industry === 'Plumber') industry = 'Plumbers';
-        else if (industry === 'Electrician') industry = 'Electricians';
-        else if (industry === 'HVAC Technician') industry = 'HVAC Technicians';
-        else if (industry === 'Landscaper') industry = 'Landscapers';
-        else if (industry === 'Cleaner') industry = 'Cleaners';
-        else if (industry === 'Handyman') industry = 'Handymen';
-        else if (!industry.endsWith('s') && !industry.includes('Service')) {
-          industry = industry + 's';
-        }
-        
-        industries.add(industry);
+        // Use singular form as per user request
+        industries.add(service.industry);
       }
     });
     
