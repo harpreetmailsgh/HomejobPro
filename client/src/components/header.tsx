@@ -14,9 +14,9 @@ export default function Header() {
           </div>
           <nav className="hidden md:flex space-x-8">
             <Link href="/search">
-              <a className="text-gray-600 hover:text-blue-grey transition-colors" data-testid="nav-browse-services">
+              <span className="text-gray-600 hover:text-blue-grey transition-colors cursor-pointer" data-testid="nav-browse-services">
                 Browse Services
-              </a>
+              </span>
             </Link>
             <a href="#" className="text-gray-600 hover:text-blue-grey transition-colors" data-testid="nav-how-it-works">
               How It Works

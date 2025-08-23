@@ -37,14 +37,14 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
             Service Type
           </Label>
           <Select 
-            value={localFilters.industry || ""} 
-            onValueChange={(value) => handleFilterChange('industry', value || undefined)}
+            value={localFilters.industry || "all"} 
+            onValueChange={(value) => handleFilterChange('industry', value === 'all' ? undefined : value)}
           >
             <SelectTrigger data-testid="industry-filter">
               <SelectValue placeholder="All Services" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Services</SelectItem>
+              <SelectItem value="all">All Services</SelectItem>
               {industries.map((industry) => (
                 <SelectItem key={industry} value={industry} data-testid={`industry-${industry}`}>
                   {industry}
@@ -60,14 +60,14 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
             City
           </Label>
           <Select 
-            value={localFilters.city || ""} 
-            onValueChange={(value) => handleFilterChange('city', value || undefined)}
+            value={localFilters.city || "all"} 
+            onValueChange={(value) => handleFilterChange('city', value === 'all' ? undefined : value)}
           >
             <SelectTrigger data-testid="city-filter">
               <SelectValue placeholder="All Cities" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Cities</SelectItem>
+              <SelectItem value="all">All Cities</SelectItem>
               {cities.map((city) => (
                 <SelectItem key={city} value={city} data-testid={`city-${city}`}>
                   {city}
