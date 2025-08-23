@@ -73,6 +73,13 @@ export default function Footer() {
                 </a>
               </li>
               <li>
+                <Link href="/faq">
+                  <span className="hover:text-white transition-colors cursor-pointer" data-testid="footer-link-faq">
+                    FAQ
+                  </span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/settings">
                   <span className="hover:text-white transition-colors cursor-pointer" data-testid="footer-link-settings">
                     Settings

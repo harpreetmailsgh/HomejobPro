@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, Save, RefreshCw } from "lucide-react";
 import Header from "../components/header";
@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function Settings() {
   const { toast } = useToast();
+  const [settingsType, setSettingsType] = useState("global"); // "global" or "page"
   
   // Website Content Settings
   const [heroTitle, setHeroTitle] = useState("I am looking for");
@@ -31,12 +32,36 @@ export default function Settings() {
   const [backgroundGradient, setBackgroundGradient] = useState("gradient");
   
   // Layout Settings
-  const [cardsPerRow, setCardsPerRow] = useState("auto");
+  const [cardsPerRow, setCardsPerRow] = useState("4");
   const [enableFilters, setEnableFilters] = useState(true);
   const [resultsPerPage, setResultsPerPage] = useState("20");
   
+  // Load saved settings on component mount
+  useEffect(() => {
+    const savedSettings = localStorage.getItem('homejobspro-settings');
+    if (savedSettings) {
+      try {
+        const settings = JSON.parse(savedSettings);
+        setHeroTitle(settings.heroTitle || "I am looking for");
+        setHeroSubtitle(settings.heroSubtitle || "Find trusted professionals for all your home service needs");
+        setSiteTitle(settings.siteTitle || "Homejobspro.com");
+        setRotatingServices(Array.isArray(settings.rotatingServices) ? settings.rotatingServices.join(', ') : "Plumber, Electrician, HVAC Technician, Landscaper, Home Services");
+        setEnableAnimations(settings.enableAnimations !== undefined ? settings.enableAnimations : true);
+        setRotationSpeed(settings.rotationSpeed ? settings.rotationSpeed.toString() : "3000");
+        setFadeSpeed(settings.fadeSpeed ? settings.fadeSpeed.toString() : "200");
+        setPrimaryColor(settings.primaryColor || "#607D8B");
+        setAccentColor(settings.accentColor || "#FF5722");
+        setBackgroundGradient(settings.backgroundGradient || "gradient");
+        setCardsPerRow(settings.cardsPerRow || "4");
+        setEnableFilters(settings.enableFilters !== undefined ? settings.enableFilters : true);
+        setResultsPerPage(settings.resultsPerPage ? settings.resultsPerPage.toString() : "20");
+      } catch (error) {
+        console.error('Error loading settings:', error);
+      }
+    }
+  }, []);
+  
   const handleSaveSettings = () => {
-    // In a real app, this would save to localStorage or backend
     const settings = {
       heroTitle,
       heroSubtitle,
@@ -55,9 +80,19 @@ export default function Settings() {
     
     localStorage.setItem('homejobspro-settings', JSON.stringify(settings));
     
+    // Apply CSS custom properties for real-time theme changes
+    document.documentElement.style.setProperty('--blue-grey', primaryColor);
+    document.documentElement.style.setProperty('--orange-primary', accentColor);
+    
+    // Update page title
+    document.title = siteTitle;
+    
+    // Dispatch custom event to update components that depend on settings
+    window.dispatchEvent(new CustomEvent('settingsChanged', { detail: settings }));
+    
     toast({
-      title: "Settings Saved",
-      description: "Your website settings have been saved successfully.",
+      title: "Settings Saved & Applied",
+      description: "Your website settings have been saved and applied successfully. Some changes may require a page refresh.",
     });
   };
   
@@ -99,6 +134,26 @@ export default function Settings() {
           </Link>
           <h1 className="text-3xl font-bold text-gray-900">Website Settings</h1>
           <p className="text-gray-600 mt-2">Customize your website content, design, and functionality</p>
+          
+          {/* Settings Type Selector */}
+          <div className="flex space-x-4 mt-6">
+            <Button
+              variant={settingsType === "global" ? "default" : "outline"}
+              onClick={() => setSettingsType("global")}
+              className={settingsType === "global" ? "bg-blue-grey hover:bg-blue-grey-700" : ""}
+              data-testid="global-settings-tab"
+            >
+              Global Settings
+            </Button>
+            <Button
+              variant={settingsType === "page" ? "default" : "outline"} 
+              onClick={() => setSettingsType("page")}
+              className={settingsType === "page" ? "bg-blue-grey hover:bg-blue-grey-700" : ""}
+              data-testid="page-settings-tab"
+            >
+              Page Specific
+            </Button>
+          </div>
         </div>
 
         <div className="bg-white rounded-lg shadow-md p-6 space-y-8">
@@ -253,11 +308,11 @@ export default function Settings() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="auto">Auto (Responsive)</SelectItem>
-                    <SelectItem value="1">1 Card</SelectItem>
-                    <SelectItem value="2">2 Cards</SelectItem>
+                    <SelectItem value="4">4 Cards (Recommended)</SelectItem>
                     <SelectItem value="3">3 Cards</SelectItem>
-                    <SelectItem value="4">4 Cards</SelectItem>
+                    <SelectItem value="2">2 Cards</SelectItem>
+                    <SelectItem value="1">1 Card</SelectItem>
+                    <SelectItem value="auto">Auto (Responsive)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

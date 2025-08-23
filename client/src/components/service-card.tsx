@@ -74,7 +74,13 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         
         <p className="text-gray-600 mb-4 flex items-center">
           <Phone className="w-4 h-4 text-blue-grey mr-2" />
-          <span data-testid={`service-phone-${service.id}`}>{service.phone}</span>
+          <a 
+            href={`tel:${service.phone}`} 
+            className="text-blue-grey hover:text-blue-grey-700 transition-colors"
+            data-testid={`service-phone-${service.id}`}
+          >
+            {service.phone}
+          </a>
         </p>
         
         <div className="flex space-x-2">
@@ -86,7 +92,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
             >
               <a href={service.website} target="_blank" rel="noopener noreferrer">
                 <ExternalLink className="w-4 h-4 mr-2" />
-                Visit Website
+                Web
               </a>
             </Button>
           )}
@@ -98,7 +104,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
             >
               <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer">
                 <Navigation className="w-4 h-4 mr-2" />
-                View on Maps
+                Google
               </a>
             </Button>
           )}

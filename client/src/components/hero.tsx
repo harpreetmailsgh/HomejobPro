@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import SearchBar from "./search-bar";
+import EnhancedSearchBar from "./enhanced-search-bar";
 
 const services = ['Plumber', 'Electrician', 'HVAC Technician', 'Landscaper', 'Home Services'];
 
@@ -36,7 +36,7 @@ export default function Hero() {
         </p>
         
         <div className="max-w-2xl mx-auto animate-fade-in-up">
-          <SearchBar />
+          <EnhancedSearchBar />
         </div>
       </div>
     </section>

@@ -124,8 +124,8 @@ export default function Search() {
             
             {/* Loading State */}
             {isLoading && (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
-                {Array.from({ length: 6 }).map((_, i) => (
+              <div className="results-grid mb-8">
+                {Array.from({ length: 8 }).map((_, i) => (
                   <div key={i} className="bg-white rounded-xl shadow-md overflow-hidden">
                     <Skeleton className="w-full h-48" />
                     <div className="p-6 space-y-4">
