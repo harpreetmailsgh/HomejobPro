@@ -88,7 +88,6 @@ export default function FeaturedServices({
                   </Button>
                 </Link>
               </div>
-              </div>
             ))}
           </div>
         </div>
