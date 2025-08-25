@@ -3,9 +3,10 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { searchFiltersSchema } from "@shared/schema";
 import { z } from "zod";
+import { Request, Response } from "express"; // Import Request and Response types
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  
+
   // Get all services
   app.get("/api/services", async (req, res) => {
     try {

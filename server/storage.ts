@@ -30,20 +30,20 @@ export class MemStorage implements IStorage {
     // Apply filters
     if (filters.query) {
       const query = filters.query.toLowerCase();
-      services = services.filter(service => 
+      services = services.filter(service =>
         service.industry.toLowerCase().includes(query) ||
         service.title.toLowerCase().includes(query)
       );
     }
 
     if (filters.industry) {
-      services = services.filter(service => 
+      services = services.filter(service =>
         service.industry.toLowerCase() === filters.industry!.toLowerCase()
       );
     }
 
     if (filters.city) {
-      services = services.filter(service => 
+      services = services.filter(service =>
         this.extractCity(service.address).toLowerCase().includes(filters.city!.toLowerCase())
       );
     }
@@ -57,13 +57,13 @@ export class MemStorage implements IStorage {
     }
 
     if (filters.companyName) {
-      services = services.filter(service => 
+      services = services.filter(service =>
         service.title.toLowerCase().includes(filters.companyName!.toLowerCase())
       );
     }
 
     if (filters.phone) {
-      services = services.filter(service => 
+      services = services.filter(service =>
         service.phone.toLowerCase().includes(filters.phone!.toLowerCase())
       );
     }
@@ -109,31 +109,31 @@ export class MemStorage implements IStorage {
     try {
       // Fetch data from all sheets in the Google Sheets document
       const SHEET_ID = '1dZ_sckZb9L6eXjymMk4gBUFC-mbTIIKydA2W_LZ0Yu8';
-      
+
       // List of sheet names to fetch from
       const sheetNames = ['Plumber', 'Electrician', 'HVAC Technician'];
       let allSheetsData: any[] = [];
-      
+
       for (const sheetName of sheetNames) {
         try {
-          const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
+          const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq:out:csv&sheet=${encodeURIComponent(sheetName)}`;
           const response = await fetch(csvUrl);
-          
+
           if (response.ok) {
             const csvText = await response.text();
-            
+
             // Skip if response is HTML (indicates sheet doesn't exist)
             if (csvText.includes('<HTML>') || csvText.includes('<!DOCTYPE')) {
               console.log(`Sheet "${sheetName}" not found, skipping...`);
               continue;
             }
-            
+
             const rows = csvText.split('\n').map(row => {
               // Handle CSV parsing with proper quote handling
               const cells = [];
               let current = '';
               let inQuotes = false;
-              
+
               for (let i = 0; i < row.length; i++) {
                 const char = row[i];
                 if (char === '"' && (i === 0 || row[i-1] === ',' || inQuotes)) {
@@ -148,11 +148,11 @@ export class MemStorage implements IStorage {
               cells.push(current.trim());
               return cells;
             });
-            
+
             if (rows && rows.length > 1) {
               const headers = rows[0];
               const dataRows = rows.slice(1).filter(row => row.length > 1 && row[0]); // Filter out empty rows
-              
+
               const sheetData = dataRows.map((row: string[]) => {
                 const rowData: any = {};
                 headers.forEach((header: string, index: number) => {
@@ -160,7 +160,7 @@ export class MemStorage implements IStorage {
                 });
                 return rowData;
               });
-              
+
               allSheetsData = allSheetsData.concat(sheetData);
               console.log(`Fetched ${dataRows.length} rows from "${sheetName}" sheet`);
             }
@@ -170,7 +170,7 @@ export class MemStorage implements IStorage {
           console.log(`Error fetching sheet "${sheetName}":`, error);
         }
       }
-      
+
       let sheetsData = allSheetsData;
 
       // If no data from sheets, use sample data for testing
@@ -185,19 +185,19 @@ export class MemStorage implements IStorage {
 
         // Convert Google Sheets data to our Service format
         let globalId = 1;
-        
+
         // Debug: Check data structure
         console.log(`Processing ${sheetsData.length} total rows from all sheets`);
         if (sheetsData.length > 0) {
           console.log('Sample row structure:', Object.keys(sheetsData[0]));
         }
-        
+
         const services = sheetsData.map((row, index) => {
           // Handle different column names between sheets
           const title = row['Title'] || row['itle'] || ''; // Electrician sheet has 'itle' not 'Title'
           const industry = row['Industry'] || '';
           const address = row['Complete address'] || row['GM Address'] || row['Address'] || '';
-          
+
           const service = {
             id: parseInt(row['S no']) || globalId++,
             title: title.trim(),
@@ -211,7 +211,7 @@ export class MemStorage implements IStorage {
             email: row['Email'] || undefined,
             duplicate: row['duplicate']?.toLowerCase() === 'true' || false
           };
-          
+
           return service;
         }).filter((service, index) => {
           const isValid = service.title && service.industry && service.title.trim() !== '' && service.industry.trim() !== '';
@@ -223,7 +223,7 @@ export class MemStorage implements IStorage {
 
         this.populateServices(services);
       }
-      
+
       this.lastSyncTime = Date.now();
       console.log(`Synced ${this.services.size} services from data source`);
     } catch (error) {
@@ -340,7 +340,7 @@ export class MemStorage implements IStorage {
   async getUniqueIndustries(): Promise<string[]> {
     const services = Array.from(this.services.values()).filter(s => !s.duplicate);
     const industries = new Set<string>();
-    
+
     services.forEach(service => {
       if (service.industry && service.industry.trim() !== '') {
         // Clean up industry names and ensure consistency
@@ -348,7 +348,7 @@ export class MemStorage implements IStorage {
         industries.add(cleanIndustry);
       }
     });
-    
+
     return Array.from(industries).sort();
   }
 

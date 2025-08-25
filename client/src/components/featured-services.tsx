@@ -16,9 +16,9 @@ interface FeaturedServicesProps {
   sectionSubtitle?: string;
 }
 
-export default function FeaturedServices({ 
-  sectionTitle = "Featured Services", 
-  sectionSubtitle = "Top-rated professionals in your area" 
+export default function FeaturedServices({
+  sectionTitle = "Featured Services",
+  sectionSubtitle = "Top-rated professionals in your area"
 }: FeaturedServicesProps) {
   const services: FeaturedService[] = [
     {
@@ -31,7 +31,7 @@ export default function FeaturedServices({
     },
     {
       id: 2,
-      title: "ProElectric Solutions", 
+      title: "ProElectric Solutions",
       category: "Electrician",
       description: "Licensed electricians for all your electrical needs",
       image: "⚡",
@@ -40,7 +40,7 @@ export default function FeaturedServices({
     {
       id: 3,
       title: "Climate Control Experts",
-      category: "HVAC Technician", 
+      category: "HVAC Technician",
       description: "Heating, cooling, and ventilation specialists",
       image: "❄️",
       jobs: 203
