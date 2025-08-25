@@ -1,4 +1,4 @@
-import { Star, MapPin, Phone, ExternalLink } from "lucide-react";
+import { Star, MapPin, Phone, ExternalLink, Mail } from "lucide-react";
 import { Service } from "@shared/schema";
 import { getImageForIndustry } from "@/lib/google-sheets";
 import { Button } from "@/components/ui/button";
@@ -75,7 +75,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         </div>
         
         {/* Action Icons */}
-        <div className="flex justify-center space-x-6">
+        <div className="flex justify-center space-x-4">
           <Button
             asChild
             variant="ghost"
@@ -100,6 +100,21 @@ export default function ServiceCard({ service }: ServiceCardProps) {
               <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center">
                 <MapPin className="w-6 h-6 text-red-600 mb-1" />
                 <span className="text-xs text-gray-600">Maps</span>
+              </a>
+            </Button>
+          )}
+          
+          {service.email && (
+            <Button
+              asChild
+              variant="ghost"
+              size="sm"
+              className="p-3 hover:bg-gray-100 rounded-full"
+              data-testid={`service-email-${service.id}`}
+            >
+              <a href={`mailto:${service.email}`} className="flex flex-col items-center">
+                <Mail className="w-6 h-6 text-purple-600 mb-1" />
+                <span className="text-xs text-gray-600">Email</span>
               </a>
             </Button>
           )}

@@ -10,6 +10,7 @@ export const serviceSchema = z.object({
   address: z.string(),
   website: z.string().url().optional(),
   googleMapsLink: z.string().url().optional(),
+  email: z.string().email().optional(),
   duplicate: z.boolean().optional()
 });
 

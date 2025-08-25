@@ -107,33 +107,51 @@ export class MemStorage implements IStorage {
 
   async syncFromGoogleSheets(): Promise<void> {
     try {
-      // Fetch data directly from Google Sheets CSV export
+      // Fetch data from all sheets in the Google Sheets document
       const SHEET_ID = '1dZ_sckZb9L6eXjymMk4gBUFC-mbTIIKydA2W_LZ0Yu8';
-      const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
       
-      let sheetsData = [];
-      try {
-        const response = await fetch(csvUrl);
-        if (response.ok) {
-          const csvText = await response.text();
-          const rows = csvText.split('\n').map(row => row.split(',').map(cell => cell.replace(/"/g, '').trim()));
+      // List of sheet IDs to fetch from (we'll try multiple common GIDs)
+      const sheetGids = [0, 1, 2, 3, 4, 5]; // Try first 6 sheets
+      let allSheetsData: any[] = [];
+      
+      for (const gid of sheetGids) {
+        try {
+          const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${gid}`;
+          const response = await fetch(csvUrl);
           
-          if (rows && rows.length > 1) {
-            const headers = rows[0];
-            const dataRows = rows.slice(1).filter(row => row.length > 1 && row[0]); // Filter out empty rows
+          if (response.ok) {
+            const csvText = await response.text();
             
-            sheetsData = dataRows.map((row: string[]) => {
-              const rowData: any = {};
-              headers.forEach((header: string, index: number) => {
-                rowData[header] = row[index] || '';
+            // Skip if response is HTML (indicates sheet doesn't exist)
+            if (csvText.includes('<HTML>') || csvText.includes('<!DOCTYPE')) {
+              continue;
+            }
+            
+            const rows = csvText.split('\n').map(row => row.split(',').map(cell => cell.replace(/"/g, '').trim()));
+            
+            if (rows && rows.length > 1) {
+              const headers = rows[0];
+              const dataRows = rows.slice(1).filter(row => row.length > 1 && row[0]); // Filter out empty rows
+              
+              const sheetData = dataRows.map((row: string[]) => {
+                const rowData: any = {};
+                headers.forEach((header: string, index: number) => {
+                  rowData[header] = row[index] || '';
+                });
+                return rowData;
               });
-              return rowData;
-            });
+              
+              allSheetsData = allSheetsData.concat(sheetData);
+              console.log(`Fetched ${dataRows.length} rows from sheet GID ${gid}`);
+            }
           }
+        } catch (error) {
+          // Continue to next sheet if this one fails
+          console.log(`Sheet GID ${gid} not found or accessible, continuing...`);
         }
-      } catch (error) {
-        console.warn('Could not fetch from Google Sheets, using sample data:', error);
       }
+      
+      let sheetsData = allSheetsData;
 
       // If no data from sheets, use sample data for testing
       if (sheetsData.length === 0) {
@@ -156,6 +174,7 @@ export class MemStorage implements IStorage {
           address: row['Complete address'] || row['Address'] || '',
           website: row['Website'] || undefined,
           googleMapsLink: row['Google Maps Link'] || undefined,
+          email: row['Email'] || undefined,
           duplicate: row['duplicate']?.toLowerCase() === 'true' || false
         })).filter(service => service.title && service.industry); // Filter out empty rows
 

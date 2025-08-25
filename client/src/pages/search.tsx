@@ -4,15 +4,19 @@ import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import ServiceCard from "@/components/service-card";
+import ServiceListItem from "@/components/service-list-item";
 import FiltersSidebar from "@/components/filters-sidebar";
 import Pagination from "@/components/pagination";
 import { SearchFilters, SearchResults } from "@shared/schema";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Grid3X3, List } from "lucide-react";
 
 export default function Search() {
   const [location] = useLocation();
   const urlParams = new URLSearchParams(location.split('?')[1] || '');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   
   const [filters, setFilters] = useState<SearchFilters>({
     query: urlParams.get('query') || undefined,
@@ -102,6 +106,28 @@ export default function Search() {
                 Search Results
               </h2>
               <div className="flex items-center space-x-4">
+                {/* View Mode Toggle */}
+                <div className="flex items-center border rounded-lg p-1">
+                  <Button
+                    variant={viewMode === 'grid' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setViewMode('grid')}
+                    className="px-3 py-1"
+                    data-testid="grid-view-button"
+                  >
+                    <Grid3X3 className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant={viewMode === 'list' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setViewMode('list')}
+                    className="px-3 py-1"
+                    data-testid="list-view-button"
+                  >
+                    <List className="w-4 h-4" />
+                  </Button>
+                </div>
+                
                 <Select value={filters.sortBy} onValueChange={handleSortChange}>
                   <SelectTrigger className="w-48" data-testid="sort-select">
                     <SelectValue />
@@ -152,9 +178,13 @@ export default function Search() {
                     <p className="text-gray-600">Try adjusting your search criteria or filters.</p>
                   </div>
                 ) : (
-                  <div className="results-grid mb-8" data-testid="results-grid">
+                  <div className={viewMode === 'grid' ? "results-grid mb-8" : "space-y-4 mb-8"} data-testid="results-container">
                     {searchResults.services.map((service) => (
-                      <ServiceCard key={service.id} service={service} />
+                      viewMode === 'grid' ? (
+                        <ServiceCard key={service.id} service={service} />
+                      ) : (
+                        <ServiceListItem key={service.id} service={service} />
+                      )
                     ))}
                   </div>
                 )}
