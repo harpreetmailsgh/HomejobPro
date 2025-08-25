@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, Save, Upload } from "lucide-react";
+import { ArrowLeft, Save, Upload, Eye } from "lucide-react";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import { Button } from "@/components/ui/button";
@@ -14,13 +14,14 @@ export default function Settings() {
   const { toast } = useToast();
   const [selectedPage, setSelectedPage] = useState("");
   
-  // Edit panel state
-  const [pageContent, setPageContent] = useState("");
-  const [primaryColor, setPrimaryColor] = useState("#607D8B");
-  const [secondaryColor, setSecondaryColor] = useState("#FF5722");
-  const [backgroundColor, setBackgroundColor] = useState("#ffffff");
-  const [layoutStyle, setLayoutStyle] = useState("default");
-  const [imageUrl, setImageUrl] = useState("");
+  // Home page specific states (loading from actual localStorage)
+  const [heroTitle, setHeroTitle] = useState("");
+  const [heroSubtitle, setHeroSubtitle] = useState("");
+  const [siteTitle, setSiteTitle] = useState("");
+  const [rotatingServices, setRotatingServices] = useState("");
+  const [backgroundImage, setBackgroundImage] = useState("");
+  const [primaryColor, setPrimaryColor] = useState("");
+  const [accentColor, setAccentColor] = useState("");
 
   const pages = [
     { value: "home", label: "Home Page" },
@@ -30,72 +31,99 @@ export default function Settings() {
     { value: "not-found", label: "Not Found Page" }
   ];
 
-  const handleSaveChanges = () => {
-    if (!selectedPage) {
-      toast({
-        title: "No Page Selected",
-        description: "Please select a page to edit first.",
-        variant: "destructive"
-      });
-      return;
+  const loadCurrentHomeSettings = () => {
+    // Load actual settings that the home page uses
+    const savedSettings = localStorage.getItem('homejobspro-settings');
+    if (savedSettings) {
+      try {
+        const settings = JSON.parse(savedSettings);
+        setHeroTitle(settings.heroTitle || "I am looking for");
+        setHeroSubtitle(settings.heroSubtitle || "Find trusted professionals for all your home service needs");
+        setSiteTitle(settings.siteTitle || "Homejobspro.com");
+        setRotatingServices(Array.isArray(settings.rotatingServices) ? settings.rotatingServices.join(', ') : "Plumber, Electrician, HVAC Technician, Landscaper, Home Services");
+        setBackgroundImage(settings.backgroundImage || "");
+        setPrimaryColor(settings.primaryColor || "#607D8B");
+        setAccentColor(settings.accentColor || "#FF5722");
+      } catch (error) {
+        console.error('Error loading settings:', error);
+        // Set defaults if loading fails
+        setDefaults();
+      }
+    } else {
+      // Set defaults if no settings found
+      setDefaults();
     }
-
-    // Save the changes for the selected page
-    const pageSettings = {
-      page: selectedPage,
-      content: pageContent,
-      colors: {
-        primary: primaryColor,
-        secondary: secondaryColor,
-        background: backgroundColor
-      },
-      layout: layoutStyle,
-      imageUrl: imageUrl
-    };
-
-    // Store in localStorage for persistence
-    const existingSettings = JSON.parse(localStorage.getItem('page-settings') || '{}');
-    existingSettings[selectedPage] = pageSettings;
-    localStorage.setItem('page-settings', JSON.stringify(existingSettings));
-
-    toast({
-      title: "Changes Saved",
-      description: `Settings for ${pages.find(p => p.value === selectedPage)?.label} have been saved.`,
-    });
   };
 
-  const loadPageSettings = (pageValue: string) => {
-    const existingSettings = JSON.parse(localStorage.getItem('page-settings') || '{}');
-    const pageSettings = existingSettings[pageValue];
-    
-    if (pageSettings) {
-      setPageContent(pageSettings.content || "");
-      setPrimaryColor(pageSettings.colors?.primary || "#607D8B");
-      setSecondaryColor(pageSettings.colors?.secondary || "#FF5722");
-      setBackgroundColor(pageSettings.colors?.background || "#ffffff");
-      setLayoutStyle(pageSettings.layout || "default");
-      setImageUrl(pageSettings.imageUrl || "");
-    } else {
-      // Reset to defaults
-      setPageContent("");
-      setPrimaryColor("#607D8B");
-      setSecondaryColor("#FF5722");
-      setBackgroundColor("#ffffff");
-      setLayoutStyle("default");
-      setImageUrl("");
-    }
+  const setDefaults = () => {
+    setHeroTitle("I am looking for");
+    setHeroSubtitle("Find trusted professionals for all your home service needs");
+    setSiteTitle("Homejobspro.com");
+    setRotatingServices("Plumber, Electrician, HVAC Technician, Landscaper, Home Services");
+    setBackgroundImage("");
+    setPrimaryColor("#607D8B");
+    setAccentColor("#FF5722");
   };
 
   const handlePageChange = (value: string) => {
     setSelectedPage(value);
-    loadPageSettings(value);
+    if (value === "home") {
+      loadCurrentHomeSettings();
+    }
   };
+
+  const handleSaveHomeChanges = () => {
+    // Save using the correct format that the home page expects
+    const settings = {
+      heroTitle,
+      heroSubtitle,
+      siteTitle,
+      rotatingServices: rotatingServices.split(',').map(s => s.trim()),
+      backgroundImage,
+      primaryColor,
+      accentColor,
+      // Keep other existing settings that might be there
+      enableAnimations: true,
+      rotationSpeed: 3000,
+      fadeSpeed: 200,
+      backgroundGradient: "gradient",
+      cardsPerRow: "4",
+      enableFilters: true,
+      resultsPerPage: 20,
+      heroAnimation: "swirl"
+    };
+
+    // Save to the correct localStorage key
+    localStorage.setItem('homejobspro-settings', JSON.stringify(settings));
+    
+    // Apply CSS custom properties for real-time theme changes
+    document.documentElement.style.setProperty('--blue-grey', primaryColor);
+    document.documentElement.style.setProperty('--orange-primary', accentColor);
+    
+    // Update page title
+    document.title = siteTitle;
+    
+    // Dispatch the correct event that the home page listens for
+    window.dispatchEvent(new CustomEvent('settingsChanged', { detail: settings }));
+
+    toast({
+      title: "Home Page Updated!",
+      description: "Your changes have been saved and applied. The home page should update immediately.",
+    });
+  };
+
+  // Load home settings when component mounts
+  useEffect(() => {
+    if (selectedPage === "home") {
+      loadCurrentHomeSettings();
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
           <Link href="/">
             <Button variant="ghost" className="mb-4" data-testid="back-to-home">
@@ -124,38 +152,140 @@ export default function Settings() {
           </Select>
         </div>
 
-        {/* Edit Panel - Only shown when a page is selected */}
-        {selectedPage && (
-          <div className="bg-white rounded-lg shadow-md p-6 space-y-8">
-            <div className="border-b border-gray-200 pb-4">
-              <h2 className="text-xl font-semibold text-gray-800">
-                Editing: {pages.find(p => p.value === selectedPage)?.label}
+        {/* HOME PAGE EDITOR */}
+        {selectedPage === "home" && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Left Side - What You're Editing */}
+            <div className="bg-blue-50 rounded-lg p-6">
+              <h2 className="text-xl font-semibold text-blue-900 mb-4 flex items-center">
+                <Eye className="w-5 h-5 mr-2" />
+                Current Home Page Structure
               </h2>
-            </div>
-
-            {/* Page Content Section */}
-            <section>
-              <h3 className="text-lg font-medium mb-4 text-gray-800">Page Content</h3>
-              <div className="space-y-4">
-                <div>
-                  <Label className="block text-sm font-medium mb-2">Content Text</Label>
-                  <Textarea
-                    value={pageContent}
-                    onChange={(e) => setPageContent(e.target.value)}
-                    placeholder="Enter page content, text, or descriptions..."
-                    rows={6}
-                    data-testid="page-content-input"
-                  />
+              <div className="space-y-4 text-sm">
+                <div className="bg-white p-3 rounded border-l-4 border-blue-500">
+                  <div className="font-semibold text-gray-800">🏠 Header Section</div>
+                  <div className="text-gray-600">Site Title: <span className="font-mono bg-gray-100 px-1 rounded">{siteTitle}</span></div>
+                </div>
+                
+                <div className="bg-white p-3 rounded border-l-4 border-purple-500">
+                  <div className="font-semibold text-gray-800">🎯 Hero Section (Main Banner)</div>
+                  <div className="text-gray-600">Title: <span className="font-mono bg-gray-100 px-1 rounded">"{heroTitle}"</span></div>
+                  <div className="text-gray-600">Rotating Services: <span className="font-mono bg-gray-100 px-1 rounded">{rotatingServices.split(',')[0]}...</span></div>
+                  <div className="text-gray-600">Subtitle: <span className="font-mono bg-gray-100 px-1 rounded">"{heroSubtitle}"</span></div>
+                  {backgroundImage && <div className="text-gray-600">Background Image: ✅ Set</div>}
+                </div>
+                
+                <div className="bg-white p-3 rounded border-l-4 border-green-500">
+                  <div className="font-semibold text-gray-800">📊 Stats Section</div>
+                  <div className="text-gray-600">"Trusted by Thousands" - 10,000+ customers, 15,000+ jobs, etc.</div>
+                  <div className="text-xs text-gray-500">Note: This section has fixed content</div>
+                </div>
+                
+                <div className="bg-white p-3 rounded border-l-4 border-orange-500">
+                  <div className="font-semibold text-gray-800">⭐ Featured Services</div>
+                  <div className="text-gray-600">6 service cards: Emergency Plumbing, Electrical, HVAC, etc.</div>
+                  <div className="text-xs text-gray-500">Note: This section has fixed content</div>
+                </div>
+                
+                <div className="bg-white p-3 rounded border-l-4 border-cyan-500">
+                  <div className="font-semibold text-gray-800">🔧 How It Works</div>
+                  <div className="text-gray-600">4 steps: Search & Compare, Connect, Get Job Done, Enjoy</div>
+                  <div className="text-xs text-gray-500">Note: This section has fixed content</div>
+                </div>
+                
+                <div className="bg-white p-3 rounded border-l-4 border-gray-500">
+                  <div className="font-semibold text-gray-800">🎨 Colors Used Throughout</div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 rounded" style={{backgroundColor: primaryColor}}></div>
+                    <span className="text-gray-600">Primary: {primaryColor}</span>
+                  </div>
+                  <div className="flex items-center gap-2 mt-1">
+                    <div className="w-4 h-4 rounded" style={{backgroundColor: accentColor}}></div>
+                    <span className="text-gray-600">Accent: {accentColor}</span>
+                  </div>
                 </div>
               </div>
-            </section>
+            </div>
 
-            {/* Colors Section */}
-            <section>
-              <h3 className="text-lg font-medium mb-4 text-gray-800">Colors</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Right Side - Edit Panel */}
+            <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
+              <div className="border-b border-gray-200 pb-4">
+                <h2 className="text-xl font-semibold text-gray-800">Edit Home Page Content</h2>
+                <p className="text-sm text-gray-600 mt-1">Changes will reflect immediately on the home page</p>
+              </div>
+
+              {/* Site Title */}
+              <div>
+                <Label className="block text-sm font-medium mb-2">🏠 Site Title (Header)</Label>
+                <Input
+                  value={siteTitle}
+                  onChange={(e) => setSiteTitle(e.target.value)}
+                  placeholder="Homejobspro.com"
+                  data-testid="site-title-input"
+                />
+                <p className="text-xs text-gray-500 mt-1">Appears in header and browser tab</p>
+              </div>
+
+              {/* Hero Title */}
+              <div>
+                <Label className="block text-sm font-medium mb-2">🎯 Hero Main Title</Label>
+                <Input
+                  value={heroTitle}
+                  onChange={(e) => setHeroTitle(e.target.value)}
+                  placeholder="I am looking for"
+                  data-testid="hero-title-input"
+                />
+                <p className="text-xs text-gray-500 mt-1">Large text before rotating services</p>
+              </div>
+
+              {/* Rotating Services */}
+              <div>
+                <Label className="block text-sm font-medium mb-2">🔄 Rotating Services (Hero)</Label>
+                <Textarea
+                  value={rotatingServices}
+                  onChange={(e) => setRotatingServices(e.target.value)}
+                  placeholder="Plumber, Electrician, HVAC Technician, Landscaper, Home Services"
+                  rows={3}
+                  data-testid="rotating-services-input"
+                />
+                <p className="text-xs text-gray-500 mt-1">Separate with commas. These rotate every 3 seconds</p>
+              </div>
+
+              {/* Hero Subtitle */}
+              <div>
+                <Label className="block text-sm font-medium mb-2">📝 Hero Subtitle</Label>
+                <Textarea
+                  value={heroSubtitle}
+                  onChange={(e) => setHeroSubtitle(e.target.value)}
+                  placeholder="Find trusted professionals for all your home service needs"
+                  rows={2}
+                  data-testid="hero-subtitle-input"
+                />
+                <p className="text-xs text-gray-500 mt-1">Text below the hero title</p>
+              </div>
+
+              {/* Background Image */}
+              <div>
+                <Label className="block text-sm font-medium mb-2">🖼️ Hero Background Image</Label>
+                <div className="flex items-center space-x-2">
+                  <Input
+                    value={backgroundImage}
+                    onChange={(e) => setBackgroundImage(e.target.value)}
+                    placeholder="https://example.com/hero-background.jpg"
+                    className="flex-1"
+                    data-testid="background-image-input"
+                  />
+                  <Button variant="outline" size="sm" data-testid="upload-image-button">
+                    <Upload className="w-4 h-4" />
+                  </Button>
+                </div>
+                <p className="text-xs text-gray-500 mt-1">Optional: Full URL to background image for hero section</p>
+              </div>
+
+              {/* Colors */}
+              <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label className="block text-sm font-medium mb-2">Primary Color</Label>
+                  <Label className="block text-sm font-medium mb-2">🎨 Primary Color</Label>
                   <div className="flex items-center space-x-2">
                     <Input
                       type="color"
@@ -172,106 +302,54 @@ export default function Settings() {
                       data-testid="primary-color-input"
                     />
                   </div>
+                  <p className="text-xs text-gray-500 mt-1">Used for buttons, hero background</p>
                 </div>
                 <div>
-                  <Label className="block text-sm font-medium mb-2">Secondary Color</Label>
+                  <Label className="block text-sm font-medium mb-2">🔥 Accent Color</Label>
                   <div className="flex items-center space-x-2">
                     <Input
                       type="color"
-                      value={secondaryColor}
-                      onChange={(e) => setSecondaryColor(e.target.value)}
+                      value={accentColor}
+                      onChange={(e) => setAccentColor(e.target.value)}
                       className="w-16 h-10 p-1"
-                      data-testid="secondary-color-picker"
+                      data-testid="accent-color-picker"
                     />
                     <Input
-                      value={secondaryColor}
-                      onChange={(e) => setSecondaryColor(e.target.value)}
+                      value={accentColor}
+                      onChange={(e) => setAccentColor(e.target.value)}
                       placeholder="#FF5722"
                       className="flex-1"
-                      data-testid="secondary-color-input"
+                      data-testid="accent-color-input"
                     />
                   </div>
-                </div>
-                <div>
-                  <Label className="block text-sm font-medium mb-2">Background Color</Label>
-                  <div className="flex items-center space-x-2">
-                    <Input
-                      type="color"
-                      value={backgroundColor}
-                      onChange={(e) => setBackgroundColor(e.target.value)}
-                      className="w-16 h-10 p-1"
-                      data-testid="background-color-picker"
-                    />
-                    <Input
-                      value={backgroundColor}
-                      onChange={(e) => setBackgroundColor(e.target.value)}
-                      placeholder="#ffffff"
-                      className="flex-1"
-                      data-testid="background-color-input"
-                    />
-                  </div>
+                  <p className="text-xs text-gray-500 mt-1">Used for rotating text, highlights</p>
                 </div>
               </div>
-            </section>
 
-            {/* Design/Layout Section */}
-            <section>
-              <h3 className="text-lg font-medium mb-4 text-gray-800">Design & Layout</h3>
-              <div className="space-y-4">
-                <div>
-                  <Label className="block text-sm font-medium mb-2">Layout Style</Label>
-                  <Select value={layoutStyle} onValueChange={setLayoutStyle}>
-                    <SelectTrigger className="w-full max-w-md" data-testid="layout-style-select">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="default">Default Layout</SelectItem>
-                      <SelectItem value="centered">Centered Layout</SelectItem>
-                      <SelectItem value="full-width">Full Width Layout</SelectItem>
-                      <SelectItem value="sidebar">Sidebar Layout</SelectItem>
-                      <SelectItem value="grid">Grid Layout</SelectItem>
-                      <SelectItem value="minimal">Minimal Layout</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+              {/* Save Button */}
+              <div className="flex justify-end pt-6 border-t border-gray-200">
+                <Button
+                  onClick={handleSaveHomeChanges}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6"
+                  data-testid="save-home-changes-button"
+                >
+                  <Save className="w-4 h-4 mr-2" />
+                  Save & Apply Changes
+                </Button>
               </div>
-            </section>
+            </div>
+          </div>
+        )}
 
-            {/* Images Section */}
-            <section>
-              <h3 className="text-lg font-medium mb-4 text-gray-800">Images</h3>
-              <div className="space-y-4">
-                <div>
-                  <Label className="block text-sm font-medium mb-2">Section Image URL</Label>
-                  <div className="flex items-center space-x-2">
-                    <Input
-                      value={imageUrl}
-                      onChange={(e) => setImageUrl(e.target.value)}
-                      placeholder="https://example.com/image.jpg"
-                      className="flex-1"
-                      data-testid="image-url-input"
-                    />
-                    <Button variant="outline" size="sm" data-testid="upload-image-button">
-                      <Upload className="w-4 h-4" />
-                    </Button>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Add images to supported sections. Not all pages support custom images.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Save Button */}
-            <div className="flex justify-end pt-6 border-t border-gray-200">
-              <Button
-                onClick={handleSaveChanges}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6"
-                data-testid="save-changes-button"
-              >
-                <Save className="w-4 h-4 mr-2" />
-                Save Changes
-              </Button>
+        {/* OTHER PAGES PLACEHOLDER */}
+        {selectedPage && selectedPage !== "home" && (
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              Editing: {pages.find(p => p.value === selectedPage)?.label}
+            </h2>
+            <div className="text-center py-12 text-gray-500">
+              <p className="text-lg">Content editing for {selectedPage} page coming soon...</p>
+              <p className="text-sm mt-2">Currently only Home page editing is available.</p>
             </div>
           </div>
         )}
