@@ -71,10 +71,10 @@ export default function Hero() {
       style={heroStyle}
     >
       <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl md:text-6xl font-bold mb-8 animate-fade-in-up">
+        <h2 className="text-4xl md:text-6xl font-bold mb-8 animate-fade-in-up whitespace-nowrap">
           {heroTitle}{' '}
           <span 
-            className={`rotating-text text-orange-primary swirl-animation ${isVisible ? 'opacity-100 rotate-0' : 'opacity-0 rotate-180'}`}
+            className={`rotating-text text-orange-primary drop-animation ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}
             data-testid="rotating-service"
           >
             {services[currentServiceIndex]}

@@ -138,8 +138,9 @@
 @layer utilities {
   .rotating-text {
     display: inline-block;
-    min-width: 200px;
+    min-width: 300px;
     text-align: left;
+    white-space: nowrap;
   }
   
   .card-hover {
@@ -208,7 +209,13 @@
     }
   }
   
-  /* Swirl animation for rotating text */
+  /* Drop animation for rotating text */
+  .drop-animation {
+    transition: all 0.3s ease-out;
+    transform-origin: center;
+  }
+  
+  /* Swirl animation for rotating text (legacy) */
   .swirl-animation {
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     transform-origin: center;
