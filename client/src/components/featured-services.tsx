@@ -1,6 +1,6 @@
 import { Star, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Link from "wouter/link";
+import { Link } from "wouter";
 
 interface FeaturedService {
   id: number;
