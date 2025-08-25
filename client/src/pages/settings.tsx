@@ -44,6 +44,9 @@ export default function Settings() {
   const [howItWorksTitle, setHowItWorksTitle] = useState("");
   const [howItWorksSubtitle, setHowItWorksSubtitle] = useState("");
 
+  // Search Box section
+  const [searchPlaceholders, setSearchPlaceholders] = useState("");
+
   const pages = [
     { value: "home", label: "Home Page" },
     { value: "search", label: "Search Page" },
@@ -86,6 +89,13 @@ export default function Settings() {
         setHowItWorksTitle(settings.howItWorksTitle || "How It Works");
         setHowItWorksSubtitle(settings.howItWorksSubtitle || "Get your home project completed in 4 simple steps");
 
+        // Search Box section
+        if (settings.searchPlaceholders && Array.isArray(settings.searchPlaceholders)) {
+          setSearchPlaceholders(settings.searchPlaceholders.join('\n'));
+        } else {
+          setSearchPlaceholders("Find a plumber in Toronto...\nSearch for electricians in Ottawa...\nLooking for HVAC service in Mississauga?\nFind home repair experts in Brampton...\nSearch landscapers in Hamilton...\nNeed a handyman in London?");
+        }
+
       } catch (error) {
         console.error('Error loading settings:', error);
         // Set defaults if loading fails
@@ -122,6 +132,8 @@ export default function Settings() {
 
     setHowItWorksTitle("How It Works");
     setHowItWorksSubtitle("Get your home project completed in 4 simple steps");
+
+    setSearchPlaceholders("Find a plumber in Toronto...\nSearch for electricians in Ottawa...\nLooking for HVAC service in Mississauga?\nFind home repair experts in Brampton...\nSearch landscapers in Hamilton...\nNeed a handyman in London?");
   };
 
   const handlePageChange = (value: string) => {
@@ -185,6 +197,9 @@ export default function Settings() {
       // How It Works section
       howItWorksTitle,
       howItWorksSubtitle,
+
+      // Search Box section
+      searchPlaceholders: searchPlaceholders.split('\n').filter(line => line.trim()),
 
       // Keep other existing settings that might be there
       enableAnimations: true,
@@ -297,6 +312,13 @@ export default function Settings() {
                   <div className="font-semibold text-gray-800">🔧 How It Works</div>
                   <div className="text-gray-600">Title: <span className="font-mono bg-gray-100 px-1 rounded">"{howItWorksTitle}"</span></div>
                   <div className="text-gray-600">Subtitle: <span className="font-mono bg-gray-100 px-1 rounded">"{howItWorksSubtitle}"</span></div>
+                  <div className="text-xs text-gray-500">Now Editable!</div>
+                </div>
+                
+                <div className="bg-white p-3 rounded border-l-4 border-pink-500">
+                  <div className="font-semibold text-gray-800">🔍 Search Box Auto Text</div>
+                  <div className="text-gray-600">Rotating placeholders: {searchPlaceholders.split('\n').length} different texts</div>
+                  <div className="text-gray-600">Current: <span className="font-mono bg-gray-100 px-1 rounded">"{searchPlaceholders.split('\n')[0]}..."</span></div>
                   <div className="text-xs text-gray-500">Now Editable!</div>
                 </div>
                 
@@ -580,6 +602,23 @@ export default function Settings() {
                     placeholder="Get your home project completed in 4 simple steps"
                     data-testid="how-it-works-subtitle-input"
                   />
+                </div>
+              </section>
+
+              {/* SEARCH BOX SECTION */}
+              <section className="space-y-4">
+                <h3 className="text-lg font-medium text-gray-800 border-b pb-2">🔍 Search Box Auto Text</h3>
+                
+                <div>
+                  <Label className="block text-sm font-medium mb-2">Rotating Placeholder Texts</Label>
+                  <Textarea
+                    value={searchPlaceholders}
+                    onChange={(e) => setSearchPlaceholders(e.target.value)}
+                    placeholder={`Find a plumber in Toronto...\nSearch for electricians in Ottawa...\nLooking for HVAC service in Mississauga?\nFind home repair experts in Brampton...`}
+                    rows={6}
+                    data-testid="search-placeholders-input"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">One placeholder per line. These rotate every 4 seconds in the search box. Include Ontario city names for local search feel.</p>
                 </div>
               </section>
 
