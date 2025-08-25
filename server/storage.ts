@@ -342,9 +342,10 @@ export class MemStorage implements IStorage {
     const industries = new Set<string>();
     
     services.forEach(service => {
-      if (service.industry) {
-        // Use singular form as per user request
-        industries.add(service.industry);
+      if (service.industry && service.industry.trim() !== '') {
+        // Clean up industry names and ensure consistency
+        const cleanIndustry = service.industry.trim();
+        industries.add(cleanIndustry);
       }
     });
     
