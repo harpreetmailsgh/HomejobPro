@@ -92,7 +92,7 @@ export default function FeaturedServices() {
           <h2 className="text-3xl font-bold text-gray-900 mb-4">{sectionTitle}</h2>
           <p className="text-xl text-gray-600">{sectionSubtitle}</p>
         </div>
-        
+
         <div className="featured-services-container overflow-hidden">
           <div className="featured-services-track animate-scroll">
             {[...services, ...services, ...services].map((service, index) => (
@@ -110,10 +110,10 @@ export default function FeaturedServices() {
                     </div>
                     <span className="text-gray-500 text-sm ml-3">{service.jobs} jobs completed</span>
                   </div>
-                  
+
                   <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
                   <p className="text-gray-600 mb-4">{service.description}</p>
-                  
+
                   <Link href={`/search?industry=${service.category}`}>
                     <Button className="w-full bg-blue-grey hover:bg-blue-grey-700 text-white flex items-center justify-center">
                       Find Professionals
