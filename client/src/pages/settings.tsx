@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, Save, Upload, Eye } from "lucide-react";
+import { ArrowLeft, Save, Upload, Eye, RefreshCw } from "lucide-react";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import { Button } from "@/components/ui/button";
@@ -46,6 +46,7 @@ export default function Settings() {
 
   // Search Box section
   const [searchPlaceholders, setSearchPlaceholders] = useState("");
+  const [isSyncing, setIsSyncing] = useState(false);
 
   const pages = [
     { value: "home", label: "Home Page" },
@@ -231,6 +232,36 @@ export default function Settings() {
     });
   };
 
+  const handleSyncGoogleSheets = async () => {
+    setIsSyncing(true);
+    try {
+      const response = await fetch('/api/sync', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        toast({
+          title: "Google Sheets Synced!",
+          description: `Successfully synced with your Google Sheet at ${new Date(result.timestamp).toLocaleTimeString()}`,
+        });
+      } else {
+        throw new Error('Sync failed');
+      }
+    } catch (error) {
+      toast({
+        title: "Sync Failed",
+        description: "Could not sync with Google Sheets. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
   // Load home settings when component mounts
   useEffect(() => {
     if (selectedPage === "home") {
@@ -250,8 +281,22 @@ export default function Settings() {
               Back to Home
             </Button>
           </Link>
-          <h1 className="text-3xl font-bold text-gray-900">Page Settings</h1>
-          <p className="text-gray-600 mt-2">Select a page to customize its content, colors, and design</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Page Settings</h1>
+              <p className="text-gray-600 mt-2">Select a page to customize its content, colors, and design</p>
+            </div>
+            <Button
+              onClick={handleSyncGoogleSheets}
+              disabled={isSyncing}
+              variant="outline"
+              className="flex items-center space-x-2"
+              data-testid="sync-google-sheets-button"
+            >
+              <RefreshCw className={`w-4 h-4 ${isSyncing ? 'animate-spin' : ''}`} />
+              <span>{isSyncing ? 'Syncing...' : 'Sync Google Sheets'}</span>
+            </Button>
+          </div>
         </div>
 
         {/* Page Selection Dropdown */}
