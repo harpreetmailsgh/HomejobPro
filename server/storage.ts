@@ -214,12 +214,34 @@ export class MemStorage implements IStorage {
 
           return service;
         }).filter((service, index) => {
-          const isValid = service.title && service.industry && service.title.trim() !== '' && service.industry.trim() !== '';
-          if (!isValid && index < 5) {
-            console.log(`Filtering out row ${index}:`, { title: service.title, industry: service.industry });
+          // Basic validation for required fields
+          const hasTitle = service.title && service.title.trim() !== '';
+          const hasIndustry = service.industry && service.industry.trim() !== '';
+          
+          // Filter out invalid/test entries
+          const isInvalidTitle = service.title && (
+            service.title.toLowerCase().includes('feel free to ask') ||
+            service.title.toLowerCase().includes('test') ||
+            service.title.trim() === '' ||
+            service.title.length < 2
+          );
+          
+          // Filter out invalid industry values - must be one of the expected industries
+          const validIndustries = ['Plumber', 'Electrician', 'HVAC Technician'];
+          const hasValidIndustry = service.industry && validIndustries.includes(service.industry.trim());
+          
+          const isValid = hasTitle && hasIndustry && !isInvalidTitle && hasValidIndustry;
+          
+          if (!isValid && index < 10) {
+            console.log(`Filtering out row ${index}:`, { 
+              title: service.title, 
+              industry: service.industry,
+              reason: !hasTitle ? 'no title' : !hasIndustry ? 'no industry' : 
+                      isInvalidTitle ? 'invalid title' : !hasValidIndustry ? 'invalid industry' : 'unknown'
+            });
           }
           return isValid;
-        }); // Filter out empty rows
+        }); // Filter out invalid entries
 
         this.populateServices(services);
       }
@@ -341,11 +363,16 @@ export class MemStorage implements IStorage {
     const services = Array.from(this.services.values()).filter(s => !s.duplicate);
     const industries = new Set<string>();
 
+    // Only include valid industry values
+    const validIndustries = ['Plumber', 'Electrician', 'HVAC Technician'];
+
     services.forEach(service => {
       if (service.industry && service.industry.trim() !== '') {
-        // Clean up industry names and ensure consistency
         const cleanIndustry = service.industry.trim();
-        industries.add(cleanIndustry);
+        // Only add if it's a valid industry
+        if (validIndustries.includes(cleanIndustry)) {
+          industries.add(cleanIndustry);
+        }
       }
     });
 
