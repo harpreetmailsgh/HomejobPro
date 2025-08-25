@@ -1,8 +1,9 @@
+import { useState, useEffect } from "react";
 import { Star, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 
-const featuredServices = [
+const defaultServices = [
   {
     id: 1,
     title: "Emergency Plumbing",
@@ -60,17 +61,41 @@ const featuredServices = [
 ];
 
 export default function FeaturedServices() {
+  const [services, setServices] = useState(defaultServices);
+  const [sectionTitle, setSectionTitle] = useState("Featured Services");
+  const [sectionSubtitle, setSectionSubtitle] = useState("Popular home services trusted by thousands of homeowners");
+
+  useEffect(() => {
+    const loadSettings = () => {
+      const savedSettings = localStorage.getItem('homejobspro-settings');
+      if (savedSettings) {
+        try {
+          const settings = JSON.parse(savedSettings);
+          if (settings.featuredTitle) setSectionTitle(settings.featuredTitle);
+          if (settings.featuredSubtitle) setSectionSubtitle(settings.featuredSubtitle);
+          if (settings.customServices) setServices(settings.customServices);
+        } catch (error) {
+          console.error('Error loading featured services settings:', error);
+        }
+      }
+    };
+
+    loadSettings();
+    window.addEventListener('settingsChanged', loadSettings);
+    return () => window.removeEventListener('settingsChanged', loadSettings);
+  }, []);
+
   return (
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Services</h2>
-          <p className="text-xl text-gray-600">Popular home services trusted by thousands of homeowners</p>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">{sectionTitle}</h2>
+          <p className="text-xl text-gray-600">{sectionSubtitle}</p>
         </div>
         
         <div className="featured-services-container overflow-hidden">
           <div className="featured-services-track animate-scroll">
-            {[...featuredServices, ...featuredServices, ...featuredServices].map((service, index) => (
+            {[...services, ...services, ...services].map((service, index) => (
               <div key={`${service.id}-${index}`} className="featured-service-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex-shrink-0">
                 <img 
                   src={service.image} 

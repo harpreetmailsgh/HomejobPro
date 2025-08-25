@@ -1,6 +1,7 @@
+import { useState, useEffect } from "react";
 import { Search, UserCheck, Wrench, CheckCircle } from "lucide-react";
 
-const steps = [
+const defaultSteps = [
   {
     id: 1,
     title: "Search & Compare",
@@ -32,12 +33,36 @@ const steps = [
 ];
 
 export default function HowItWorks() {
+  const [steps, setSteps] = useState(defaultSteps);
+  const [sectionTitle, setSectionTitle] = useState("How It Works");
+  const [sectionSubtitle, setSectionSubtitle] = useState("Get your home project completed in 4 simple steps");
+
+  useEffect(() => {
+    const loadSettings = () => {
+      const savedSettings = localStorage.getItem('homejobspro-settings');
+      if (savedSettings) {
+        try {
+          const settings = JSON.parse(savedSettings);
+          if (settings.howItWorksTitle) setSectionTitle(settings.howItWorksTitle);
+          if (settings.howItWorksSubtitle) setSectionSubtitle(settings.howItWorksSubtitle);
+          if (settings.customSteps) setSteps(settings.customSteps);
+        } catch (error) {
+          console.error('Error loading how it works settings:', error);
+        }
+      }
+    };
+
+    loadSettings();
+    window.addEventListener('settingsChanged', loadSettings);
+    return () => window.removeEventListener('settingsChanged', loadSettings);
+  }, []);
+
   return (
     <section className="py-16 bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">How It Works</h2>
-          <p className="text-xl text-gray-600">Get your home project completed in 4 simple steps</p>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">{sectionTitle}</h2>
+          <p className="text-xl text-gray-600">{sectionSubtitle}</p>
         </div>
         
         <div className="relative">

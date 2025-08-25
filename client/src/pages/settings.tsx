@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, Save, Upload, Eye } from "lucide-react";
 import Header from "../components/header";
@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 export default function Settings() {
   const { toast } = useToast();
   const [selectedPage, setSelectedPage] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   // Home page specific states (loading from actual localStorage)
   const [heroTitle, setHeroTitle] = useState("");
@@ -22,6 +23,26 @@ export default function Settings() {
   const [backgroundImage, setBackgroundImage] = useState("");
   const [primaryColor, setPrimaryColor] = useState("");
   const [accentColor, setAccentColor] = useState("");
+
+  // Stats section
+  const [statsTitle, setStatsTitle] = useState("");
+  const [statsSubtitle, setStatsSubtitle] = useState("");
+  const [stat1Value, setStat1Value] = useState("");
+  const [stat1Label, setStat1Label] = useState("");
+  const [stat2Value, setStat2Value] = useState("");
+  const [stat2Label, setStat2Label] = useState("");
+  const [stat3Value, setStat3Value] = useState("");
+  const [stat3Label, setStat3Label] = useState("");
+  const [stat4Value, setStat4Value] = useState("");
+  const [stat4Label, setStat4Label] = useState("");
+
+  // Featured Services section
+  const [featuredTitle, setFeaturedTitle] = useState("");
+  const [featuredSubtitle, setFeaturedSubtitle] = useState("");
+
+  // How It Works section
+  const [howItWorksTitle, setHowItWorksTitle] = useState("");
+  const [howItWorksSubtitle, setHowItWorksSubtitle] = useState("");
 
   const pages = [
     { value: "home", label: "Home Page" },
@@ -44,6 +65,27 @@ export default function Settings() {
         setBackgroundImage(settings.backgroundImage || "");
         setPrimaryColor(settings.primaryColor || "#607D8B");
         setAccentColor(settings.accentColor || "#FF5722");
+
+        // Stats section
+        setStatsTitle(settings.statsTitle || "Trusted by Thousands");
+        setStatsSubtitle(settings.statsSubtitle || "Join the growing community of satisfied homeowners");
+        setStat1Value(settings.stat1Value || "10,000+");
+        setStat1Label(settings.stat1Label || "Happy Customers");
+        setStat2Value(settings.stat2Value || "15,000+");
+        setStat2Label(settings.stat2Label || "Jobs Completed");
+        setStat3Value(settings.stat3Value || "4.8/5");
+        setStat3Label(settings.stat3Label || "Average Rating");
+        setStat4Value(settings.stat4Value || "100%");
+        setStat4Label(settings.stat4Label || "Verified Pros");
+
+        // Featured Services section
+        setFeaturedTitle(settings.featuredTitle || "Featured Services");
+        setFeaturedSubtitle(settings.featuredSubtitle || "Popular home services trusted by thousands of homeowners");
+
+        // How It Works section
+        setHowItWorksTitle(settings.howItWorksTitle || "How It Works");
+        setHowItWorksSubtitle(settings.howItWorksSubtitle || "Get your home project completed in 4 simple steps");
+
       } catch (error) {
         console.error('Error loading settings:', error);
         // Set defaults if loading fails
@@ -63,12 +105,53 @@ export default function Settings() {
     setBackgroundImage("");
     setPrimaryColor("#607D8B");
     setAccentColor("#FF5722");
+
+    setStatsTitle("Trusted by Thousands");
+    setStatsSubtitle("Join the growing community of satisfied homeowners");
+    setStat1Value("10,000+");
+    setStat1Label("Happy Customers");
+    setStat2Value("15,000+");
+    setStat2Label("Jobs Completed");
+    setStat3Value("4.8/5");
+    setStat3Label("Average Rating");
+    setStat4Value("100%");
+    setStat4Label("Verified Pros");
+
+    setFeaturedTitle("Featured Services");
+    setFeaturedSubtitle("Popular home services trusted by thousands of homeowners");
+
+    setHowItWorksTitle("How It Works");
+    setHowItWorksSubtitle("Get your home project completed in 4 simple steps");
   };
 
   const handlePageChange = (value: string) => {
     setSelectedPage(value);
     if (value === "home") {
       loadCurrentHomeSettings();
+    }
+  };
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const result = e.target?.result as string;
+          setBackgroundImage(result);
+          toast({
+            title: "Image Uploaded",
+            description: "Background image has been uploaded successfully.",
+          });
+        };
+        reader.readAsDataURL(file);
+      } else {
+        toast({
+          title: "Invalid File",
+          description: "Please select an image file (JPG, PNG, etc.)",
+          variant: "destructive"
+        });
+      }
     }
   };
 
@@ -82,6 +165,27 @@ export default function Settings() {
       backgroundImage,
       primaryColor,
       accentColor,
+      
+      // Stats section
+      statsTitle,
+      statsSubtitle,
+      stat1Value,
+      stat1Label,
+      stat2Value,
+      stat2Label,
+      stat3Value,
+      stat3Label,
+      stat4Value,
+      stat4Label,
+
+      // Featured Services section
+      featuredTitle,
+      featuredSubtitle,
+
+      // How It Works section
+      howItWorksTitle,
+      howItWorksSubtitle,
+
       // Keep other existing settings that might be there
       enableAnimations: true,
       rotationSpeed: 3000,
@@ -177,20 +281,23 @@ export default function Settings() {
                 
                 <div className="bg-white p-3 rounded border-l-4 border-green-500">
                   <div className="font-semibold text-gray-800">📊 Stats Section</div>
-                  <div className="text-gray-600">"Trusted by Thousands" - 10,000+ customers, 15,000+ jobs, etc.</div>
-                  <div className="text-xs text-gray-500">Note: This section has fixed content</div>
+                  <div className="text-gray-600">Title: <span className="font-mono bg-gray-100 px-1 rounded">"{statsTitle}"</span></div>
+                  <div className="text-gray-600">Stats: {stat1Value} {stat1Label}, {stat2Value} {stat2Label}...</div>
+                  <div className="text-xs text-gray-500">Now Editable!</div>
                 </div>
                 
                 <div className="bg-white p-3 rounded border-l-4 border-orange-500">
                   <div className="font-semibold text-gray-800">⭐ Featured Services</div>
-                  <div className="text-gray-600">6 service cards: Emergency Plumbing, Electrical, HVAC, etc.</div>
-                  <div className="text-xs text-gray-500">Note: This section has fixed content</div>
+                  <div className="text-gray-600">Title: <span className="font-mono bg-gray-100 px-1 rounded">"{featuredTitle}"</span></div>
+                  <div className="text-gray-600">Subtitle: <span className="font-mono bg-gray-100 px-1 rounded">"{featuredSubtitle}"</span></div>
+                  <div className="text-xs text-gray-500">Now Editable!</div>
                 </div>
                 
                 <div className="bg-white p-3 rounded border-l-4 border-cyan-500">
                   <div className="font-semibold text-gray-800">🔧 How It Works</div>
-                  <div className="text-gray-600">4 steps: Search & Compare, Connect, Get Job Done, Enjoy</div>
-                  <div className="text-xs text-gray-500">Note: This section has fixed content</div>
+                  <div className="text-gray-600">Title: <span className="font-mono bg-gray-100 px-1 rounded">"{howItWorksTitle}"</span></div>
+                  <div className="text-gray-600">Subtitle: <span className="font-mono bg-gray-100 px-1 rounded">"{howItWorksSubtitle}"</span></div>
+                  <div className="text-xs text-gray-500">Now Editable!</div>
                 </div>
                 
                 <div className="bg-white p-3 rounded border-l-4 border-gray-500">
@@ -208,123 +315,273 @@ export default function Settings() {
             </div>
 
             {/* Right Side - Edit Panel */}
-            <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
+            <div className="bg-white rounded-lg shadow-md p-6 space-y-6 max-h-screen overflow-y-auto">
               <div className="border-b border-gray-200 pb-4">
                 <h2 className="text-xl font-semibold text-gray-800">Edit Home Page Content</h2>
                 <p className="text-sm text-gray-600 mt-1">Changes will reflect immediately on the home page</p>
               </div>
 
-              {/* Site Title */}
-              <div>
-                <Label className="block text-sm font-medium mb-2">🏠 Site Title (Header)</Label>
-                <Input
-                  value={siteTitle}
-                  onChange={(e) => setSiteTitle(e.target.value)}
-                  placeholder="Homejobspro.com"
-                  data-testid="site-title-input"
-                />
-                <p className="text-xs text-gray-500 mt-1">Appears in header and browser tab</p>
-              </div>
-
-              {/* Hero Title */}
-              <div>
-                <Label className="block text-sm font-medium mb-2">🎯 Hero Main Title</Label>
-                <Input
-                  value={heroTitle}
-                  onChange={(e) => setHeroTitle(e.target.value)}
-                  placeholder="I am looking for"
-                  data-testid="hero-title-input"
-                />
-                <p className="text-xs text-gray-500 mt-1">Large text before rotating services</p>
-              </div>
-
-              {/* Rotating Services */}
-              <div>
-                <Label className="block text-sm font-medium mb-2">🔄 Rotating Services (Hero)</Label>
-                <Textarea
-                  value={rotatingServices}
-                  onChange={(e) => setRotatingServices(e.target.value)}
-                  placeholder="Plumber, Electrician, HVAC Technician, Landscaper, Home Services"
-                  rows={3}
-                  data-testid="rotating-services-input"
-                />
-                <p className="text-xs text-gray-500 mt-1">Separate with commas. These rotate every 3 seconds</p>
-              </div>
-
-              {/* Hero Subtitle */}
-              <div>
-                <Label className="block text-sm font-medium mb-2">📝 Hero Subtitle</Label>
-                <Textarea
-                  value={heroSubtitle}
-                  onChange={(e) => setHeroSubtitle(e.target.value)}
-                  placeholder="Find trusted professionals for all your home service needs"
-                  rows={2}
-                  data-testid="hero-subtitle-input"
-                />
-                <p className="text-xs text-gray-500 mt-1">Text below the hero title</p>
-              </div>
-
-              {/* Background Image */}
-              <div>
-                <Label className="block text-sm font-medium mb-2">🖼️ Hero Background Image</Label>
-                <div className="flex items-center space-x-2">
+              {/* HERO SECTION */}
+              <section className="space-y-4">
+                <h3 className="text-lg font-medium text-gray-800 border-b pb-2">🎯 Hero Section</h3>
+                
+                <div>
+                  <Label className="block text-sm font-medium mb-2">🏠 Site Title (Header)</Label>
                   <Input
-                    value={backgroundImage}
-                    onChange={(e) => setBackgroundImage(e.target.value)}
-                    placeholder="https://example.com/hero-background.jpg"
-                    className="flex-1"
-                    data-testid="background-image-input"
+                    value={siteTitle}
+                    onChange={(e) => setSiteTitle(e.target.value)}
+                    placeholder="Homejobspro.com"
+                    data-testid="site-title-input"
                   />
-                  <Button variant="outline" size="sm" data-testid="upload-image-button">
-                    <Upload className="w-4 h-4" />
-                  </Button>
                 </div>
-                <p className="text-xs text-gray-500 mt-1">Optional: Full URL to background image for hero section</p>
-              </div>
 
-              {/* Colors */}
-              <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label className="block text-sm font-medium mb-2">🎨 Primary Color</Label>
-                  <div className="flex items-center space-x-2">
-                    <Input
-                      type="color"
-                      value={primaryColor}
-                      onChange={(e) => setPrimaryColor(e.target.value)}
-                      className="w-16 h-10 p-1"
-                      data-testid="primary-color-picker"
+                  <Label className="block text-sm font-medium mb-2">🎯 Hero Main Title</Label>
+                  <Input
+                    value={heroTitle}
+                    onChange={(e) => setHeroTitle(e.target.value)}
+                    placeholder="I am looking for"
+                    data-testid="hero-title-input"
+                  />
+                </div>
+
+                <div>
+                  <Label className="block text-sm font-medium mb-2">🔄 Rotating Services</Label>
+                  <Textarea
+                    value={rotatingServices}
+                    onChange={(e) => setRotatingServices(e.target.value)}
+                    placeholder="Plumber, Electrician, HVAC Technician, Landscaper, Home Services"
+                    rows={3}
+                    data-testid="rotating-services-input"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">Separate with commas. These rotate every 3 seconds</p>
+                </div>
+
+                <div>
+                  <Label className="block text-sm font-medium mb-2">📝 Hero Subtitle</Label>
+                  <Textarea
+                    value={heroSubtitle}
+                    onChange={(e) => setHeroSubtitle(e.target.value)}
+                    placeholder="Find trusted professionals for all your home service needs"
+                    rows={2}
+                    data-testid="hero-subtitle-input"
+                  />
+                </div>
+
+                <div>
+                  <Label className="block text-sm font-medium mb-2">🖼️ Hero Background Image</Label>
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <Input
+                        value={backgroundImage}
+                        onChange={(e) => setBackgroundImage(e.target.value)}
+                        placeholder="https://example.com/hero-background.jpg or upload file"
+                        className="flex-1"
+                        data-testid="background-image-input"
+                      />
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => fileInputRef.current?.click()}
+                        data-testid="upload-image-button"
+                      >
+                        <Upload className="w-4 h-4" />
+                      </Button>
+                    </div>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileUpload}
+                      className="hidden"
                     />
+                    <p className="text-xs text-gray-500">Upload an image file or paste a URL</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label className="block text-sm font-medium mb-2">🎨 Primary Color</Label>
+                    <div className="flex items-center space-x-2">
+                      <Input
+                        type="color"
+                        value={primaryColor}
+                        onChange={(e) => setPrimaryColor(e.target.value)}
+                        className="w-16 h-10 p-1"
+                        data-testid="primary-color-picker"
+                      />
+                      <Input
+                        value={primaryColor}
+                        onChange={(e) => setPrimaryColor(e.target.value)}
+                        placeholder="#607D8B"
+                        className="flex-1"
+                        data-testid="primary-color-input"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <Label className="block text-sm font-medium mb-2">🔥 Accent Color</Label>
+                    <div className="flex items-center space-x-2">
+                      <Input
+                        type="color"
+                        value={accentColor}
+                        onChange={(e) => setAccentColor(e.target.value)}
+                        className="w-16 h-10 p-1"
+                        data-testid="accent-color-picker"
+                      />
+                      <Input
+                        value={accentColor}
+                        onChange={(e) => setAccentColor(e.target.value)}
+                        placeholder="#FF5722"
+                        className="flex-1"
+                        data-testid="accent-color-input"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* STATS SECTION */}
+              <section className="space-y-4">
+                <h3 className="text-lg font-medium text-gray-800 border-b pb-2">📊 Stats Section</h3>
+                
+                <div>
+                  <Label className="block text-sm font-medium mb-2">Section Title</Label>
+                  <Input
+                    value={statsTitle}
+                    onChange={(e) => setStatsTitle(e.target.value)}
+                    placeholder="Trusted by Thousands"
+                    data-testid="stats-title-input"
+                  />
+                </div>
+
+                <div>
+                  <Label className="block text-sm font-medium mb-2">Section Subtitle</Label>
+                  <Input
+                    value={statsSubtitle}
+                    onChange={(e) => setStatsSubtitle(e.target.value)}
+                    placeholder="Join the growing community of satisfied homeowners"
+                    data-testid="stats-subtitle-input"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label className="block text-sm font-medium mb-2">Stat 1 Value</Label>
                     <Input
-                      value={primaryColor}
-                      onChange={(e) => setPrimaryColor(e.target.value)}
-                      placeholder="#607D8B"
-                      className="flex-1"
-                      data-testid="primary-color-input"
+                      value={stat1Value}
+                      onChange={(e) => setStat1Value(e.target.value)}
+                      placeholder="10,000+"
                     />
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">Used for buttons, hero background</p>
-                </div>
-                <div>
-                  <Label className="block text-sm font-medium mb-2">🔥 Accent Color</Label>
-                  <div className="flex items-center space-x-2">
+                  <div>
+                    <Label className="block text-sm font-medium mb-2">Stat 1 Label</Label>
                     <Input
-                      type="color"
-                      value={accentColor}
-                      onChange={(e) => setAccentColor(e.target.value)}
-                      className="w-16 h-10 p-1"
-                      data-testid="accent-color-picker"
-                    />
-                    <Input
-                      value={accentColor}
-                      onChange={(e) => setAccentColor(e.target.value)}
-                      placeholder="#FF5722"
-                      className="flex-1"
-                      data-testid="accent-color-input"
+                      value={stat1Label}
+                      onChange={(e) => setStat1Label(e.target.value)}
+                      placeholder="Happy Customers"
                     />
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">Used for rotating text, highlights</p>
+                  <div>
+                    <Label className="block text-sm font-medium mb-2">Stat 2 Value</Label>
+                    <Input
+                      value={stat2Value}
+                      onChange={(e) => setStat2Value(e.target.value)}
+                      placeholder="15,000+"
+                    />
+                  </div>
+                  <div>
+                    <Label className="block text-sm font-medium mb-2">Stat 2 Label</Label>
+                    <Input
+                      value={stat2Label}
+                      onChange={(e) => setStat2Label(e.target.value)}
+                      placeholder="Jobs Completed"
+                    />
+                  </div>
+                  <div>
+                    <Label className="block text-sm font-medium mb-2">Stat 3 Value</Label>
+                    <Input
+                      value={stat3Value}
+                      onChange={(e) => setStat3Value(e.target.value)}
+                      placeholder="4.8/5"
+                    />
+                  </div>
+                  <div>
+                    <Label className="block text-sm font-medium mb-2">Stat 3 Label</Label>
+                    <Input
+                      value={stat3Label}
+                      onChange={(e) => setStat3Label(e.target.value)}
+                      placeholder="Average Rating"
+                    />
+                  </div>
+                  <div>
+                    <Label className="block text-sm font-medium mb-2">Stat 4 Value</Label>
+                    <Input
+                      value={stat4Value}
+                      onChange={(e) => setStat4Value(e.target.value)}
+                      placeholder="100%"
+                    />
+                  </div>
+                  <div>
+                    <Label className="block text-sm font-medium mb-2">Stat 4 Label</Label>
+                    <Input
+                      value={stat4Label}
+                      onChange={(e) => setStat4Label(e.target.value)}
+                      placeholder="Verified Pros"
+                    />
+                  </div>
                 </div>
-              </div>
+              </section>
+
+              {/* FEATURED SERVICES SECTION */}
+              <section className="space-y-4">
+                <h3 className="text-lg font-medium text-gray-800 border-b pb-2">⭐ Featured Services Section</h3>
+                
+                <div>
+                  <Label className="block text-sm font-medium mb-2">Section Title</Label>
+                  <Input
+                    value={featuredTitle}
+                    onChange={(e) => setFeaturedTitle(e.target.value)}
+                    placeholder="Featured Services"
+                    data-testid="featured-title-input"
+                  />
+                </div>
+
+                <div>
+                  <Label className="block text-sm font-medium mb-2">Section Subtitle</Label>
+                  <Input
+                    value={featuredSubtitle}
+                    onChange={(e) => setFeaturedSubtitle(e.target.value)}
+                    placeholder="Popular home services trusted by thousands of homeowners"
+                    data-testid="featured-subtitle-input"
+                  />
+                </div>
+              </section>
+
+              {/* HOW IT WORKS SECTION */}
+              <section className="space-y-4">
+                <h3 className="text-lg font-medium text-gray-800 border-b pb-2">🔧 How It Works Section</h3>
+                
+                <div>
+                  <Label className="block text-sm font-medium mb-2">Section Title</Label>
+                  <Input
+                    value={howItWorksTitle}
+                    onChange={(e) => setHowItWorksTitle(e.target.value)}
+                    placeholder="How It Works"
+                    data-testid="how-it-works-title-input"
+                  />
+                </div>
+
+                <div>
+                  <Label className="block text-sm font-medium mb-2">Section Subtitle</Label>
+                  <Input
+                    value={howItWorksSubtitle}
+                    onChange={(e) => setHowItWorksSubtitle(e.target.value)}
+                    placeholder="Get your home project completed in 4 simple steps"
+                    data-testid="how-it-works-subtitle-input"
+                  />
+                </div>
+              </section>
 
               {/* Save Button */}
               <div className="flex justify-end pt-6 border-t border-gray-200">
@@ -334,7 +591,7 @@ export default function Settings() {
                   data-testid="save-home-changes-button"
                 >
                   <Save className="w-4 h-4 mr-2" />
-                  Save & Apply Changes
+                  Save & Apply All Changes
                 </Button>
               </div>
             </div>
