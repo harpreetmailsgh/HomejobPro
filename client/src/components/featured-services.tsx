@@ -76,17 +76,18 @@ export default function FeaturedServices({
                     </div>
                     <span className="text-gray-500 text-sm ml-3">{service.jobs} jobs completed</span>
                   </div>
-
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
-                  <p className="text-gray-600 mb-4">{service.description}</p>
-
-                  <Link href={`/search?industry=${service.category}`}>
-                    <Button className="w-full bg-blue-grey hover:bg-blue-grey-700 text-white flex items-center justify-center">
-                      Find Professionals
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </Button>
-                  </Link>
                 </div>
+
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
+                <p className="text-gray-600 mb-4">{service.description}</p>
+
+                <Link href={`/search?industry=${service.category}`}>
+                  <Button className="w-full bg-blue-grey hover:bg-blue-grey-700 text-white flex items-center justify-center">
+                    Find Professionals
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </Link>
+              </div>
               </div>
             ))}
           </div>
