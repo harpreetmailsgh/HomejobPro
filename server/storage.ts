@@ -110,13 +110,13 @@ export class MemStorage implements IStorage {
       // Fetch data from all sheets in the Google Sheets document
       const SHEET_ID = '1dZ_sckZb9L6eXjymMk4gBUFC-mbTIIKydA2W_LZ0Yu8';
       
-      // List of sheet IDs to fetch from (we'll try multiple common GIDs)
-      const sheetGids = [0, 1, 2, 3, 4, 5]; // Try first 6 sheets
+      // List of sheet names to fetch from
+      const sheetNames = ['Plumber', 'Electrician', 'HVAC Technician'];
       let allSheetsData: any[] = [];
       
-      for (const gid of sheetGids) {
+      for (const sheetName of sheetNames) {
         try {
-          const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${gid}`;
+          const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
           const response = await fetch(csvUrl);
           
           if (response.ok) {
@@ -124,10 +124,30 @@ export class MemStorage implements IStorage {
             
             // Skip if response is HTML (indicates sheet doesn't exist)
             if (csvText.includes('<HTML>') || csvText.includes('<!DOCTYPE')) {
+              console.log(`Sheet "${sheetName}" not found, skipping...`);
               continue;
             }
             
-            const rows = csvText.split('\n').map(row => row.split(',').map(cell => cell.replace(/"/g, '').trim()));
+            const rows = csvText.split('\n').map(row => {
+              // Handle CSV parsing with proper quote handling
+              const cells = [];
+              let current = '';
+              let inQuotes = false;
+              
+              for (let i = 0; i < row.length; i++) {
+                const char = row[i];
+                if (char === '"' && (i === 0 || row[i-1] === ',' || inQuotes)) {
+                  inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                  cells.push(current.trim());
+                  current = '';
+                } else {
+                  current += char;
+                }
+              }
+              cells.push(current.trim());
+              return cells;
+            });
             
             if (rows && rows.length > 1) {
               const headers = rows[0];
@@ -142,12 +162,12 @@ export class MemStorage implements IStorage {
               });
               
               allSheetsData = allSheetsData.concat(sheetData);
-              console.log(`Fetched ${dataRows.length} rows from sheet GID ${gid}`);
+              console.log(`Fetched ${dataRows.length} rows from "${sheetName}" sheet`);
             }
           }
         } catch (error) {
           // Continue to next sheet if this one fails
-          console.log(`Sheet GID ${gid} not found or accessible, continuing...`);
+          console.log(`Error fetching sheet "${sheetName}":`, error);
         }
       }
       
@@ -164,19 +184,42 @@ export class MemStorage implements IStorage {
         }
 
         // Convert Google Sheets data to our Service format
-        const services = sheetsData.map((row, index) => ({
-          id: parseInt(row['S no']) || index + 1,
-          title: row['Title'] || '',
-          rating: parseFloat(row['Rating']) || 0,
-          reviews: parseInt(row['Reviews']) || 0,
-          phone: row['Phone'] || '',
-          industry: row['Industry'] || '',
-          address: row['Complete address'] || row['Address'] || '',
-          website: row['Website'] || undefined,
-          googleMapsLink: row['Google Maps Link'] || undefined,
-          email: row['Email'] || undefined,
-          duplicate: row['duplicate']?.toLowerCase() === 'true' || false
-        })).filter(service => service.title && service.industry); // Filter out empty rows
+        let globalId = 1;
+        
+        // Debug: Check data structure
+        console.log(`Processing ${sheetsData.length} total rows from all sheets`);
+        if (sheetsData.length > 0) {
+          console.log('Sample row structure:', Object.keys(sheetsData[0]));
+        }
+        
+        const services = sheetsData.map((row, index) => {
+          // Handle different column names between sheets
+          const title = row['Title'] || row['itle'] || ''; // Electrician sheet has 'itle' not 'Title'
+          const industry = row['Industry'] || '';
+          const address = row['Complete address'] || row['Address'] || '';
+          
+          const service = {
+            id: parseInt(row['S no']) || globalId++,
+            title: title.trim(),
+            rating: parseFloat(row['Rating']) || 0,
+            reviews: parseInt(row['Reviews']) || 0,
+            phone: row['Phone'] || '',
+            industry: industry.trim(),
+            address: address.trim(),
+            website: row['Website'] || undefined,
+            googleMapsLink: row['Google Maps Link'] || undefined,
+            email: row['Email'] || undefined,
+            duplicate: row['duplicate']?.toLowerCase() === 'true' || false
+          };
+          
+          return service;
+        }).filter((service, index) => {
+          const isValid = service.title && service.industry && service.title.trim() !== '' && service.industry.trim() !== '';
+          if (!isValid && index < 5) {
+            console.log(`Filtering out row ${index}:`, { title: service.title, industry: service.industry });
+          }
+          return isValid;
+        }); // Filter out empty rows
 
         this.populateServices(services);
       }
@@ -325,9 +368,13 @@ export class MemStorage implements IStorage {
   // Method to populate services (will be called from Google Sheets API)
   populateServices(servicesData: Service[]): void {
     this.services.clear();
+    let id = 1;
     servicesData.forEach(service => {
-      this.services.set(service.id, service);
+      // Ensure unique IDs by assigning incremental IDs
+      const uniqueService = { ...service, id: id++ };
+      this.services.set(uniqueService.id, uniqueService);
     });
+    console.log(`Total services populated: ${this.services.size}`);
   }
 }
 

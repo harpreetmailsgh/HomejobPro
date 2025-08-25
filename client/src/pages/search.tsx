@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import ServiceCard from "@/components/service-card";
-import ServiceListItem from "@/components/service-list-item";
+import ServiceListItem from "../components/service-list-item";
 import FiltersSidebar from "@/components/filters-sidebar";
 import Pagination from "@/components/pagination";
 import { SearchFilters, SearchResults } from "@shared/schema";
