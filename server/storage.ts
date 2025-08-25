@@ -116,7 +116,7 @@ export class MemStorage implements IStorage {
 
       for (const sheetName of sheetNames) {
         try {
-          const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq:out:csv&sheet=${encodeURIComponent(sheetName)}`;
+          const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
           const response = await fetch(csvUrl);
 
           if (response.ok) {
