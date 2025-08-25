@@ -8,6 +8,8 @@ export const serviceSchema = z.object({
   phone: z.string(),
   industry: z.string(), // service type like Plumber
   address: z.string(),
+  city: z.string().optional(),
+  postCode: z.string().optional(),
   website: z.string().url().optional(),
   googleMapsLink: z.string().url().optional(),
   email: z.string().email().optional(),
@@ -18,8 +20,8 @@ export const searchFiltersSchema = z.object({
   query: z.string().optional(),
   industry: z.string().optional(),
   city: z.string().optional(),
+  postCode: z.string().optional(),
   minRating: z.number().min(0).max(5).optional(),
-  maxRating: z.number().min(0).max(5).optional(),
   companyName: z.string().optional(),
   phone: z.string().optional(),
   sortBy: z.enum(['rating_desc', 'rating_asc', 'name_asc', 'reviews_desc']).default('rating_desc'),

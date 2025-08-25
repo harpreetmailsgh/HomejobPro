@@ -55,7 +55,7 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
         {/* City Filter */}
         <div className="mb-6">
           <Label className="block text-sm font-medium text-gray-700 mb-2">
-            City
+            Service City
           </Label>
           <Select 
             value={localFilters.city || "all"} 
@@ -75,37 +75,41 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
           </Select>
         </div>
         
+        {/* Post Code Filter */}
+        <div className="mb-6">
+          <Label className="block text-sm font-medium text-gray-700 mb-2">
+            Post Code
+          </Label>
+          <Input
+            type="text"
+            placeholder="Enter Canadian postal code"
+            value={localFilters.postCode || ""}
+            onChange={(e) => {
+              const value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+              if (value.length <= 6) {
+                const formatted = value.replace(/([A-Z]\d[A-Z])(\d[A-Z]\d)/, '$1 $2');
+                handleFilterChange('postCode', formatted || undefined);
+              }
+            }}
+            pattern="[A-Z]\d[A-Z] ?\d[A-Z]\d"
+            data-testid="postcode-filter"
+          />
+        </div>
+        
         {/* Rating Filter */}
         <div className="mb-6">
           <Label className="block text-sm font-medium text-gray-700 mb-2">
-            Rating Range: {localFilters.minRating?.toFixed(1) || '1.0'} - {localFilters.maxRating?.toFixed(1) || '5.0'}
+            Minimum Rating: {(localFilters.minRating || 1).toFixed(1)}
           </Label>
-          <div className="space-y-2">
-            <div>
-              <Label className="text-xs text-gray-500">Minimum Rating</Label>
-              <Slider
-                value={[localFilters.minRating || 1]}
-                onValueChange={(value) => handleFilterChange('minRating', value[0])}
-                min={1}
-                max={5}
-                step={0.1}
-                className="w-full"
-                data-testid="min-rating-slider"
-              />
-            </div>
-            <div>
-              <Label className="text-xs text-gray-500">Maximum Rating</Label>
-              <Slider
-                value={[localFilters.maxRating || 5]}
-                onValueChange={(value) => handleFilterChange('maxRating', value[0])}
-                min={1}
-                max={5}
-                step={0.1}
-                className="w-full"
-                data-testid="max-rating-slider"
-              />
-            </div>
-          </div>
+          <Slider
+            value={[localFilters.minRating || 1]}
+            onValueChange={(value) => handleFilterChange('minRating', value[0])}
+            min={1}
+            max={5}
+            step={0.1}
+            className="w-full"
+            data-testid="rating-slider"
+          />
           <div className="flex justify-between text-sm text-gray-500 mt-1">
             <span>1.0</span>
             <span>5.0</span>

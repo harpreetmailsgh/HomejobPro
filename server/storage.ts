@@ -44,16 +44,18 @@ export class MemStorage implements IStorage {
 
     if (filters.city) {
       services = services.filter(service =>
-        this.extractCity(service.address).toLowerCase().includes(filters.city!.toLowerCase())
+        service.city && service.city.toLowerCase().includes(filters.city!.toLowerCase())
+      );
+    }
+
+    if (filters.postCode) {
+      services = services.filter(service =>
+        service.postCode && service.postCode.toLowerCase().includes(filters.postCode!.toLowerCase())
       );
     }
 
     if (filters.minRating !== undefined) {
       services = services.filter(service => service.rating >= filters.minRating!);
-    }
-
-    if (filters.maxRating !== undefined) {
-      services = services.filter(service => service.rating <= filters.maxRating!);
     }
 
     if (filters.companyName) {
@@ -93,7 +95,7 @@ export class MemStorage implements IStorage {
     // Get unique industries and cities for filters
     const allServices = Array.from(this.services.values()).filter(s => !s.duplicate);
     const industries = Array.from(new Set(allServices.map(s => s.industry))).sort();
-    const cities = Array.from(new Set(allServices.map(s => this.extractCity(s.address)))).filter(Boolean).sort();
+    const cities = Array.from(new Set(allServices.map(s => s.city).filter((city): city is string => Boolean(city)))).sort();
 
     return {
       services: paginatedServices,
@@ -206,6 +208,8 @@ export class MemStorage implements IStorage {
             phone: row['Phone'] || '',
             industry: industry.trim(),
             address: address.trim(),
+            city: (row['City from address'] || '').trim(),
+            postCode: (row['Post code'] || '').trim(),
             website: row['Website'] || undefined,
             googleMapsLink: row['Google Maps Link'] || undefined,
             email: row['Email'] || undefined,
@@ -381,7 +385,7 @@ export class MemStorage implements IStorage {
 
   async getUniqueCities(): Promise<string[]> {
     const services = Array.from(this.services.values()).filter(s => !s.duplicate);
-    return Array.from(new Set(services.map(s => this.extractCity(s.address)))).filter(Boolean).sort();
+    return Array.from(new Set(services.map(s => s.city).filter((city): city is string => Boolean(city)))).sort();
   }
 
   private extractCity(address: string): string {

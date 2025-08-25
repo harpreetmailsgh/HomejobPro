@@ -25,8 +25,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         query: req.query.query,
         industry: req.query.industry,
         city: req.query.city,
+        postCode: req.query.postCode,
         minRating: req.query.minRating ? parseFloat(req.query.minRating as string) : undefined,
         companyName: req.query.companyName,
+        phone: req.query.phone,
         sortBy: req.query.sortBy || 'rating_desc',
         page: req.query.page ? parseInt(req.query.page as string) : 1,
         limit: req.query.limit ? parseInt(req.query.limit as string) : 20
