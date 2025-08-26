@@ -1,4 +1,3 @@
-
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -26,6 +25,7 @@ import LightSwitchNotWorkingGuide from "./pages/light-switch-not-working-guide";
 import PowerSurgeProtectionGuide from "./pages/power-surge-protection-guide";
 import ACNotCoolingGuide from "./pages/ac-not-cooling-guide";
 import NotFound from "./pages/not-found";
+import { lazy } from "react";
 
 function Router() {
   return (
@@ -51,6 +51,7 @@ function Router() {
       <Route path="/light-switch-not-working-guide" component={LightSwitchNotWorkingGuide} />
       <Route path="/power-surge-protection-guide" component={PowerSurgeProtectionGuide} />
       <Route path="/ac-not-cooling-guide" component={ACNotCoolingGuide} />
+      <Route path="/furnace-not-turning-on-guide" component={lazy(() => import("./pages/furnace-not-turning-on-guide"))} />
       <Route component={NotFound} />
     </Switch>
   );

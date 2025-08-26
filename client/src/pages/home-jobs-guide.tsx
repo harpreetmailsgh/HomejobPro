@@ -175,7 +175,8 @@ export default function HomeJobsGuide() {
                         "Is Your Outlet Hot or Buzzing? Dangers and Fixes You Need to Know": "/hot-buzzing-outlet-guide",
                         "Light Switch Not Working? How to Diagnose and Fix Common Issues": "/light-switch-not-working-guide",
                         "How to Protect Your Home from Power Surges: Causes, Fixes, and Surge Protectors": "/power-surge-protection-guide",
-                        "AC Running but Not Cooling? Top Reasons and Fixes": "/ac-not-cooling-guide"
+                        "AC Running but Not Cooling? Top Reasons and Fixes": "/ac-not-cooling-guide",
+                        "Furnace Not Turning On? Troubleshooting Guide for Quick Fixes": "/furnace-not-turning-on-guide"
                       };
                       
                       const jobRoute = jobRoutes[job];
