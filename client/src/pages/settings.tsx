@@ -118,6 +118,48 @@ export default function Settings() {
     setHvacDescription("Heating, ventilation, and air conditioning experts for your comfort needs");
   };
 
+  const handleSaveSearchChanges = () => {
+    const searchSettings = {
+      searchPageTitle,
+      searchPageSubtitle,
+      resultsFoundText,
+      noResultsText,
+      filterSectionTitle,
+      plumberImage,
+      electricianImage,
+      hvacImage,
+      plumberDescription,
+      electricianDescription,
+      hvacDescription
+    };
+    
+    try {
+      localStorage.setItem('search-results-settings', JSON.stringify(searchSettings));
+      
+      // Dispatch custom event to notify search page of changes
+      window.dispatchEvent(new CustomEvent('searchSettingsChanged'));
+      
+      // Show success message
+      setMessage("Search Results settings saved successfully!");
+      setMessageType("success");
+      
+      // Clear message after 3 seconds
+      setTimeout(() => {
+        setMessage("");
+        setMessageType("");
+      }, 3000);
+    } catch (error) {
+      console.error('Error saving search settings:', error);
+      setMessage("Error saving settings. Please try again.");
+      setMessageType("error");
+      
+      setTimeout(() => {
+        setMessage("");
+        setMessageType("");
+      }, 3000);
+    }
+  };
+
   const loadCurrentHomeSettings = () => {
     // Load actual settings that the home page uses
     const savedSettings = localStorage.getItem('homejobspro-settings');

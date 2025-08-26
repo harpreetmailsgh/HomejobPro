@@ -49,7 +49,9 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
   }, []);
 
   const handleFilterChange = (key: keyof SearchFilters, value: any) => {
-    const newFilters = { ...localFilters, [key]: value, page: 1 };
+    // Convert 'all' values to undefined for proper filtering
+    const filterValue = value === 'all' ? undefined : value;
+    const newFilters = { ...localFilters, [key]: filterValue, page: 1 };
     setLocalFilters(newFilters);
     onFiltersChange(newFilters);
   };
@@ -100,14 +102,14 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
           <div>
             <Label className="block text-sm font-medium mb-2">Industry</Label>
             <Select
-              value={localFilters.industry || ''}
-              onValueChange={(value) => handleFilterChange('industry', value || undefined)}
+              value={localFilters.industry || 'all'}
+              onValueChange={(value) => handleFilterChange('industry', value)}
             >
               <SelectTrigger data-testid="industry-filter">
                 <SelectValue placeholder="All Industries" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Industries</SelectItem>
+                <SelectItem value="all">All Industries</SelectItem>
                 {industries.map((industry) => (
                   <SelectItem key={industry} value={industry}>
                     {industry}
@@ -121,14 +123,14 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
           <div>
             <Label className="block text-sm font-medium mb-2">City</Label>
             <Select
-              value={localFilters.city || ''}
-              onValueChange={(value) => handleFilterChange('city', value || undefined)}
+              value={localFilters.city || 'all'}
+              onValueChange={(value) => handleFilterChange('city', value)}
             >
               <SelectTrigger data-testid="city-filter">
                 <SelectValue placeholder="All Cities" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Cities</SelectItem>
+                <SelectItem value="all">All Cities</SelectItem>
                 {cities.map((city) => (
                   <SelectItem key={city} value={city}>
                     {city}
