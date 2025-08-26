@@ -13,11 +13,9 @@ export default function Header() {
           <div className="flex items-center">
             <Link href="/">
               <div className="cursor-pointer hover:opacity-80 transition-opacity" data-testid="logo">
-                <img 
-                  src={logoImage} 
-                  alt="Homejobspro" 
-                  className="h-25 w-auto"
-                />
+                <span className="text-2xl font-bold text-blue-600">
+                  HomeJobsPro
+                </span>
               </div>
             </Link>
           </div>
