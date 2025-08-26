@@ -170,6 +170,11 @@ export default function HomeJobsGuide() {
                         "No Hot Water at Home? Common Water Heater Problems and Fixes": "/no-hot-water-guide",
                         "Frozen Pipes? How to Thaw and Prevent Burst Pipes in Winter": "/frozen-pipes-guide",
                         "Circuit Breaker Keeps Tripping? Causes and Easy Fixes You Can Try": "/circuit-breaker-guide",
+                        "Why Do My Lights Flicker? Common Causes and How to Fix Them": "/flickering-lights-guide",
+                        "Outlet Not Working or GFCI Won't Reset? Here's What to Do": "/outlet-not-working-guide",
+                        "Is Your Outlet Hot or Buzzing? Dangers and Fixes You Need to Know": "/hot-buzzing-outlet-guide",
+                        "Light Switch Not Working? How to Diagnose and Fix Common Issues": "/light-switch-not-working-guide",
+                        "How to Protect Your Home from Power Surges: Causes, Fixes, and Surge Protectors": "/power-surge-protection-guide",
                         "AC Running but Not Cooling? Top Reasons and Fixes": "/ac-not-cooling-guide"
                       };
                       

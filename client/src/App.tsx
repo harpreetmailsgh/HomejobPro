@@ -18,6 +18,11 @@ import LowWaterPressureGuide from "./pages/low-water-pressure-guide";
 import NoHotWaterGuide from "./pages/no-hot-water-guide";
 import FrozenPipesGuide from "./pages/frozen-pipes-guide";
 import CircuitBreakerGuide from "./pages/circuit-breaker-guide";
+import FlickeringLightsGuide from "./pages/flickering-lights-guide";
+import OutletNotWorkingGuide from "./pages/outlet-not-working-guide";
+import HotBuzzingOutletGuide from "./pages/hot-buzzing-outlet-guide";
+import LightSwitchNotWorkingGuide from "./pages/light-switch-not-working-guide";
+import PowerSurgeProtectionGuide from "./pages/power-surge-protection-guide";
 import ACNotCoolingGuide from "./pages/ac-not-cooling-guide";
 import NotFound from "./pages/not-found";
 
@@ -39,6 +44,11 @@ function Router() {
       <Route path="/no-hot-water-guide" component={NoHotWaterGuide} />
       <Route path="/frozen-pipes-guide" component={FrozenPipesGuide} />
       <Route path="/circuit-breaker-guide" component={CircuitBreakerGuide} />
+      <Route path="/flickering-lights-guide" component={FlickeringLightsGuide} />
+      <Route path="/outlet-not-working-guide" component={OutletNotWorkingGuide} />
+      <Route path="/hot-buzzing-outlet-guide" component={HotBuzzingOutletGuide} />
+      <Route path="/light-switch-not-working-guide" component={LightSwitchNotWorkingGuide} />
+      <Route path="/power-surge-protection-guide" component={PowerSurgeProtectionGuide} />
       <Route path="/ac-not-cooling-guide" component={ACNotCoolingGuide} />
       <Route component={NotFound} />
     </Switch>
