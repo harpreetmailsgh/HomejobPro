@@ -18,6 +18,42 @@ export default function Search() {
   const urlParams = new URLSearchParams(location.split('?')[1] || '');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   
+  // Search page content states
+  const [pageTitle, setPageTitle] = useState("Search Results");
+  const [pageSubtitle, setPageSubtitle] = useState("Find the perfect professional for your home service needs");
+  const [resultsFoundText, setResultsFoundText] = useState("professional(s) found");
+  const [noResultsText, setNoResultsText] = useState("No professionals found matching your criteria. Try adjusting your filters.");
+
+  useEffect(() => {
+    // Load search settings
+    const searchSettings = localStorage.getItem('search-results-settings');
+    if (searchSettings) {
+      try {
+        const settings = JSON.parse(searchSettings);
+        setPageTitle(settings.searchPageTitle || "Search Results");
+        setPageSubtitle(settings.searchPageSubtitle || "Find the perfect professional for your home service needs");
+        setResultsFoundText(settings.resultsFoundText || "professional(s) found");
+        setNoResultsText(settings.noResultsText || "No professionals found matching your criteria. Try adjusting your filters.");
+      } catch (error) {
+        console.error('Error loading search settings:', error);
+      }
+    }
+
+    // Listen for settings changes
+    const handleSettingsChange = (event: CustomEvent) => {
+      const settings = event.detail;
+      setPageTitle(settings.searchPageTitle || "Search Results");
+      setPageSubtitle(settings.searchPageSubtitle || "Find the perfect professional for your home service needs");
+      setResultsFoundText(settings.resultsFoundText || "professional(s) found");
+      setNoResultsText(settings.noResultsText || "No professionals found matching your criteria. Try adjusting your filters.");
+    };
+
+    window.addEventListener('searchSettingsChanged', handleSettingsChange as EventListener);
+    return () => {
+      window.removeEventListener('searchSettingsChanged', handleSettingsChange as EventListener);
+    };
+  }, []);
+  
   const [filters, setFilters] = useState<SearchFilters>({
     query: urlParams.get('query') || undefined,
     industry: urlParams.get('industry') || undefined,
@@ -103,7 +139,7 @@ export default function Search() {
             {/* Results Header */}
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-semibold text-gray-800" data-testid="results-title">
-                Search Results
+                {pageTitle}
               </h2>
               <div className="flex items-center space-x-4">
                 {/* View Mode Toggle */}
@@ -142,7 +178,7 @@ export default function Search() {
                 
                 {searchResults && (
                   <span className="text-gray-600" data-testid="results-count">
-                    {searchResults.total} results found
+                    {searchResults.total} {resultsFoundText}
                   </span>
                 )}
               </div>
@@ -175,7 +211,7 @@ export default function Search() {
                 {searchResults.services.length === 0 ? (
                   <div className="text-center py-12">
                     <h3 className="text-xl font-semibold text-gray-800 mb-2">No Results Found</h3>
-                    <p className="text-gray-600">Try adjusting your search criteria or filters.</p>
+                    <p className="text-gray-600">{noResultsText}</p>
                   </div>
                 ) : (
                   <div className={viewMode === 'grid' ? "results-grid mb-8" : "space-y-4 mb-8"} data-testid="results-container">

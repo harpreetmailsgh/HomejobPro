@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,6 +15,35 @@ interface FiltersSidebarProps {
 
 export default function FiltersSidebar({ filters, onFiltersChange, industries, cities }: FiltersSidebarProps) {
   const [localFilters, setLocalFilters] = useState(filters);
+  const [filterTitle, setFilterTitle] = useState("Filters");
+
+  useEffect(() => {
+    // Load filter title from search settings
+    const searchSettings = localStorage.getItem('search-results-settings');
+    if (searchSettings) {
+      try {
+        const settings = JSON.parse(searchSettings);
+        if (settings.filterSectionTitle) {
+          setFilterTitle(settings.filterSectionTitle);
+        }
+      } catch (error) {
+        console.error('Error loading search settings:', error);
+      }
+    }
+
+    // Listen for settings changes
+    const handleSettingsChange = (event: CustomEvent) => {
+      const settings = event.detail;
+      if (settings.filterSectionTitle) {
+        setFilterTitle(settings.filterSectionTitle);
+      }
+    };
+
+    window.addEventListener('searchSettingsChanged', handleSettingsChange as EventListener);
+    return () => {
+      window.removeEventListener('searchSettingsChanged', handleSettingsChange as EventListener);
+    };
+  }, []);
 
   const handleFilterChange = (key: keyof SearchFilters, value: any) => {
     const newFilters = { ...localFilters, [key]: value, page: 1 };
@@ -26,7 +55,7 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
     <aside className="lg:w-1/4">
       <div className="bg-white rounded-lg shadow-md p-6 filter-sidebar">
         <h3 className="text-xl font-semibold text-gray-800 mb-6" data-testid="filters-title">
-          Filters
+          {filterTitle}
         </h3>
         
         {/* Industry Filter */}

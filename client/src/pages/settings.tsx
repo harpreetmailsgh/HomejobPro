@@ -48,13 +48,75 @@ export default function Settings() {
   const [searchPlaceholders, setSearchPlaceholders] = useState("");
   const [isSyncing, setIsSyncing] = useState(false);
 
+  // Search Results page specific states
+  const [searchPageTitle, setSearchPageTitle] = useState("");
+  const [searchPageSubtitle, setSearchPageSubtitle] = useState("");
+  const [resultsFoundText, setResultsFoundText] = useState("");
+  const [noResultsText, setNoResultsText] = useState("");
+  const [filterSectionTitle, setFilterSectionTitle] = useState("");
+  
+  // Service type images
+  const [plumberImage, setPlumberImage] = useState("");
+  const [electricianImage, setElectricianImage] = useState("");
+  const [hvacImage, setHvacImage] = useState("");
+  
+  // Service type descriptions
+  const [plumberDescription, setPlumberDescription] = useState("");
+  const [electricianDescription, setElectricianDescription] = useState("");
+  const [hvacDescription, setHvacDescription] = useState("");
+
   const pages = [
     { value: "home", label: "Home Page" },
-    { value: "search", label: "Search Page" },
+    { value: "search", label: "Search Results Page" },
     { value: "faq", label: "FAQ Page" },
     { value: "settings", label: "Settings Page" },
     { value: "not-found", label: "Not Found Page" }
   ];
+
+  const loadCurrentSearchSettings = () => {
+    const savedSettings = localStorage.getItem('search-results-settings');
+    if (savedSettings) {
+      try {
+        const settings = JSON.parse(savedSettings);
+        setSearchPageTitle(settings.searchPageTitle || "Search Results");
+        setSearchPageSubtitle(settings.searchPageSubtitle || "Find the perfect professional for your home service needs");
+        setResultsFoundText(settings.resultsFoundText || "professional(s) found");
+        setNoResultsText(settings.noResultsText || "No professionals found matching your criteria. Try adjusting your filters.");
+        setFilterSectionTitle(settings.filterSectionTitle || "Filters");
+        
+        // Service type images
+        setPlumberImage(settings.plumberImage || "");
+        setElectricianImage(settings.electricianImage || "");
+        setHvacImage(settings.hvacImage || "");
+        
+        // Service type descriptions
+        setPlumberDescription(settings.plumberDescription || "Professional plumbing services for repairs, installations, and maintenance");
+        setElectricianDescription(settings.electricianDescription || "Licensed electrical services for wiring, repairs, and installations");
+        setHvacDescription(settings.hvacDescription || "Heating, ventilation, and air conditioning experts for your comfort needs");
+      } catch (error) {
+        console.error('Error loading search settings:', error);
+        setSearchDefaults();
+      }
+    } else {
+      setSearchDefaults();
+    }
+  };
+
+  const setSearchDefaults = () => {
+    setSearchPageTitle("Search Results");
+    setSearchPageSubtitle("Find the perfect professional for your home service needs");
+    setResultsFoundText("professional(s) found");
+    setNoResultsText("No professionals found matching your criteria. Try adjusting your filters.");
+    setFilterSectionTitle("Filters");
+    
+    setPlumberImage("");
+    setElectricianImage("");
+    setHvacImage("");
+    
+    setPlumberDescription("Professional plumbing services for repairs, installations, and maintenance");
+    setElectricianDescription("Licensed electrical services for wiring, repairs, and installations");
+    setHvacDescription("Heating, ventilation, and air conditioning experts for your comfort needs");
+  };
 
   const loadCurrentHomeSettings = () => {
     // Load actual settings that the home page uses
@@ -141,20 +203,37 @@ export default function Settings() {
     setSelectedPage(value);
     if (value === "home") {
       loadCurrentHomeSettings();
+    } else if (value === "search") {
+      loadCurrentSearchSettings();
     }
   };
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>, imageType: string) => {
     const file = event.target.files?.[0];
     if (file) {
       if (file.type.startsWith('image/')) {
         const reader = new FileReader();
         reader.onload = (e) => {
           const result = e.target?.result as string;
-          setBackgroundImage(result);
+          
+          switch (imageType) {
+            case 'background':
+              setBackgroundImage(result);
+              break;
+            case 'plumber':
+              setPlumberImage(result);
+              break;
+            case 'electrician':
+              setElectricianImage(result);
+              break;
+            case 'hvac':
+              setHvacImage(result);
+              break;
+          }
+          
           toast({
             title: "Image Uploaded",
-            description: "Background image has been uploaded successfully.",
+            description: `${imageType} image has been uploaded successfully.`,
           });
         };
         reader.readAsDataURL(file);
@@ -229,6 +308,32 @@ export default function Settings() {
     toast({
       title: "Home Page Updated!",
       description: "Your changes have been saved and applied. The home page should update immediately.",
+    });
+  };
+
+  const handleSaveSearchChanges = () => {
+    const settings = {
+      searchPageTitle,
+      searchPageSubtitle,
+      resultsFoundText,
+      noResultsText,
+      filterSectionTitle,
+      plumberImage,
+      electricianImage,
+      hvacImage,
+      plumberDescription,
+      electricianDescription,
+      hvacDescription
+    };
+
+    localStorage.setItem('search-results-settings', JSON.stringify(settings));
+    
+    // Update the image mapping function
+    window.dispatchEvent(new CustomEvent('searchSettingsChanged', { detail: settings }));
+
+    toast({
+      title: "Search Results Updated!",
+      description: "Your changes have been saved and will apply to search results.",
     });
   };
 
@@ -459,7 +564,7 @@ export default function Settings() {
                       ref={fileInputRef}
                       type="file"
                       accept="image/*"
-                      onChange={handleFileUpload}
+                      onChange={(e) => handleFileUpload(e, 'background')}
                       className="hidden"
                     />
                     <p className="text-xs text-gray-500">Upload an image file or paste a URL</p>
@@ -682,15 +787,244 @@ export default function Settings() {
           </div>
         )}
 
+        {/* SEARCH RESULTS PAGE EDITOR */}
+        {selectedPage === "search" && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Left Side - What You're Editing */}
+            <div className="bg-green-50 rounded-lg p-6">
+              <h2 className="text-xl font-semibold text-green-900 mb-4 flex items-center">
+                <Eye className="w-5 h-5 mr-2" />
+                Search Results Page Structure
+              </h2>
+              <div className="space-y-4 text-sm">
+                <div className="bg-white p-3 rounded border-l-4 border-green-500">
+                  <div className="font-semibold text-gray-800">🔍 Page Header</div>
+                  <div className="text-gray-600">Title: <span className="font-mono bg-gray-100 px-1 rounded">{searchPageTitle}</span></div>
+                  <div className="text-gray-600">Subtitle: <span className="font-mono bg-gray-100 px-1 rounded">{searchPageSubtitle}</span></div>
+                </div>
+                
+                <div className="bg-white p-3 rounded border-l-4 border-blue-500">
+                  <div className="font-semibold text-gray-800">📋 Results Display</div>
+                  <div className="text-gray-600">Found Text: <span className="font-mono bg-gray-100 px-1 rounded">{resultsFoundText}</span></div>
+                  <div className="text-gray-600">No Results: <span className="font-mono bg-gray-100 px-1 rounded">{noResultsText}</span></div>
+                </div>
+                
+                <div className="bg-white p-3 rounded border-l-4 border-purple-500">
+                  <div className="font-semibold text-gray-800">🎛️ Filters Section</div>
+                  <div className="text-gray-600">Title: <span className="font-mono bg-gray-100 px-1 rounded">{filterSectionTitle}</span></div>
+                </div>
+                
+                <div className="bg-white p-3 rounded border-l-4 border-orange-500">
+                  <div className="font-semibold text-gray-800">🖼️ Service Type Images</div>
+                  <div className="space-y-1">
+                    <div className="text-gray-600">Plumber: {plumberImage ? '✅ Custom Image' : '❌ Default Image'}</div>
+                    <div className="text-gray-600">Electrician: {electricianImage ? '✅ Custom Image' : '❌ Default Image'}</div>
+                    <div className="text-gray-600">HVAC: {hvacImage ? '✅ Custom Image' : '❌ Default Image'}</div>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-3 rounded border-l-4 border-cyan-500">
+                  <div className="font-semibold text-gray-800">📝 Service Descriptions</div>
+                  <div className="text-gray-600">Used in service cards and tooltips</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side - Edit Panel */}
+            <div className="bg-white rounded-lg shadow-md p-6 space-y-6 max-h-screen overflow-y-auto">
+              <div className="border-b border-gray-200 pb-4">
+                <h2 className="text-xl font-semibold text-gray-800">Edit Search Results Page</h2>
+                <p className="text-sm text-gray-600 mt-1">Customize search results display and service images</p>
+              </div>
+
+              {/* PAGE HEADER SECTION */}
+              <section className="space-y-4">
+                <h3 className="text-lg font-medium text-gray-800 border-b pb-2">🔍 Page Header</h3>
+                
+                <div>
+                  <Label className="block text-sm font-medium mb-2">Page Title</Label>
+                  <Input
+                    value={searchPageTitle}
+                    onChange={(e) => setSearchPageTitle(e.target.value)}
+                    placeholder="Search Results"
+                    data-testid="search-page-title-input"
+                  />
+                </div>
+
+                <div>
+                  <Label className="block text-sm font-medium mb-2">Page Subtitle</Label>
+                  <Textarea
+                    value={searchPageSubtitle}
+                    onChange={(e) => setSearchPageSubtitle(e.target.value)}
+                    placeholder="Find the perfect professional for your home service needs"
+                    rows={2}
+                    data-testid="search-page-subtitle-input"
+                  />
+                </div>
+              </section>
+
+              {/* RESULTS DISPLAY SECTION */}
+              <section className="space-y-4">
+                <h3 className="text-lg font-medium text-gray-800 border-b pb-2">📋 Results Display</h3>
+                
+                <div>
+                  <Label className="block text-sm font-medium mb-2">Results Found Text</Label>
+                  <Input
+                    value={resultsFoundText}
+                    onChange={(e) => setResultsFoundText(e.target.value)}
+                    placeholder="professional(s) found"
+                    data-testid="results-found-text-input"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">This text appears after the number (e.g., "25 professional(s) found")</p>
+                </div>
+
+                <div>
+                  <Label className="block text-sm font-medium mb-2">No Results Message</Label>
+                  <Textarea
+                    value={noResultsText}
+                    onChange={(e) => setNoResultsText(e.target.value)}
+                    placeholder="No professionals found matching your criteria. Try adjusting your filters."
+                    rows={2}
+                    data-testid="no-results-text-input"
+                  />
+                </div>
+
+                <div>
+                  <Label className="block text-sm font-medium mb-2">Filters Section Title</Label>
+                  <Input
+                    value={filterSectionTitle}
+                    onChange={(e) => setFilterSectionTitle(e.target.value)}
+                    placeholder="Filters"
+                    data-testid="filter-section-title-input"
+                  />
+                </div>
+              </section>
+
+              {/* SERVICE TYPE IMAGES SECTION */}
+              <section className="space-y-6">
+                <h3 className="text-lg font-medium text-gray-800 border-b pb-2">🖼️ Service Type Images</h3>
+                
+                {/* Plumber Image */}
+                <div className="space-y-3">
+                  <Label className="block text-sm font-medium">🔧 Plumber Image</Label>
+                  <div className="flex items-center space-x-3">
+                    {plumberImage && (
+                      <img src={plumberImage} alt="Plumber" className="w-16 h-16 object-cover rounded" />
+                    )}
+                    <div className="flex-1">
+                      <Input
+                        value={plumberImage}
+                        onChange={(e) => setPlumberImage(e.target.value)}
+                        placeholder="Upload or enter image URL"
+                        className="mb-2"
+                        data-testid="plumber-image-input"
+                      />
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleFileUpload(e, 'plumber')}
+                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                      />
+                    </div>
+                  </div>
+                  <Textarea
+                    value={plumberDescription}
+                    onChange={(e) => setPlumberDescription(e.target.value)}
+                    placeholder="Professional plumbing services for repairs, installations, and maintenance"
+                    rows={2}
+                    data-testid="plumber-description-input"
+                  />
+                </div>
+
+                {/* Electrician Image */}
+                <div className="space-y-3">
+                  <Label className="block text-sm font-medium">⚡ Electrician Image</Label>
+                  <div className="flex items-center space-x-3">
+                    {electricianImage && (
+                      <img src={electricianImage} alt="Electrician" className="w-16 h-16 object-cover rounded" />
+                    )}
+                    <div className="flex-1">
+                      <Input
+                        value={electricianImage}
+                        onChange={(e) => setElectricianImage(e.target.value)}
+                        placeholder="Upload or enter image URL"
+                        className="mb-2"
+                        data-testid="electrician-image-input"
+                      />
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleFileUpload(e, 'electrician')}
+                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                      />
+                    </div>
+                  </div>
+                  <Textarea
+                    value={electricianDescription}
+                    onChange={(e) => setElectricianDescription(e.target.value)}
+                    placeholder="Licensed electrical services for wiring, repairs, and installations"
+                    rows={2}
+                    data-testid="electrician-description-input"
+                  />
+                </div>
+
+                {/* HVAC Image */}
+                <div className="space-y-3">
+                  <Label className="block text-sm font-medium">🌡️ HVAC Technician Image</Label>
+                  <div className="flex items-center space-x-3">
+                    {hvacImage && (
+                      <img src={hvacImage} alt="HVAC" className="w-16 h-16 object-cover rounded" />
+                    )}
+                    <div className="flex-1">
+                      <Input
+                        value={hvacImage}
+                        onChange={(e) => setHvacImage(e.target.value)}
+                        placeholder="Upload or enter image URL"
+                        className="mb-2"
+                        data-testid="hvac-image-input"
+                      />
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleFileUpload(e, 'hvac')}
+                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                      />
+                    </div>
+                  </div>
+                  <Textarea
+                    value={hvacDescription}
+                    onChange={(e) => setHvacDescription(e.target.value)}
+                    placeholder="Heating, ventilation, and air conditioning experts for your comfort needs"
+                    rows={2}
+                    data-testid="hvac-description-input"
+                  />
+                </div>
+              </section>
+
+              {/* Save Button */}
+              <div className="flex justify-end pt-6 border-t border-gray-200">
+                <Button
+                  onClick={handleSaveSearchChanges}
+                  className="bg-green-600 hover:bg-green-700 text-white px-6"
+                  data-testid="save-search-changes-button"
+                >
+                  <Save className="w-4 h-4 mr-2" />
+                  Save Search Results Settings
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* OTHER PAGES PLACEHOLDER */}
-        {selectedPage && selectedPage !== "home" && (
+        {selectedPage && selectedPage !== "home" && selectedPage !== "search" && (
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
               Editing: {pages.find(p => p.value === selectedPage)?.label}
             </h2>
             <div className="text-center py-12 text-gray-500">
               <p className="text-lg">Content editing for {selectedPage} page coming soon...</p>
-              <p className="text-sm mt-2">Currently only Home page editing is available.</p>
+              <p className="text-sm mt-2">Currently Home page and Search Results editing are available.</p>
             </div>
           </div>
         )}

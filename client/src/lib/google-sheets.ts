@@ -16,6 +16,28 @@ export interface GoogleSheetsRow {
 }
 
 export const getImageForIndustry = (industry: string): string => {
+  // First check for custom uploaded images from settings
+  const searchSettings = localStorage.getItem('search-results-settings');
+  if (searchSettings) {
+    try {
+      const settings = JSON.parse(searchSettings);
+      const key = industry.toLowerCase();
+      
+      if (key === 'plumber' && settings.plumberImage) {
+        return settings.plumberImage;
+      }
+      if (key === 'electrician' && settings.electricianImage) {
+        return settings.electricianImage;
+      }
+      if ((key === 'hvac technician' || key === 'hvac') && settings.hvacImage) {
+        return settings.hvacImage;
+      }
+    } catch (error) {
+      console.error('Error loading search settings for images:', error);
+    }
+  }
+
+  // Fallback to default Unsplash images
   const industryImages: Record<string, string> = {
     'plumber': 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250',
     'electrician': 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250',
