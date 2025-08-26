@@ -4,6 +4,7 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import { Button } from "@/components/ui/button";
 import { useSEO } from "../hooks/use-seo";
+import drippingFaucetImage from "@assets/generated_images/Dripping_faucet_repair_image_cde1cce0.png";
 
 export default function DrippingFaucetGuide() {
   useSEO({
@@ -133,27 +134,36 @@ export default function DrippingFaucetGuide() {
 
         {/* Header */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-8 text-white">
-            <div className="flex items-center mb-4">
-              <div className="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mr-6">
-                <Droplets className="w-8 h-8 text-white" />
-              </div>
-              <div>
+          {/* Hero Image */}
+          <div className="relative h-64 md:h-80">
+            <img 
+              src={drippingFaucetImage} 
+              alt="Close-up of a dripping faucet showing water droplet - professional plumbing repair guide"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center text-white">
+                <div className="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Droplets className="w-8 h-8 text-white" />
+                </div>
                 <h1 className="text-3xl md:text-4xl font-bold mb-2">How to Fix a Dripping Faucet</h1>
                 <p className="text-blue-100 text-lg">Step-by-Step Guide to Stop Leaks Fast</p>
               </div>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-              <div className="flex items-center">
+          </div>
+          
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-6 text-white">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="flex items-center justify-center md:justify-start">
                 <Clock className="w-5 h-5 mr-2" />
                 <span>30-45 minutes</span>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center justify-center md:justify-start">
                 <DollarSign className="w-5 h-5 mr-2" />
                 <span>$5-25 in parts</span>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center justify-center md:justify-start">
                 <Wrench className="w-5 h-5 mr-2" />
                 <span>Basic tools needed</span>
               </div>
