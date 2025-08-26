@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
-import logoImage from "@assets/generated_images/Updated_Homejobspro_logo_design_8be0a3bf.png";
+import Logo from './logo';
 
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
