@@ -10,52 +10,42 @@ export default function HomeJobsGuide() {
       category: "Plumbing",
       icon: Droplets,
       color: "blue",
+      description: "Expert plumbing services for all your water and pipe needs",
       jobs: [
-        "Fix leaky faucets and pipes",
-        "Unclog drains and toilets", 
-        "Water heater repair and installation",
-        "Pipe replacement and repair",
-        "Bathroom fixture installation",
-        "Emergency plumbing services"
+        "Water Heater Installation & Repair",
+        "Toilet Repair & Replacement", 
+        "Sink & Faucet Services",
+        "Drain Cleaning & Unclogging",
+        "Leak Detection & Repair",
+        "Emergency Plumbing Services"
       ]
     },
     {
       category: "Electrical",
       icon: Zap,
       color: "yellow",
+      description: "Safe and reliable electrical services for your home",
       jobs: [
-        "Outlet and switch installation",
-        "Electrical panel upgrades",
-        "Light fixture installation",
-        "Ceiling fan installation",
-        "Electrical wiring repairs",
-        "Home electrical inspections"
+        "Electrical Panel Upgrades",
+        "Outlet & Switch Installation",
+        "Lighting Fixture Installation",
+        "Appliance Hookup Services",
+        "Electrical Safety Inspections",
+        "Smart Home Installations"
       ]
     },
     {
       category: "HVAC",
       icon: Thermometer,
       color: "red",
+      description: "Complete heating, ventilation, and air conditioning solutions",
       jobs: [
-        "Air conditioning repair and installation",
-        "Heating system maintenance",
-        "Ductwork cleaning and repair",
-        "Thermostat installation",
-        "Furnace repair and replacement",
-        "Indoor air quality improvement"
-      ]
-    },
-    {
-      category: "General Home Repair",
-      icon: Hammer,
-      color: "gray",
-      jobs: [
-        "Drywall repair and painting",
-        "Door and window installation",
-        "Flooring installation and repair",
-        "Kitchen and bathroom remodeling",
-        "Roof repair and maintenance",
-        "Deck and patio construction"
+        "AC Installation & Repair",
+        "Heating System Maintenance",
+        "Preventive HVAC Tune-ups",
+        "Thermostat Installation",
+        "Ductwork Services",
+        "Emergency HVAC Repairs"
       ]
     }
   ];
@@ -132,12 +122,28 @@ export default function HomeJobsGuide() {
                     <h3 className="text-2xl font-bold">{category.category}</h3>
                   </div>
                 </div>
-                <div className="p-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-8">
+                  <p className="text-gray-600 mb-6 text-center">{category.description}</p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {category.jobs.map((job, jobIndex) => (
-                      <div key={jobIndex} className="flex items-center">
-                        <CheckCircle className="w-5 h-5 text-green-600 mr-3 flex-shrink-0" />
-                        <span className="text-gray-700">{job}</span>
+                      <div key={jobIndex} className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow duration-200 group">
+                        <div className="flex flex-col items-center text-center">
+                          <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-3 ${
+                            category.color === 'blue' ? 'bg-blue-100 group-hover:bg-blue-200' :
+                            category.color === 'yellow' ? 'bg-yellow-100 group-hover:bg-yellow-200' :
+                            category.color === 'red' ? 'bg-red-100 group-hover:bg-red-200' :
+                            'bg-gray-200 group-hover:bg-gray-300'
+                          }`}>
+                            <CheckCircle className={`w-6 h-6 ${
+                              category.color === 'blue' ? 'text-blue-600' :
+                              category.color === 'yellow' ? 'text-yellow-600' :
+                              category.color === 'red' ? 'text-red-600' :
+                              'text-gray-600'
+                            }`} />
+                          </div>
+                          <h4 className="font-semibold text-gray-800 mb-2 leading-tight">{job}</h4>
+                          <div className="w-8 h-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                        </div>
                       </div>
                     ))}
                   </div>
