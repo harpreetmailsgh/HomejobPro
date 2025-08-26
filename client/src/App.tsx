@@ -24,6 +24,7 @@ import HotBuzzingOutletGuide from "./pages/hot-buzzing-outlet-guide";
 import LightSwitchNotWorkingGuide from "./pages/light-switch-not-working-guide";
 import PowerSurgeProtectionGuide from "./pages/power-surge-protection-guide";
 import ACNotCoolingGuide from "./pages/ac-not-cooling-guide";
+import FurnaceNotTurningOnGuide from "./pages/furnace-not-turning-on-guide";
 import NotFound from "./pages/not-found";
 import { lazy } from "react";
 
@@ -51,7 +52,7 @@ function Router() {
       <Route path="/light-switch-not-working-guide" component={LightSwitchNotWorkingGuide} />
       <Route path="/power-surge-protection-guide" component={PowerSurgeProtectionGuide} />
       <Route path="/ac-not-cooling-guide" component={ACNotCoolingGuide} />
-      <Route path="/furnace-not-turning-on-guide" component={lazy(() => import("./pages/furnace-not-turning-on-guide"))} />
+      <Route path="/furnace-not-turning-on-guide" component={FurnaceNotTurningOnGuide} />
       <Route component={NotFound} />
     </Switch>
   );
