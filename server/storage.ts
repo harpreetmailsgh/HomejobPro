@@ -385,7 +385,29 @@ export class MemStorage implements IStorage {
 
   async getUniqueCities(): Promise<string[]> {
     const services = Array.from(this.services.values()).filter(s => !s.duplicate);
-    return Array.from(new Set(services.map(s => s.city).filter((city): city is string => Boolean(city)))).sort();
+    
+    // Filter out invalid city names
+    const validCities = services
+      .map(s => s.city)
+      .filter((city): city is string => Boolean(city))
+      .filter(city => {
+        const cleanCity = city.trim();
+        // Filter out invalid entries
+        const isInvalidCity = 
+          cleanCity.length < 2 ||
+          cleanCity.toLowerCase().includes('feel free to ask') ||
+          cleanCity.toLowerCase().includes('let me know') ||
+          cleanCity.toLowerCase().includes('test') ||
+          cleanCity.toLowerCase().includes('sample') ||
+          cleanCity.toLowerCase().includes('example') ||
+          cleanCity.includes('?') ||
+          cleanCity.includes('!') ||
+          /^\d+$/.test(cleanCity); // Just numbers
+        
+        return !isInvalidCity;
+      });
+    
+    return Array.from(new Set(validCities)).sort();
   }
 
   private extractCity(address: string): string {
