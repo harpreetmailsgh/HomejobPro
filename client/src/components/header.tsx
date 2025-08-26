@@ -16,7 +16,7 @@ export default function Header() {
                 <img 
                   src={logoImage} 
                   alt="Homejobspro" 
-                  className="h-12 w-auto"
+                  className="h-8 w-auto"
                 />
               </div>
             </Link>
@@ -27,7 +27,7 @@ export default function Header() {
                 Browse Services
               </span>
             </Link>
-            
+
             {/* Common Home Jobs Dropdown */}
             <div className="relative">
               <button
@@ -38,7 +38,7 @@ export default function Header() {
                 Common Home Jobs
                 <ChevronDown className={`w-4 h-4 ml-1 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
-              
+
               {isDropdownOpen && (
                 <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
                   <Link href="/faq">
@@ -62,7 +62,7 @@ export default function Header() {
                 </div>
               )}
             </div>
-            
+
             <Link href="/about">
               <span className="text-gray-600 hover:text-blue-grey transition-colors cursor-pointer" data-testid="nav-about-us">
                 About Us
@@ -76,7 +76,7 @@ export default function Header() {
           </nav>
         </div>
       </div>
-      
+
       {/* Backdrop to close dropdown when clicking outside */}
       {isDropdownOpen && (
         <div 
