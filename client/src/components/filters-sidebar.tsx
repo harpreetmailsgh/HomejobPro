@@ -58,7 +58,6 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
 
   const clearFilters = () => {
     const clearedFilters = {
-      query: undefined,
       industry: undefined,
       city: undefined,
       minRating: undefined,
@@ -84,20 +83,6 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
         </div>
 
         <div className="space-y-4">
-          {/* Search Query */}
-          <div>
-            <Label htmlFor="query" className="block text-sm font-medium mb-2">
-              Search Keywords
-            </Label>
-            <Input
-              id="query"
-              value={localFilters.query || ''}
-              onChange={(e) => handleFilterChange('query', e.target.value)}
-              placeholder="Search for services..."
-              data-testid="query-filter"
-            />
-          </div>
-
           {/* Industry Filter */}
           <div>
             <Label className="block text-sm font-medium mb-2">Industry</Label>

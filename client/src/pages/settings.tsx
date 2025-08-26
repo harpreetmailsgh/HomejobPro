@@ -47,6 +47,8 @@ export default function Settings() {
   // Search Box section
   const [searchPlaceholders, setSearchPlaceholders] = useState("");
   const [isSyncing, setIsSyncing] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
 
   // Search Results page specific states
   const [searchPageTitle, setSearchPageTitle] = useState("");
