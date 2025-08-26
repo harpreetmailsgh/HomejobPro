@@ -8,6 +8,8 @@ import Search from "./pages/search";
 import Settings from "./pages/settings";
 import FAQ from "./pages/faq";
 import About from "./pages/about";
+import ListBusiness from "./pages/list-business";
+import ThankYou from "./pages/thank-you";
 import NotFound from "./pages/not-found";
 
 function Router() {
@@ -18,6 +20,8 @@ function Router() {
       <Route path="/settings" component={Settings} />
       <Route path="/faq" component={FAQ} />
       <Route path="/about" component={About} />
+      <Route path="/list-business" component={ListBusiness} />
+      <Route path="/list-business/thank-you" component={ThankYou} />
       <Route component={NotFound} />
     </Switch>
   );

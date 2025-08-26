@@ -23,9 +23,11 @@ export default function Header() {
                 About Us
               </span>
             </Link>
-            <a href="#" className="text-gray-600 hover:text-blue-grey transition-colors" data-testid="nav-list-business">
-              List Your Business
-            </a>
+            <Link href="/list-business">
+              <span className="text-gray-600 hover:text-blue-grey transition-colors cursor-pointer" data-testid="nav-list-business">
+                List Your Business
+              </span>
+            </Link>
           </nav>
         </div>
       </div>
