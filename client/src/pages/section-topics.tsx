@@ -178,8 +178,14 @@ export default function SectionTopics() {
   };
 
   useEffect(() => {
-    if (section && commonJobs[section]) {
-      setAllTopics(commonJobs[section].jobs);
+    if (section) {
+      // Handle case-insensitive section lookup
+      const sectionKey = Object.keys(commonJobs).find(
+        key => key.toLowerCase() === section.toLowerCase()
+      );
+      if (sectionKey && commonJobs[sectionKey]) {
+        setAllTopics(commonJobs[sectionKey].jobs);
+      }
     }
   }, [section]);
 
@@ -187,7 +193,11 @@ export default function SectionTopics() {
     topic.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const currentSection = section && commonJobs[section] ? commonJobs[section] : null;
+  // Handle case-insensitive section lookup for currentSection
+  const sectionKey = section ? Object.keys(commonJobs).find(
+    key => key.toLowerCase() === section.toLowerCase()
+  ) : null;
+  const currentSection = sectionKey && commonJobs[sectionKey] ? commonJobs[sectionKey] : null;
 
   if (!currentSection) {
     return (

@@ -29,8 +29,9 @@ import UnevenTemperatureGuide from "./pages/uneven-temperature-guide";
 import HVACNoiseGuide from "./pages/hvac-noise-guide";
 import AirFilterReplacementGuide from "./pages/air-filter-replacement-guide";
 import ThermostatNotWorkingGuide from "./pages/thermostat-not-working-guide";
+import SectionTopics from "./pages/section-topics";
+import { lazy, Suspense } from "react";
 import NotFound from "./pages/not-found";
-import { lazy } from "react";
 
 function Router() {
   return (
@@ -61,7 +62,7 @@ function Router() {
       <Route path="/hvac-noise-guide" component={HVACNoiseGuide} />
       <Route path="/air-filter-replacement-guide" component={AirFilterReplacementGuide} />
       <Route path="/thermostat-not-working-guide" component={ThermostatNotWorkingGuide} />
-      <Route path="/section/:section" component={lazy(() => import("./pages/section-topics"))} />
+      <Route path="/section/:section" component={SectionTopics} />
       <Route component={NotFound} />
     </Switch>
   );
