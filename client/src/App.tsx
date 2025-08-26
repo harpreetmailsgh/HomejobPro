@@ -10,6 +10,7 @@ import FAQ from "./pages/faq";
 import About from "./pages/about";
 import ListBusiness from "./pages/list-business";
 import ThankYou from "./pages/thank-you";
+import HomeJobsGuide from "./pages/home-jobs-guide";
 import NotFound from "./pages/not-found";
 
 function Router() {
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/list-business" component={ListBusiness} />
       <Route path="/list-business/thank-you" component={ThankYou} />
+      <Route path="/home-jobs-guide" component={HomeJobsGuide} />
       <Route component={NotFound} />
     </Switch>
   );

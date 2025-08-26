@@ -1,6 +1,10 @@
 import { Link } from "wouter";
+import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 export default function Header() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   return (
     <header className="bg-white shadow-sm border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,6 +22,42 @@ export default function Header() {
                 Browse Services
               </span>
             </Link>
+            
+            {/* Common Home Jobs Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="text-gray-600 hover:text-blue-grey transition-colors cursor-pointer flex items-center"
+                data-testid="nav-common-home-jobs"
+              >
+                Common Home Jobs
+                <ChevronDown className={`w-4 h-4 ml-1 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {isDropdownOpen && (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                  <Link href="/faq">
+                    <span 
+                      className="block px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-blue-grey transition-colors cursor-pointer"
+                      data-testid="dropdown-faqs"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      FAQs
+                    </span>
+                  </Link>
+                  <Link href="/home-jobs-guide">
+                    <span 
+                      className="block px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-blue-grey transition-colors cursor-pointer"
+                      data-testid="dropdown-home-jobs-guide"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Home Jobs Guide
+                    </span>
+                  </Link>
+                </div>
+              )}
+            </div>
+            
             <Link href="/about">
               <span className="text-gray-600 hover:text-blue-grey transition-colors cursor-pointer" data-testid="nav-about-us">
                 About Us
@@ -31,6 +71,14 @@ export default function Header() {
           </nav>
         </div>
       </div>
+      
+      {/* Backdrop to close dropdown when clicking outside */}
+      {isDropdownOpen && (
+        <div 
+          className="fixed inset-0 z-40" 
+          onClick={() => setIsDropdownOpen(false)}
+        />
+      )}
     </header>
   );
 }
