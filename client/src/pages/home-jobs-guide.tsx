@@ -160,27 +160,51 @@ export default function HomeJobsGuide() {
                 <div className="p-8">
                   <p className="text-gray-600 mb-6 text-center">{category.description}</p>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {category.jobs.map((job, jobIndex) => (
-                      <div key={jobIndex} className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow duration-200 group">
-                        <div className="flex flex-col items-center text-center">
-                          <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-3 ${
-                            category.color === 'blue' ? 'bg-blue-100 group-hover:bg-blue-200' :
-                            category.color === 'yellow' ? 'bg-yellow-100 group-hover:bg-yellow-200' :
-                            category.color === 'red' ? 'bg-red-100 group-hover:bg-red-200' :
-                            'bg-gray-200 group-hover:bg-gray-300'
-                          }`}>
-                            <CheckCircle className={`w-6 h-6 ${
-                              category.color === 'blue' ? 'text-blue-600' :
-                              category.color === 'yellow' ? 'text-yellow-600' :
-                              category.color === 'red' ? 'text-red-600' :
-                              'text-gray-600'
-                            }`} />
+                    {category.jobs.map((job, jobIndex) => 
+                      job === "How to Fix a Dripping Faucet: Step-by-Step Guide to Stop Leaks Fast" ? (
+                        <Link href="/dripping-faucet-guide" key={jobIndex}>
+                          <div className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow duration-200 group cursor-pointer">
+                            <div className="flex flex-col items-center text-center">
+                              <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-3 ${
+                                category.color === 'blue' ? 'bg-blue-100 group-hover:bg-blue-200' :
+                                category.color === 'yellow' ? 'bg-yellow-100 group-hover:bg-yellow-200' :
+                                category.color === 'red' ? 'bg-red-100 group-hover:bg-red-200' :
+                                'bg-gray-200 group-hover:bg-gray-300'
+                              }`}>
+                                <CheckCircle className={`w-6 h-6 ${
+                                  category.color === 'blue' ? 'text-blue-600' :
+                                  category.color === 'yellow' ? 'text-yellow-600' :
+                                  category.color === 'red' ? 'text-red-600' :
+                                  'text-gray-600'
+                                }`} />
+                              </div>
+                              <h4 className="font-semibold text-gray-800 mb-2 leading-tight group-hover:text-blue-600 transition-colors">{job}</h4>
+                              <div className="w-8 h-1 bg-gradient-to-r from-transparent via-blue-300 to-transparent group-hover:via-blue-500"></div>
+                            </div>
                           </div>
-                          <h4 className="font-semibold text-gray-800 mb-2 leading-tight">{job}</h4>
-                          <div className="w-8 h-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                        </Link>
+                      ) : (
+                        <div key={jobIndex} className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow duration-200 group">
+                          <div className="flex flex-col items-center text-center">
+                            <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-3 ${
+                              category.color === 'blue' ? 'bg-blue-100 group-hover:bg-blue-200' :
+                              category.color === 'yellow' ? 'bg-yellow-100 group-hover:bg-yellow-200' :
+                              category.color === 'red' ? 'bg-red-100 group-hover:bg-red-200' :
+                              'bg-gray-200 group-hover:bg-gray-300'
+                            }`}>
+                              <CheckCircle className={`w-6 h-6 ${
+                                category.color === 'blue' ? 'text-blue-600' :
+                                category.color === 'yellow' ? 'text-yellow-600' :
+                                category.color === 'red' ? 'text-red-600' :
+                                'text-gray-600'
+                              }`} />
+                            </div>
+                            <h4 className="font-semibold text-gray-800 mb-2 leading-tight">{job}</h4>
+                            <div className="w-8 h-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      )
+                    )}
                   </div>
                 </div>
               </div>

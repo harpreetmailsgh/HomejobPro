@@ -11,6 +11,7 @@ import About from "./pages/about";
 import ListBusiness from "./pages/list-business";
 import ThankYou from "./pages/thank-you";
 import HomeJobsGuide from "./pages/home-jobs-guide";
+import DrippingFaucetGuide from "./pages/dripping-faucet-guide";
 import NotFound from "./pages/not-found";
 
 function Router() {
@@ -24,6 +25,7 @@ function Router() {
       <Route path="/list-business" component={ListBusiness} />
       <Route path="/list-business/thank-you" component={ThankYou} />
       <Route path="/home-jobs-guide" component={HomeJobsGuide} />
+      <Route path="/dripping-faucet-guide" component={DrippingFaucetGuide} />
       <Route component={NotFound} />
     </Switch>
   );
