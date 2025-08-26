@@ -12,6 +12,11 @@ import ListBusiness from "./pages/list-business";
 import ThankYou from "./pages/thank-you";
 import HomeJobsGuide from "./pages/home-jobs-guide";
 import DrippingFaucetGuide from "./pages/dripping-faucet-guide";
+import CloggedDrainGuide from "./pages/clogged-drain-guide";
+import RunningToiletGuide from "./pages/running-toilet-guide";
+import LowWaterPressureGuide from "./pages/low-water-pressure-guide";
+import CircuitBreakerGuide from "./pages/circuit-breaker-guide";
+import ACNotCoolingGuide from "./pages/ac-not-cooling-guide";
 import NotFound from "./pages/not-found";
 
 function Router() {
@@ -26,6 +31,11 @@ function Router() {
       <Route path="/list-business/thank-you" component={ThankYou} />
       <Route path="/home-jobs-guide" component={HomeJobsGuide} />
       <Route path="/dripping-faucet-guide" component={DrippingFaucetGuide} />
+      <Route path="/clogged-drain-guide" component={CloggedDrainGuide} />
+      <Route path="/running-toilet-guide" component={RunningToiletGuide} />
+      <Route path="/low-water-pressure-guide" component={LowWaterPressureGuide} />
+      <Route path="/circuit-breaker-guide" component={CircuitBreakerGuide} />
+      <Route path="/ac-not-cooling-guide" component={ACNotCoolingGuide} />
       <Route component={NotFound} />
     </Switch>
   );

@@ -160,9 +160,21 @@ export default function HomeJobsGuide() {
                 <div className="p-8">
                   <p className="text-gray-600 mb-6 text-center">{category.description}</p>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {category.jobs.map((job, jobIndex) => 
-                      job === "How to Fix a Dripping Faucet: Step-by-Step Guide to Stop Leaks Fast" ? (
-                        <Link href="/dripping-faucet-guide" key={jobIndex}>
+                    {category.jobs.map((job, jobIndex) => {
+                      // Map job titles to their corresponding routes
+                      const jobRoutes: Record<string, string> = {
+                        "How to Fix a Dripping Faucet: Step-by-Step Guide to Stop Leaks Fast": "/dripping-faucet-guide",
+                        "Clogged Sink or Shower Drain? Easy DIY Fixes That Actually Work": "/clogged-drain-guide",
+                        "Toilet Won't Stop Running? Easy Fixes for Flapper & Fill Valve Problems": "/running-toilet-guide",
+                        "Low Water Pressure in House or Shower? Here's How to Fix It": "/low-water-pressure-guide",
+                        "Circuit Breaker Keeps Tripping? Causes and Easy Fixes You Can Try": "/circuit-breaker-guide",
+                        "AC Running but Not Cooling? Top Reasons and Fixes": "/ac-not-cooling-guide"
+                      };
+                      
+                      const jobRoute = jobRoutes[job];
+                      
+                      return jobRoute ? (
+                        <Link href={jobRoute} key={jobIndex}>
                           <div className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow duration-200 group cursor-pointer">
                             <div className="flex flex-col items-center text-center">
                               <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-3 ${
@@ -203,8 +215,8 @@ export default function HomeJobsGuide() {
                             <div className="w-8 h-1 bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
                           </div>
                         </div>
-                      )
-                    )}
+                      );
+                    })}
                   </div>
                 </div>
               </div>
