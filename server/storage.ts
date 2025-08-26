@@ -93,9 +93,8 @@ export class MemStorage implements IStorage {
     const paginatedServices = services.slice(startIndex, startIndex + filters.limit);
 
     // Get unique industries and cities for filters
-    const allServices = Array.from(this.services.values()).filter(s => !s.duplicate);
-    const industries = Array.from(new Set(allServices.map(s => s.industry))).sort();
-    const cities = Array.from(new Set(allServices.map(s => s.city).filter((city): city is string => Boolean(city)))).sort();
+    const industries = await this.getUniqueIndustries();
+    const cities = await this.getUniqueCities();
 
     return {
       services: paginatedServices,
