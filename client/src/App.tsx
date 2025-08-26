@@ -27,6 +27,8 @@ import ACNotCoolingGuide from "./pages/ac-not-cooling-guide";
 import FurnaceNotTurningOnGuide from "./pages/furnace-not-turning-on-guide";
 import UnevenTemperatureGuide from "./pages/uneven-temperature-guide";
 import HVACNoiseGuide from "./pages/hvac-noise-guide";
+import AirFilterReplacementGuide from "./pages/air-filter-replacement-guide";
+import ThermostatNotWorkingGuide from "./pages/thermostat-not-working-guide";
 import NotFound from "./pages/not-found";
 import { lazy } from "react";
 
@@ -57,6 +59,8 @@ function Router() {
       <Route path="/furnace-not-turning-on-guide" component={FurnaceNotTurningOnGuide} />
       <Route path="/uneven-temperature-guide" component={UnevenTemperatureGuide} />
       <Route path="/hvac-noise-guide" component={HVACNoiseGuide} />
+      <Route path="/air-filter-replacement-guide" component={AirFilterReplacementGuide} />
+      <Route path="/thermostat-not-working-guide" component={ThermostatNotWorkingGuide} />
       <Route component={NotFound} />
     </Switch>
   );

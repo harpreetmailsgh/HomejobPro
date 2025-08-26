@@ -178,7 +178,9 @@ export default function HomeJobsGuide() {
                         "AC Running but Not Cooling? Top Reasons and Fixes": "/ac-not-cooling-guide",
                         "Furnace Not Turning On? Troubleshooting Guide for Quick Fixes": "/furnace-not-turning-on-guide",
                         "Why Are Some Rooms Hotter Than Others? How to Fix Uneven Heating & Cooling": "/uneven-temperature-guide",
-                        "HVAC Making Loud or Strange Noises? What They Mean and How to Fix Them": "/hvac-noise-guide"
+                        "HVAC Making Loud or Strange Noises? What They Mean and How to Fix Them": "/hvac-noise-guide",
+                        "Air Filter Dirty or Clogged? When and How to Replace HVAC Filters": "/air-filter-replacement-guide",
+                        "Thermostat Not Working? Troubleshooting Temperature Control Issues": "/thermostat-not-working-guide"
                       };
 
                       const jobRoute = jobRoutes[job];
