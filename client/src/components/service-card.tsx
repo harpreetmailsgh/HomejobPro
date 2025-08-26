@@ -8,8 +8,29 @@ interface ServiceCardProps {
 }
 
 export default function ServiceCard({ service }: ServiceCardProps) {
-  const imageUrl = getImageForIndustry(service.industry);
-  
+  const getServiceTypeImage = (industry: string): string => {
+  // Check if there's a custom image from settings
+  const customImageFn = (window as any).getServiceTypeImage;
+  if (customImageFn) {
+    const customImage = customImageFn(industry);
+    if (customImage && customImage.trim()) {
+      return customImage;
+    }
+  }
+
+  // Fallback to default images
+  const imageMap: { [key: string]: string } = {
+    "Plumber": "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=400&h=300&fit=crop&crop=center",
+    "Electrician": "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=300&fit=crop&crop=center",
+    "HVAC Technician": "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=300&fit=crop&crop=center",
+    "Landscaper": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop&crop=center",
+    "Home Services": "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop&crop=center"
+  };
+
+  return imageMap[industry] || "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop&crop=center";
+};
+  const imageUrl = getServiceTypeImage(service.industry);
+
   const renderStars = (rating: number) => {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
@@ -20,7 +41,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         <Star key={i} className="w-4 h-4 fill-current text-yellow-400" />
       );
     }
-    
+
     if (hasHalfStar) {
       stars.push(
         <div key="half" className="relative">
@@ -31,7 +52,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         </div>
       );
     }
-    
+
     const remainingStars = 5 - Math.ceil(rating);
     for (let i = 0; i < remainingStars; i++) {
       stars.push(
@@ -54,7 +75,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         <h3 className="text-xl font-semibold text-gray-800 mb-2" data-testid={`service-title-${service.id}`}>
           {service.title}
         </h3>
-        
+
         <div className="flex items-center mb-3">
           <div className="flex items-center star-rating">
             {renderStars(service.rating)}
@@ -66,14 +87,14 @@ export default function ServiceCard({ service }: ServiceCardProps) {
             (<span data-testid={`service-reviews-${service.id}`}>{service.reviews}</span> reviews)
           </span>
         </div>
-        
+
         {/* Full Address */}
         <div className="mb-4">
           <p className="text-gray-600 text-sm" data-testid={`service-address-${service.id}`}>
             {service.address}
           </p>
         </div>
-        
+
         {/* Action Icons */}
         <div className="flex justify-center space-x-4">
           <Button
@@ -88,7 +109,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
               <span className="text-xs text-gray-600">Call</span>
             </a>
           </Button>
-          
+
           {service.googleMapsLink && (
             <Button
               asChild
@@ -103,7 +124,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
               </a>
             </Button>
           )}
-          
+
           {service.email && (
             <Button
               asChild
@@ -118,7 +139,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
               </a>
             </Button>
           )}
-          
+
           {service.website && (
             <Button
               asChild

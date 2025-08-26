@@ -8,8 +8,30 @@ interface ServiceListItemProps {
 }
 
 export default function ServiceListItem({ service }: ServiceListItemProps) {
-  const imageUrl = getImageForIndustry(service.industry);
-  
+  const getServiceTypeImage = (industry: string): string => {
+    // Check if there's a custom image from settings
+    const customImageFn = (window as any).getServiceTypeImage;
+    if (customImageFn) {
+      const customImage = customImageFn(industry);
+      if (customImage && customImage.trim()) {
+        return customImage;
+      }
+    }
+
+    // Fallback to default images
+    const imageMap: { [key: string]: string } = {
+      "Plumber": "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=400&h=300&fit=crop&crop=center",
+      "Electrician": "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=300&fit=crop&crop=center", 
+      "HVAC Technician": "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=300&fit=crop&crop=center",
+      "Landscaper": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop&crop=center",
+      "Home Services": "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop&crop=center"
+    };
+
+    return imageMap[industry] || "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop&crop=center";
+  };
+
+  const imageUrl = getServiceTypeImage(service.industry);
+
   const renderStars = (rating: number) => {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
@@ -20,7 +42,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
         <Star key={i} className="w-4 h-4 fill-current text-yellow-400" />
       );
     }
-    
+
     if (hasHalfStar) {
       stars.push(
         <div key="half" className="relative">
@@ -31,7 +53,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
         </div>
       );
     }
-    
+
     const remainingStars = 5 - Math.ceil(rating);
     for (let i = 0; i < remainingStars; i++) {
       stars.push(
@@ -50,12 +72,12 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
         className="w-24 h-24 object-cover rounded-lg flex-shrink-0"
         data-testid={`service-list-image-${service.id}`}
       />
-      
+
       <div className="flex-1 min-w-0">
         <h3 className="text-xl font-semibold text-gray-800 mb-2" data-testid={`service-list-title-${service.id}`}>
           {service.title}
         </h3>
-        
+
         <div className="flex items-center mb-2">
           <div className="flex items-center star-rating">
             {renderStars(service.rating)}
@@ -67,12 +89,12 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
             (<span data-testid={`service-list-reviews-${service.id}`}>{service.reviews}</span> reviews)
           </span>
         </div>
-        
+
         <p className="text-gray-600 text-sm mb-4" data-testid={`service-list-address-${service.id}`}>
           {service.address}
         </p>
       </div>
-      
+
       {/* Action Icons */}
       <div className="flex items-center space-x-3 flex-shrink-0">
         <Button
@@ -86,7 +108,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
             <Phone className="w-5 h-5 text-green-600" />
           </a>
         </Button>
-        
+
         {service.googleMapsLink && (
           <Button
             asChild
@@ -100,7 +122,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
             </a>
           </Button>
         )}
-        
+
         {service.email && (
           <Button
             asChild
@@ -114,7 +136,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
             </a>
           </Button>
         )}
-        
+
         {service.website && (
           <Button
             asChild

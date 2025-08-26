@@ -23,9 +23,13 @@ export default function Search() {
   const [pageSubtitle, setPageSubtitle] = useState("Find the perfect professional for your home service needs");
   const [resultsFoundText, setResultsFoundText] = useState("professional(s) found");
   const [noResultsText, setNoResultsText] = useState("No professionals found matching your criteria. Try adjusting your filters.");
+  const [filterSectionTitle, setFilterSectionTitle] = useState("Filters");
+  
+  // Service type images and descriptions
+  const [serviceTypeImages, setServiceTypeImages] = useState<{[key: string]: string}>({});
+  const [serviceTypeDescriptions, setServiceTypeDescriptions] = useState<{[key: string]: string}>({});
 
-  useEffect(() => {
-    // Load search settings
+  const loadSearchSettings = () => {
     const searchSettings = localStorage.getItem('search-results-settings');
     if (searchSettings) {
       try {
@@ -34,18 +38,48 @@ export default function Search() {
         setPageSubtitle(settings.searchPageSubtitle || "Find the perfect professional for your home service needs");
         setResultsFoundText(settings.resultsFoundText || "professional(s) found");
         setNoResultsText(settings.noResultsText || "No professionals found matching your criteria. Try adjusting your filters.");
+        setFilterSectionTitle(settings.filterSectionTitle || "Filters");
+        
+        // Update service type images and descriptions
+        const images = {
+          'Plumber': settings.plumberImage || '',
+          'Electrician': settings.electricianImage || '',
+          'HVAC Technician': settings.hvacImage || ''
+        };
+        setServiceTypeImages(images);
+        
+        const descriptions = {
+          'Plumber': settings.plumberDescription || 'Professional plumbing services for repairs, installations, and maintenance',
+          'Electrician': settings.electricianDescription || 'Licensed electrical services for wiring, repairs, and installations',
+          'HVAC Technician': settings.hvacDescription || 'Heating, ventilation, and air conditioning experts for your comfort needs'
+        };
+        setServiceTypeDescriptions(descriptions);
+        
+        // Update the global service type image mapping for ServiceCard component
+        (window as any).getServiceTypeImage = (industry: string) => {
+          return images[industry] || '';
+        };
+        
+        // Update the global service type description mapping
+        (window as any).getServiceTypeDescription = (industry: string) => {
+          return descriptions[industry] || '';
+        };
+        
       } catch (error) {
         console.error('Error loading search settings:', error);
       }
     }
+  };
+
+  useEffect(() => {
+    // Load search settings on mount
+    loadSearchSettings();
 
     // Listen for settings changes
     const handleSettingsChange = (event: CustomEvent) => {
-      const settings = event.detail;
-      setPageTitle(settings.searchPageTitle || "Search Results");
-      setPageSubtitle(settings.searchPageSubtitle || "Find the perfect professional for your home service needs");
-      setResultsFoundText(settings.resultsFoundText || "professional(s) found");
-      setNoResultsText(settings.noResultsText || "No professionals found matching your criteria. Try adjusting your filters.");
+      loadSearchSettings();
+      // Force a re-render of service cards by updating the query
+      window.dispatchEvent(new CustomEvent('serviceSettingsUpdated'));
     };
 
     window.addEventListener('searchSettingsChanged', handleSettingsChange as EventListener);
@@ -137,11 +171,18 @@ export default function Search() {
           {/* Results Grid */}
           <main className="lg:w-3/4">
             {/* Results Header */}
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-semibold text-gray-800" data-testid="results-title">
-                {pageTitle}
-              </h2>
-              <div className="flex items-center space-x-4">
+            <div className="mb-6">
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <h2 className="text-2xl font-semibold text-gray-800" data-testid="results-title">
+                    {pageTitle}
+                  </h2>
+                  <p className="text-gray-600 mt-1" data-testid="results-subtitle">
+                    {pageSubtitle}
+                  </p>
+                </div>
+              </div>
+              <div className="flex justify-end items-center space-x-4">
                 {/* View Mode Toggle */}
                 <div className="flex items-center border rounded-lg p-1">
                   <Button
