@@ -304,36 +304,19 @@ export default function ListBusiness() {
                 </div>
 
                 {/* Licensing Information */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <Label htmlFor="licensed" className="block text-sm font-medium mb-2 text-gray-700">
-                      Licensed Professional?
-                    </Label>
-                    <Select name="licensed">
-                      <SelectTrigger className="h-12 border-gray-200 focus:border-blue-500 focus:ring-blue-500" data-testid="licensed-select">
-                        <SelectValue placeholder="Select option" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Yes">Yes - Licensed</SelectItem>
-                        <SelectItem value="No">No - Not Licensed</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="verified" className="block text-sm font-medium mb-2 text-gray-700">
-                      Business Verification
-                    </Label>
-                    <Select name="verified">
-                      <SelectTrigger className="h-12 border-gray-200 focus:border-blue-500 focus:ring-blue-500" data-testid="verified-select">
-                        <SelectValue placeholder="Select option" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Pending">Pending Verification</SelectItem>
-                        <SelectItem value="Verified">Already Verified</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <div>
+                  <Label htmlFor="licensed" className="block text-sm font-medium mb-2 text-gray-700">
+                    Licensed Professional?
+                  </Label>
+                  <Select name="licensed">
+                    <SelectTrigger className="h-12 border-gray-200 focus:border-blue-500 focus:ring-blue-500" data-testid="licensed-select">
+                      <SelectValue placeholder="Select option" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Yes">Yes - Licensed</SelectItem>
+                      <SelectItem value="No">No - Not Licensed</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <Button

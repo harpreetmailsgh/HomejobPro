@@ -1,4 +1,4 @@
-import { Star, MapPin, Phone, ExternalLink, Mail } from "lucide-react";
+import { Star, MapPin, Phone, ExternalLink, Mail, Shield, CheckCircle } from "lucide-react";
 import { Service } from "@shared/schema";
 import { getImageForIndustry } from "@/lib/google-sheets";
 import { Button } from "@/components/ui/button";
@@ -72,9 +72,25 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         data-testid={`service-image-${service.id}`}
       />
       <div className="p-6">
-        <h3 className="text-xl font-semibold text-gray-800 mb-2" data-testid={`service-title-${service.id}`}>
-          {service.title}
-        </h3>
+        <div className="flex items-start justify-between mb-2">
+          <h3 className="text-xl font-semibold text-gray-800 flex-1" data-testid={`service-title-${service.id}`}>
+            {service.title}
+          </h3>
+          <div className="flex items-center space-x-2 ml-2">
+            {service.verified?.toLowerCase() === 'yes' && (
+              <div className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                <CheckCircle className="w-3 h-3 mr-1" />
+                Verified
+              </div>
+            )}
+            {service.licensed?.toLowerCase() === 'yes' && (
+              <div className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                <Shield className="w-3 h-3 mr-1" />
+                Licensed
+              </div>
+            )}
+          </div>
+        </div>
 
         <div className="flex items-center mb-3">
           <div className="flex items-center star-rating">

@@ -13,6 +13,8 @@ export const serviceSchema = z.object({
   website: z.string().url().optional(),
   googleMapsLink: z.string().url().optional(),
   email: z.string().email().optional(),
+  verified: z.string().optional(),
+  licensed: z.string().optional(),
   duplicate: z.boolean().optional()
 });
 

@@ -212,6 +212,8 @@ export class MemStorage implements IStorage {
             website: row['Website'] || undefined,
             googleMapsLink: row['Google Maps Link'] || undefined,
             email: row['Email'] || undefined,
+            verified: row['Verified'] || undefined,
+            licensed: row['Licensed'] || undefined,
             duplicate: row['duplicate']?.toLowerCase() === 'true' || false
           };
 
