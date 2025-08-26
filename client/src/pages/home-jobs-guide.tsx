@@ -4,21 +4,7 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import { Button } from "@/components/ui/button";
 import { useSEO } from "../hooks/use-seo";
-import { useState } from "react";
-
 export default function HomeJobsGuide() {
-  const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({
-    Plumbing: false,
-    Electrical: false,
-    HVAC: false
-  });
-
-  const toggleSection = (category: string) => {
-    setExpandedSections(prev => ({
-      ...prev,
-      [category]: !prev[category]
-    }));
-  };
 
   useSEO({
     title: "Home Jobs Guide: DIY Fixes for Plumbing, Electrical & HVAC | Homejobspro.com",
@@ -272,7 +258,7 @@ export default function HomeJobsGuide() {
                   </div>
 
                   {/* + More Button */}
-                  <div className="flex justify-center gap-3 mb-6">
+                  <div className="flex justify-center mb-6">
                     <Link href={`/section/${category.category.toLowerCase()}`}>
                       <Button
                         variant="outline"
@@ -285,68 +271,12 @@ export default function HomeJobsGuide() {
                         data-testid={`view-all-${category.category.toLowerCase()}`}
                       >
                         <Plus className="w-4 h-4" />
-                        View All {category.category} Topics
+                        More {category.category} DIY Guides
                       </Button>
                     </Link>
-                    <Button
-                      variant="ghost"
-                      onClick={() => toggleSection(category.category)}
-                      className={`flex items-center gap-2 px-4 py-3 transition-all duration-200 ${
-                        category.color === 'blue' ? 'hover:bg-blue-50 text-blue-600' :
-                        category.color === 'yellow' ? 'hover:bg-yellow-50 text-yellow-600' :
-                        category.color === 'red' ? 'hover:bg-red-50 text-red-600' :
-                        'hover:bg-gray-50 text-gray-600'
-                      }`}
-                      data-testid={`toggle-${category.category.toLowerCase()}`}
-                    >
-                      {expandedSections[category.category] ? (
-                        <>
-                          <ChevronUp className="w-4 h-4" />
-                          Show Less
-                        </>
-                      ) : (
-                        <>
-                          <ChevronDown className="w-4 h-4" />
-                          Preview More
-                        </>
-                      )}
-                    </Button>
                   </div>
 
-                  {/* Expanded Section - Upcoming/Additional Jobs */}
-                  {expandedSections[category.category] && (
-                    <div className="border-t pt-8 mt-6">
-                      <div className="text-center mb-6">
-                        <h4 className="text-lg font-medium text-gray-700 mb-2">Coming Soon</h4>
-                        <p className="text-sm text-gray-500">More helpful guides are being added regularly</p>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {category.upcomingJobs?.map((job, jobIndex) => (
-                          <div key={jobIndex} className="bg-gray-25 border-2 border-dashed border-gray-200 rounded-xl p-6 opacity-60">
-                            <div className="flex flex-col items-center text-center">
-                              <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-3 bg-gray-100`}>
-                                <Plus className="w-6 h-6 text-gray-400" />
-                              </div>
-                              <h4 className="font-semibold text-gray-600 mb-2 leading-tight">{job}</h4>
-                              <div className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">Coming Soon</div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="text-center mt-8">
-                        <p className="text-sm text-gray-500 mb-4">Want to see a specific topic covered?</p>
-                        <Link href="/list-business">
-                          <Button 
-                            variant="outline" 
-                            size="sm"
-                            className="text-blue-600 border-blue-200 hover:bg-blue-50"
-                          >
-                            Request a Topic
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
-                  )}
+                  
                 </div>
               </div>
             );
