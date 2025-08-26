@@ -208,7 +208,7 @@ export class MemStorage implements IStorage {
             phone: row['Phone'] || '',
             industry: industry.trim(),
             address: address.trim(),
-            city: (row['City from address'] || '').trim(),
+            city: (row['City'] || '').trim(),
             postCode: (row['Post code'] || '').trim(),
             website: row['Website'] || undefined,
             googleMapsLink: row['Google Maps Link'] || undefined,
