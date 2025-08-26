@@ -16,7 +16,7 @@ export default function Header() {
                 <img 
                   src={logoImage} 
                   alt="Homejobspro" 
-                  className="h-20 w-auto"
+                  className="h-50 w-auto"
                 />
               </div>
             </Link>
