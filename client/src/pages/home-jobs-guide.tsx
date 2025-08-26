@@ -12,12 +12,12 @@ export default function HomeJobsGuide() {
       color: "blue",
       description: "Expert plumbing services for all your water and pipe needs",
       jobs: [
-        "Water Heater Installation & Repair",
-        "Toilet Repair & Replacement", 
-        "Sink & Faucet Services",
-        "Drain Cleaning & Unclogging",
-        "Leak Detection & Repair",
-        "Emergency Plumbing Services"
+        "How to Fix a Dripping Faucet: Step-by-Step Guide to Stop Leaks Fast",
+        "Clogged Sink or Shower Drain? Easy DIY Fixes That Actually Work",
+        "Toilet Won't Stop Running? Easy Fixes for Flapper & Fill Valve Problems",
+        "Low Water Pressure in House or Shower? Here's How to Fix It",
+        "No Hot Water at Home? Common Water Heater Problems and Fixes",
+        "Frozen Pipes? How to Thaw and Prevent Burst Pipes in Winter"
       ]
     },
     {
@@ -26,12 +26,12 @@ export default function HomeJobsGuide() {
       color: "yellow",
       description: "Safe and reliable electrical services for your home",
       jobs: [
-        "Electrical Panel Upgrades",
-        "Outlet & Switch Installation",
-        "Lighting Fixture Installation",
-        "Appliance Hookup Services",
-        "Electrical Safety Inspections",
-        "Smart Home Installations"
+        "Circuit Breaker Keeps Tripping? Causes and Easy Fixes You Can Try",
+        "Why Do My Lights Flicker? Common Causes and How to Fix Them",
+        "Outlet Not Working or GFCI Won't Reset? Here's What to Do",
+        "Is Your Outlet Hot or Buzzing? Dangers and Fixes You Need to Know",
+        "Light Switch Not Working? How to Diagnose and Fix Common Issues",
+        "How to Protect Your Home from Power Surges: Causes, Fixes, and Surge Protectors"
       ]
     },
     {
@@ -40,12 +40,12 @@ export default function HomeJobsGuide() {
       color: "red",
       description: "Complete heating, ventilation, and air conditioning solutions",
       jobs: [
-        "AC Installation & Repair",
-        "Heating System Maintenance",
-        "Preventive HVAC Tune-ups",
-        "Thermostat Installation",
-        "Ductwork Services",
-        "Emergency HVAC Repairs"
+        "AC Running but Not Cooling? Top Reasons and Fixes",
+        "Furnace Not Turning On? Troubleshooting Guide for Quick Fixes",
+        "Why Are Some Rooms Hotter Than Others? How to Fix Uneven Heating & Cooling",
+        "HVAC Making Loud or Strange Noises? What They Mean and How to Fix Them",
+        "Thermostat Not Working? Easy Fixes for Heating and Cooling Issues",
+        "Why Replacing HVAC Air Filters Matters: Signs, Schedule & How to Change"
       ]
     }
   ];
