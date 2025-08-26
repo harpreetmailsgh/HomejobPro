@@ -167,6 +167,8 @@ export default function HomeJobsGuide() {
                         "Clogged Sink or Shower Drain? Easy DIY Fixes That Actually Work": "/clogged-drain-guide",
                         "Toilet Won't Stop Running? Easy Fixes for Flapper & Fill Valve Problems": "/running-toilet-guide",
                         "Low Water Pressure in House or Shower? Here's How to Fix It": "/low-water-pressure-guide",
+                        "No Hot Water at Home? Common Water Heater Problems and Fixes": "/no-hot-water-guide",
+                        "Frozen Pipes? How to Thaw and Prevent Burst Pipes in Winter": "/frozen-pipes-guide",
                         "Circuit Breaker Keeps Tripping? Causes and Easy Fixes You Can Try": "/circuit-breaker-guide",
                         "AC Running but Not Cooling? Top Reasons and Fixes": "/ac-not-cooling-guide"
                       };
