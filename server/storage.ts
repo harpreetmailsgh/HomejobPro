@@ -197,7 +197,10 @@ export class MemStorage implements IStorage {
           // Handle different column names between sheets
           const title = row['Title'] || row['itle'] || ''; // Electrician sheet has 'itle' not 'Title'
           const industry = row['Industry'] || '';
-          const address = row['Complete address'] || row['GM Address'] || row['Address'] || '';
+          // Prioritize Complete address over GM Address
+          const completeAddress = row['Complete address'] || row['complete address'] || '';
+          const gmAddress = row['GM Address'] || row['GM address'] || '';
+          const address = completeAddress.trim() || gmAddress.trim() || row['Address'] || '';
 
           const service = {
             id: parseInt(row['S no']) || globalId++,
