@@ -3,8 +3,32 @@ import { ArrowLeft, Home, Wrench, Zap, Thermometer, Droplets, Hammer, CheckCircl
 import Header from "../components/header";
 import Footer from "../components/footer";
 import { Button } from "@/components/ui/button";
+import { useSEO } from "../hooks/use-seo";
 
 export default function HomeJobsGuide() {
+  useSEO({
+    title: "Home Jobs Guide: DIY Fixes for Plumbing, Electrical & HVAC | Homejobspro.com",
+    description: "Complete guide to common home repair issues with step-by-step solutions. Learn how to fix plumbing, electrical, and HVAC problems or find professional help.",
+    keywords: "home repair guide, DIY fixes, plumbing problems, electrical issues, HVAC troubleshooting, home maintenance tips, professional home services",
+    canonical: "https://homejobspro.com/home-jobs-guide",
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Home Jobs Guide: DIY Fixes for Plumbing, Electrical & HVAC",
+      "description": "Complete guide to common home repair issues with step-by-step solutions for plumbing, electrical, and HVAC problems.",
+      "author": {
+        "@type": "Organization",
+        "name": "Homejobspro.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Homejobspro.com",
+        "url": "https://homejobspro.com"
+      },
+      "url": "https://homejobspro.com/home-jobs-guide"
+    }
+  });
+
   const commonJobs = [
     {
       category: "Plumbing",

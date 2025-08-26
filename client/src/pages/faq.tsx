@@ -4,6 +4,7 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useSEO } from "../hooks/use-seo";
 
 interface FAQ {
   id: number;
@@ -117,6 +118,20 @@ const faqs: FAQ[] = [
 ];
 
 export default function FAQ() {
+  useSEO({
+    title: "Frequently Asked Questions | Home Service Help | Homejobspro.com",
+    description: "Get answers to common questions about plumbing, electrical, and HVAC issues. Expert advice on home repairs, maintenance, and when to call professionals.",
+    keywords: "home service FAQ, plumbing questions, electrical help, HVAC troubleshooting, home repair advice, maintenance tips, professional help",
+    canonical: "https://homejobspro.com/faq",
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "name": "Home Service Frequently Asked Questions",
+      "description": "Common questions and answers about home service repairs and maintenance",
+      "url": "https://homejobspro.com/faq"
+    }
+  });
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);

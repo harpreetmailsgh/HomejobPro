@@ -8,11 +8,32 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { useSEO } from "../hooks/use-seo";
 import heroImage from "@assets/generated_images/Home_services_team_hero_0e492e2c.png";
 
 export default function About() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useSEO({
+    title: "About Homejobspro.com | Connecting You with Trusted Home Service Professionals",
+    description: "Learn about Homejobspro.com - your trusted platform for finding verified local home service professionals. We connect homeowners with quality plumbers, electricians, and HVAC technicians.",
+    keywords: "about homejobspro, trusted home services, verified professionals, local contractors, home service directory, reliable plumbers electricians HVAC",
+    canonical: "https://homejobspro.com/about",
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "About Homejobspro.com",
+      "description": "Learn about Homejobspro.com - your trusted platform for finding verified local home service professionals.",
+      "url": "https://homejobspro.com/about",
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "Homejobspro.com",
+        "description": "Trusted platform connecting homeowners with verified local home service professionals",
+        "url": "https://homejobspro.com"
+      }
+    }
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

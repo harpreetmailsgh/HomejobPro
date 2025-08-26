@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://homejobspro.com/sitemap.xml
+
+# Specific directives
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /private/
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1

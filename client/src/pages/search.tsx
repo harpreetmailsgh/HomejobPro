@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Grid3X3, List } from "lucide-react";
+import { useSEO } from "../hooks/use-seo";
 
 export default function Search() {
   const [location] = useLocation();
@@ -57,12 +58,12 @@ export default function Search() {
         
         // Update the global service type image mapping for ServiceCard component
         (window as any).getServiceTypeImage = (industry: string) => {
-          return images[industry] || '';
+          return images[industry as keyof typeof images] || '';
         };
         
         // Update the global service type description mapping
         (window as any).getServiceTypeDescription = (industry: string) => {
-          return descriptions[industry] || '';
+          return descriptions[industry as keyof typeof descriptions] || '';
         };
         
       } catch (error) {
@@ -97,6 +98,42 @@ export default function Search() {
     sortBy: (urlParams.get('sortBy') as any) || 'rating_desc',
     page: parseInt(urlParams.get('page') || '1'),
     limit: 20
+  });
+
+  // Dynamic SEO based on search filters
+  const generateSEOTitle = () => {
+    const parts = [];
+    if (filters.industry) parts.push(filters.industry + 's');
+    if (filters.city) parts.push('in ' + filters.city);
+    
+    if (parts.length > 0) {
+      return `Find ${parts.join(' ')} | Verified Local Professionals | Homejobspro.com`;
+    }
+    return "Search Home Service Professionals | Plumbers, Electricians, HVAC | Homejobspro.com";
+  };
+
+  const generateSEODescription = () => {
+    const parts = [];
+    if (filters.industry) parts.push(`trusted ${filters.industry.toLowerCase()}s`);
+    if (filters.city) parts.push(`in ${filters.city}`);
+    
+    const base = "Find verified home service professionals";
+    const specific = parts.length > 0 ? ` - ${parts.join(' ')}` : " including plumbers, electricians, and HVAC technicians";
+    return `${base}${specific}. Read reviews, compare ratings, and book services today.`;
+  };
+
+  useSEO({
+    title: generateSEOTitle(),
+    description: generateSEODescription(),
+    keywords: `${filters.industry || 'home services'} near me, local professionals, verified contractors, ${filters.city || ''} home repair`,
+    canonical: `https://homejobspro.com/search${location.includes('?') ? location.substring(location.indexOf('?')) : ''}`,
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "SearchResultsPage",
+      "name": generateSEOTitle(),
+      "description": generateSEODescription(),
+      "url": `https://homejobspro.com/search${location.includes('?') ? location.substring(location.indexOf('?')) : ''}`
+    }
   });
 
   const { data: searchResults, isLoading, error } = useQuery<SearchResults>({

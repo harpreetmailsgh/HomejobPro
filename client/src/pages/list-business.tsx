@@ -9,12 +9,32 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useSEO } from "../hooks/use-seo";
 import heroImage from "@assets/generated_images/Business_owner_professional_hero_1db2eef7.png";
 
 export default function ListBusiness() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [industry, setIndustry] = useState("");
+
+  useSEO({
+    title: "List Your Home Service Business | Join Homejobspro.com Directory",
+    description: "List your home service business on Homejobspro.com and connect with local customers. Perfect for plumbers, electricians, HVAC technicians, and other home service professionals.",
+    keywords: "list home service business, join directory, plumber marketing, electrician advertising, HVAC business listing, local contractors, home service leads",
+    canonical: "https://homejobspro.com/list-business",
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "List Your Home Service Business",
+      "description": "List your home service business on Homejobspro.com and connect with local customers.",
+      "url": "https://homejobspro.com/list-business",
+      "mainEntity": {
+        "@type": "Service",
+        "name": "Business Directory Listing",
+        "description": "Professional business listing service for home service providers"
+      }
+    }
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
