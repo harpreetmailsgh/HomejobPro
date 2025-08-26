@@ -7,6 +7,7 @@ import Home from "./pages/home";
 import Search from "./pages/search";
 import Settings from "./pages/settings";
 import FAQ from "./pages/faq";
+import About from "./pages/about";
 import NotFound from "./pages/not-found";
 
 function Router() {
@@ -16,6 +17,7 @@ function Router() {
       <Route path="/search" component={Search} />
       <Route path="/settings" component={Settings} />
       <Route path="/faq" component={FAQ} />
+      <Route path="/about" component={About} />
       <Route component={NotFound} />
     </Switch>
   );

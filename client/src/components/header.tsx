@@ -18,9 +18,11 @@ export default function Header() {
                 Browse Services
               </span>
             </Link>
-            <a href="#" className="text-gray-600 hover:text-blue-grey transition-colors" data-testid="nav-how-it-works">
-              How It Works
-            </a>
+            <Link href="/about">
+              <span className="text-gray-600 hover:text-blue-grey transition-colors cursor-pointer" data-testid="nav-about-us">
+                About Us
+              </span>
+            </Link>
             <a href="#" className="text-gray-600 hover:text-blue-grey transition-colors" data-testid="nav-list-business">
               List Your Business
             </a>
