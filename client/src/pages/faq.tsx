@@ -279,19 +279,34 @@ export default function FAQ() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
-          <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      {/* Hero Section with Background Image */}
+      <div className="relative bg-gradient-to-r from-blue-600 to-purple-600 py-20 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-20"
+          style={{
+            backgroundImage: 'url(https://images.unsplash.com/photo-1558618047-fd4a85a8fc00?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80)'
+          }}
+        />
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/80 to-purple-600/80" />
+        
+        {/* Content */}
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-8 backdrop-blur-sm">
+            <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">Get expert answers to the most common home service questions. From plumbing emergencies to electrical safety and HVAC maintenance.</p>
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">Frequently Asked Questions</h1>
+          <p className="text-xl md:text-2xl text-white opacity-90 max-w-3xl mx-auto leading-relaxed drop-shadow">Get expert answers to the most common home service questions. From plumbing emergencies to electrical safety and HVAC maintenance.</p>
         </div>
+      </div>
+      
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-8 relative z-10">
 
         {/* Search and Filter Section */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 border border-gray-100">
+        <div className="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
           <div className="flex flex-col md:flex-row gap-6">
             <div className="flex-1 relative">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
