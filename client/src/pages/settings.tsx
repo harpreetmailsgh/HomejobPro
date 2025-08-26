@@ -353,31 +353,7 @@ export default function Settings() {
     });
   };
 
-  const handleSaveSearchChanges = () => {
-    const settings = {
-      searchPageTitle,
-      searchPageSubtitle,
-      resultsFoundText,
-      noResultsText,
-      filterSectionTitle,
-      plumberImage,
-      electricianImage,
-      hvacImage,
-      plumberDescription,
-      electricianDescription,
-      hvacDescription
-    };
-
-    localStorage.setItem('search-results-settings', JSON.stringify(settings));
-    
-    // Update the image mapping function
-    window.dispatchEvent(new CustomEvent('searchSettingsChanged', { detail: settings }));
-
-    toast({
-      title: "Search Results Updated!",
-      description: "Your changes have been saved and will apply to search results.",
-    });
-  };
+  
 
   const handleSyncGoogleSheets = async () => {
     setIsSyncing(true);
