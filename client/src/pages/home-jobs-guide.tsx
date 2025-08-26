@@ -179,8 +179,8 @@ export default function HomeJobsGuide() {
                         "Furnace Not Turning On? Troubleshooting Guide for Quick Fixes": "/furnace-not-turning-on-guide",
                         "Why Are Some Rooms Hotter Than Others? How to Fix Uneven Heating & Cooling": "/uneven-temperature-guide",
                         "HVAC Making Loud or Strange Noises? What They Mean and How to Fix Them": "/hvac-noise-guide",
-                        "Air Filter Dirty or Clogged? When and How to Replace HVAC Filters": "/air-filter-replacement-guide",
-                        "Thermostat Not Working? Troubleshooting Temperature Control Issues": "/thermostat-not-working-guide"
+                        "Why Replacing HVAC Air Filters Matters: Signs, Schedule & How to Change": "/air-filter-replacement-guide",
+                        "Thermostat Not Working? Easy Fixes for Heating and Cooling Issues": "/thermostat-not-working-guide"
                       };
 
                       const jobRoute = jobRoutes[job];

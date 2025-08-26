@@ -9,7 +9,7 @@ import thermostatImage from "@assets/generated_images/Thermostat_not_working_ima
 
 export default function ThermostatNotWorkingGuide() {
   useSEO({
-    title: "Thermostat Not Working? Troubleshooting Temperature Control Issues | Homejobspro.com",
+    title: "Thermostat Not Working? Easy Fixes for Heating and Cooling Issues | Homejobspro.com",
     description: "Learn how to troubleshoot and fix common thermostat problems. Step-by-step guide to diagnose temperature control issues and restore home comfort.",
     keywords: "thermostat not working, thermostat troubleshooting, temperature control problems, HVAC thermostat repair, smart thermostat issues",
     canonical: "https://homejobspro.com/thermostat-not-working-guide"
@@ -136,7 +136,7 @@ export default function ThermostatNotWorkingGuide() {
                   <Settings className="w-8 h-8 text-white" />
                 </div>
                 <h1 className="text-3xl md:text-4xl font-bold mb-2">Thermostat Not Working?</h1>
-                <p className="text-blue-100 text-lg">Troubleshooting Temperature Control Issues</p>
+                <p className="text-blue-100 text-lg">Easy Fixes for Heating and Cooling Issues</p>
               </div>
             </div>
           </div>

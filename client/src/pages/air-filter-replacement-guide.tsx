@@ -9,7 +9,7 @@ import airFilterImage from "@assets/generated_images/Air_filter_replacement_imag
 
 export default function AirFilterReplacementGuide() {
   useSEO({
-    title: "Air Filter Dirty or Clogged? When and How to Replace HVAC Filters | Homejobspro.com",
+    title: "Why Replacing HVAC Air Filters Matters: Signs, Schedule & How to Change | Homejobspro.com",
     description: "Learn when and how to replace your HVAC air filter. Step-by-step guide to choose the right filter and improve your home's air quality and system efficiency.",
     keywords: "air filter replacement, HVAC filter, dirty air filter, clogged filter, air quality, HVAC maintenance, filter types",
     canonical: "https://homejobspro.com/air-filter-replacement-guide"
@@ -143,8 +143,8 @@ export default function AirFilterReplacementGuide() {
                 <div className="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Filter className="w-8 h-8 text-white" />
                 </div>
-                <h1 className="text-3xl md:text-4xl font-bold mb-2">Air Filter Dirty or Clogged?</h1>
-                <p className="text-blue-100 text-lg">When and How to Replace HVAC Filters</p>
+                <h1 className="text-3xl md:text-4xl font-bold mb-2">Why Replacing HVAC Air Filters Matters</h1>
+                <p className="text-blue-100 text-lg">Signs, Schedule & How to Change</p>
               </div>
             </div>
           </div>
