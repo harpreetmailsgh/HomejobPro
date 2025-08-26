@@ -87,7 +87,7 @@ export default function HomeJobsGuide() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
           <Link href="/">
@@ -144,7 +144,7 @@ export default function HomeJobsGuide() {
         {/* Common Jobs by Category */}
         <div className="space-y-8">
           <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">Common Home Jobs by Category</h2>
-          
+
           {commonJobs.map((category, index) => {
             const IconComponent = category.icon;
             return (
@@ -176,11 +176,13 @@ export default function HomeJobsGuide() {
                         "Light Switch Not Working? How to Diagnose and Fix Common Issues": "/light-switch-not-working-guide",
                         "How to Protect Your Home from Power Surges: Causes, Fixes, and Surge Protectors": "/power-surge-protection-guide",
                         "AC Running but Not Cooling? Top Reasons and Fixes": "/ac-not-cooling-guide",
-                        "Furnace Not Turning On? Troubleshooting Guide for Quick Fixes": "/furnace-not-turning-on-guide"
+                        "Furnace Not Turning On? Troubleshooting Guide for Quick Fixes": "/furnace-not-turning-on-guide",
+                        "Why Are Some Rooms Hotter Than Others? How to Fix Uneven Heating & Cooling": "/uneven-temperature-guide",
+                        "HVAC Making Loud or Strange Noises? What They Mean and How to Fix Them": "/hvac-noise-guide"
                       };
-                      
+
                       const jobRoute = jobRoutes[job];
-                      
+
                       return jobRoute ? (
                         <Link href={jobRoute} key={jobIndex}>
                           <div className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow duration-200 group cursor-pointer">

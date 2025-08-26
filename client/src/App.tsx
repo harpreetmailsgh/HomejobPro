@@ -25,6 +25,8 @@ import LightSwitchNotWorkingGuide from "./pages/light-switch-not-working-guide";
 import PowerSurgeProtectionGuide from "./pages/power-surge-protection-guide";
 import ACNotCoolingGuide from "./pages/ac-not-cooling-guide";
 import FurnaceNotTurningOnGuide from "./pages/furnace-not-turning-on-guide";
+import UnevenTemperatureGuide from "./pages/uneven-temperature-guide";
+import HVACNoiseGuide from "./pages/hvac-noise-guide";
 import NotFound from "./pages/not-found";
 import { lazy } from "react";
 
@@ -53,6 +55,8 @@ function Router() {
       <Route path="/power-surge-protection-guide" component={PowerSurgeProtectionGuide} />
       <Route path="/ac-not-cooling-guide" component={ACNotCoolingGuide} />
       <Route path="/furnace-not-turning-on-guide" component={FurnaceNotTurningOnGuide} />
+      <Route path="/uneven-temperature-guide" component={UnevenTemperatureGuide} />
+      <Route path="/hvac-noise-guide" component={HVACNoiseGuide} />
       <Route component={NotFound} />
     </Switch>
   );
