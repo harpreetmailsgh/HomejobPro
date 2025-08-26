@@ -1,11 +1,25 @@
 import { Link } from "wouter";
-import { ArrowLeft, Home, Wrench, Zap, Thermometer, Droplets, Hammer, CheckCircle } from "lucide-react";
+import { ArrowLeft, Home, Wrench, Zap, Thermometer, Droplets, Hammer, CheckCircle, Plus, ChevronUp, ChevronDown } from "lucide-react";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import { Button } from "@/components/ui/button";
 import { useSEO } from "../hooks/use-seo";
+import { useState } from "react";
 
 export default function HomeJobsGuide() {
+  const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({
+    Plumbing: false,
+    Electrical: false,
+    HVAC: false
+  });
+
+  const toggleSection = (category: string) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [category]: !prev[category]
+    }));
+  };
+
   useSEO({
     title: "Home Jobs Guide: DIY Fixes for Plumbing, Electrical & HVAC | Homejobspro.com",
     description: "Complete guide to common home repair issues with step-by-step solutions. Learn how to fix plumbing, electrical, and HVAC problems or find professional help.",
@@ -42,6 +56,14 @@ export default function HomeJobsGuide() {
         "Low Water Pressure in House or Shower? Here's How to Fix It",
         "No Hot Water at Home? Common Water Heater Problems and Fixes",
         "Frozen Pipes? How to Thaw and Prevent Burst Pipes in Winter"
+      ],
+      upcomingJobs: [
+        "Sump Pump Not Working? How to Fix Common Issues",
+        "Water Heater Leaking? Causes and Emergency Fixes",
+        "Garbage Disposal Jammed? Safe Repair Methods",
+        "Pipe Leak Detection: Early Warning Signs to Watch For",
+        "Shower Head Low Pressure? Cleaning and Replacement Guide",
+        "Toilet Installation: Step-by-Step DIY Guide"
       ]
     },
     {
@@ -56,6 +78,14 @@ export default function HomeJobsGuide() {
         "Is Your Outlet Hot or Buzzing? Dangers and Fixes You Need to Know",
         "Light Switch Not Working? How to Diagnose and Fix Common Issues",
         "How to Protect Your Home from Power Surges: Causes, Fixes, and Surge Protectors"
+      ],
+      upcomingJobs: [
+        "Installing Smart Switches: Modern Home Automation",
+        "Ceiling Fan Not Working? Motor and Wiring Troubleshooting",
+        "Electrical Panel Upgrade: When and Why You Need It",
+        "USB Outlet Installation: Adding Modern Convenience",
+        "Dimmer Switch Problems: Common Issues and Solutions",
+        "Outdoor Electrical Safety: GFCI Requirements and Installation"
       ]
     },
     {
@@ -70,6 +100,14 @@ export default function HomeJobsGuide() {
         "HVAC Making Loud or Strange Noises? What They Mean and How to Fix Them",
         "Thermostat Not Working? Easy Fixes for Heating and Cooling Issues",
         "Why Replacing HVAC Air Filters Matters: Signs, Schedule & How to Change"
+      ],
+      upcomingJobs: [
+        "Heat Pump Not Working? Troubleshooting Cold Weather Issues",
+        "Central Air Installation: What to Expect and Costs",
+        "Ductwork Cleaning: Signs You Need Professional Service",
+        "Smart Thermostat Installation: Energy-Saving Upgrades",
+        "HVAC Maintenance Schedule: Seasonal Checklist",
+        "Indoor Air Quality: Improving Your Home's Air"
       ]
     }
   ];
@@ -159,7 +197,9 @@ export default function HomeJobsGuide() {
                 </div>
                 <div className="p-8">
                   <p className="text-gray-600 mb-6 text-center">{category.description}</p>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  
+                  {/* Main Jobs Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     {category.jobs.map((job, jobIndex) => {
                       // Map job titles to their corresponding routes
                       const jobRoutes: Record<string, string> = {
@@ -230,6 +270,67 @@ export default function HomeJobsGuide() {
                       );
                     })}
                   </div>
+
+                  {/* + More Button */}
+                  <div className="flex justify-center mb-6">
+                    <Button
+                      variant="outline"
+                      onClick={() => toggleSection(category.category)}
+                      className={`flex items-center gap-2 px-6 py-3 border-2 transition-all duration-200 ${
+                        category.color === 'blue' ? 'border-blue-200 hover:border-blue-400 hover:bg-blue-50 text-blue-700' :
+                        category.color === 'yellow' ? 'border-yellow-200 hover:border-yellow-400 hover:bg-yellow-50 text-yellow-700' :
+                        category.color === 'red' ? 'border-red-200 hover:border-red-400 hover:bg-red-50 text-red-700' :
+                        'border-gray-200 hover:border-gray-400 hover:bg-gray-50'
+                      }`}
+                    >
+                      {expandedSections[category.category] ? (
+                        <>
+                          <ChevronUp className="w-4 h-4" />
+                          Show Less
+                        </>
+                      ) : (
+                        <>
+                          <Plus className="w-4 h-4" />
+                          More {category.category} Topics
+                        </>
+                      )}
+                    </Button>
+                  </div>
+
+                  {/* Expanded Section - Upcoming/Additional Jobs */}
+                  {expandedSections[category.category] && (
+                    <div className="border-t pt-8 mt-6">
+                      <div className="text-center mb-6">
+                        <h4 className="text-lg font-medium text-gray-700 mb-2">Coming Soon</h4>
+                        <p className="text-sm text-gray-500">More helpful guides are being added regularly</p>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {category.upcomingJobs?.map((job, jobIndex) => (
+                          <div key={jobIndex} className="bg-gray-25 border-2 border-dashed border-gray-200 rounded-xl p-6 opacity-60">
+                            <div className="flex flex-col items-center text-center">
+                              <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-3 bg-gray-100`}>
+                                <Plus className="w-6 h-6 text-gray-400" />
+                              </div>
+                              <h4 className="font-semibold text-gray-600 mb-2 leading-tight">{job}</h4>
+                              <div className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">Coming Soon</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="text-center mt-8">
+                        <p className="text-sm text-gray-500 mb-4">Want to see a specific topic covered?</p>
+                        <Link href="/list-business">
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            className="text-blue-600 border-blue-200 hover:bg-blue-50"
+                          >
+                            Request a Topic
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             );
