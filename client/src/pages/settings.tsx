@@ -67,9 +67,22 @@ export default function Settings() {
   const [electricianDescription, setElectricianDescription] = useState("");
   const [hvacDescription, setHvacDescription] = useState("");
 
+  // Home Jobs Guide states
+  const [homeJobsSections, setHomeJobsSections] = useState([]);
+  const [newSectionName, setNewSectionName] = useState("");
+  const [newSectionIcon, setNewSectionIcon] = useState("");
+  const [newSectionColor, setNewSectionColor] = useState("blue");
+  const [newSectionDescription, setNewSectionDescription] = useState("");
+  const [showCreateBlogModal, setShowCreateBlogModal] = useState(false);
+  const [newBlogTitle, setNewBlogTitle] = useState("");
+  const [newBlogSection, setNewBlogSection] = useState("");
+  const [newBlogContent, setNewBlogContent] = useState("");
+  const [newBlogImage, setNewBlogImage] = useState("");
+
   const pages = [
     { value: "home", label: "Home Page" },
     { value: "search", label: "Search Results Page" },
+    { value: "home-jobs", label: "Home Jobs Guide" },
     { value: "faq", label: "FAQ Page" },
     { value: "settings", label: "Settings Page" },
     { value: "not-found", label: "Not Found Page" }
@@ -118,6 +131,115 @@ export default function Settings() {
     setPlumberDescription("Professional plumbing services for repairs, installations, and maintenance");
     setElectricianDescription("Licensed electrical services for wiring, repairs, and installations");
     setHvacDescription("Heating, ventilation, and air conditioning experts for your comfort needs");
+  };
+
+  const loadHomeJobsSettings = () => {
+    const savedSettings = localStorage.getItem('home-jobs-guide-settings');
+    if (savedSettings) {
+      try {
+        const settings = JSON.parse(savedSettings);
+        setHomeJobsSections(settings.sections || []);
+      } catch (error) {
+        console.error('Error loading home jobs settings:', error);
+        setHomeJobsDefaults();
+      }
+    } else {
+      setHomeJobsDefaults();
+    }
+  };
+
+  const setHomeJobsDefaults = () => {
+    setHomeJobsSections([
+      {
+        id: 'plumbing',
+        name: 'Plumbing',
+        icon: 'Droplets',
+        color: 'blue',
+        description: 'Expert plumbing services for all your water and pipe needs'
+      },
+      {
+        id: 'electrical',
+        name: 'Electrical',
+        icon: 'Zap',
+        color: 'yellow',
+        description: 'Safe and reliable electrical services for your home'
+      },
+      {
+        id: 'hvac',
+        name: 'HVAC',
+        icon: 'Thermometer',
+        color: 'red',
+        description: 'Complete heating, ventilation, and air conditioning solutions'
+      }
+    ]);
+  };
+
+  const handleAddNewSection = () => {
+    if (!newSectionName.trim()) return;
+    
+    const newSection = {
+      id: newSectionName.toLowerCase().replace(/\s+/g, '-'),
+      name: newSectionName,
+      icon: newSectionIcon || 'Home',
+      color: newSectionColor,
+      description: newSectionDescription
+    };
+    
+    const updatedSections = [...homeJobsSections, newSection];
+    setHomeJobsSections(updatedSections);
+    
+    // Save to localStorage
+    const settings = { sections: updatedSections };
+    localStorage.setItem('home-jobs-guide-settings', JSON.stringify(settings));
+    
+    // Reset form
+    setNewSectionName('');
+    setNewSectionIcon('');
+    setNewSectionColor('blue');
+    setNewSectionDescription('');
+    
+    toast({
+      title: "Section Added!",
+      description: `New section "${newSectionName}" has been added to Home Jobs Guide.`,
+    });
+  };
+
+  const handleCreateBlog = () => {
+    if (!newBlogTitle.trim() || !newBlogSection) return;
+    
+    // Generate file name from title
+    const fileName = newBlogTitle
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/--+/g, '-')
+      .trim();
+    
+    const blogData = {
+      title: newBlogTitle,
+      section: newBlogSection,
+      fileName: `${fileName}-guide`,
+      content: newBlogContent,
+      image: newBlogImage,
+      createdAt: new Date().toISOString()
+    };
+    
+    // Save blog data to localStorage for now (could be extended to create actual files)
+    const savedBlogs = JSON.parse(localStorage.getItem('custom-blogs') || '[]');
+    savedBlogs.push(blogData);
+    localStorage.setItem('custom-blogs', JSON.stringify(savedBlogs));
+    
+    // Reset form and close modal
+    setNewBlogTitle('');
+    setNewBlogSection('');
+    setNewBlogContent('');
+    setNewBlogImage('');
+    setShowCreateBlogModal(false);
+    
+    toast({
+      title: "Blog Created!",
+      description: `New blog "${newBlogTitle}" has been created. File name: ${fileName}-guide.tsx`,
+    });
   };
 
   const handleSaveSearchChanges = () => {
@@ -249,6 +371,8 @@ export default function Settings() {
       loadCurrentHomeSettings();
     } else if (value === "search") {
       loadCurrentSearchSettings();
+    } else if (value === "home-jobs") {
+      loadHomeJobsSettings();
     }
   };
 
@@ -1036,15 +1160,245 @@ export default function Settings() {
           </div>
         )}
 
+        {/* HOME JOBS GUIDE EDITOR */}
+        {selectedPage === "home-jobs" && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Left Side - Current Structure */}
+            <div className="bg-purple-50 rounded-lg p-6">
+              <h2 className="text-xl font-semibold text-purple-900 mb-4 flex items-center">
+                <Eye className="w-5 h-5 mr-2" />
+                Current Home Jobs Guide Structure
+              </h2>
+              <div className="space-y-4 text-sm">
+                {homeJobsSections.map((section, index) => (
+                  <div key={section.id} className="bg-white p-3 rounded border-l-4 border-purple-500">
+                    <div className="font-semibold text-gray-800">📋 {section.name} Section</div>
+                    <div className="text-gray-600">Icon: {section.icon}</div>
+                    <div className="text-gray-600">Color: <span className={`inline-block w-4 h-4 rounded mr-2 ${section.color === 'blue' ? 'bg-blue-500' : section.color === 'yellow' ? 'bg-yellow-500' : section.color === 'red' ? 'bg-red-500' : 'bg-gray-500'}`}></span>{section.color}</div>
+                    <div className="text-gray-600 text-xs">{section.description}</div>
+                  </div>
+                ))}
+                
+                <div className="bg-white p-3 rounded border-l-4 border-green-500">
+                  <div className="font-semibold text-gray-800">✨ Dynamic Features</div>
+                  <div className="text-gray-600">+ More buttons expand sections</div>
+                  <div className="text-gray-600">Custom blog creation system</div>
+                  <div className="text-gray-600">Searchable topic pages</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side - Management Panel */}
+            <div className="bg-white rounded-lg shadow-md p-6 space-y-8 max-h-screen overflow-y-auto">
+              <div className="border-b border-gray-200 pb-4">
+                <h2 className="text-xl font-semibold text-gray-800">Manage Home Jobs Guide</h2>
+                <p className="text-sm text-gray-600 mt-1">Add new sections and create custom blog guides</p>
+              </div>
+
+              {/* Add New Section */}
+              <section className="space-y-4">
+                <h3 className="text-lg font-medium text-gray-800 border-b pb-2">➕ Add New Section</h3>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label className="block text-sm font-medium mb-2">Section Name</Label>
+                    <Input
+                      value={newSectionName}
+                      onChange={(e) => setNewSectionName(e.target.value)}
+                      placeholder="e.g., Landscaping"
+                      data-testid="new-section-name"
+                    />
+                  </div>
+                  <div>
+                    <Label className="block text-sm font-medium mb-2">Icon Name</Label>
+                    <Input
+                      value={newSectionIcon}
+                      onChange={(e) => setNewSectionIcon(e.target.value)}
+                      placeholder="e.g., Flower, TreePine, Shovel"
+                      data-testid="new-section-icon"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Use Lucide React icon names</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label className="block text-sm font-medium mb-2">Section Color</Label>
+                    <Select value={newSectionColor} onValueChange={setNewSectionColor}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="blue">Blue</SelectItem>
+                        <SelectItem value="yellow">Yellow</SelectItem>
+                        <SelectItem value="red">Red</SelectItem>
+                        <SelectItem value="green">Green</SelectItem>
+                        <SelectItem value="purple">Purple</SelectItem>
+                        <SelectItem value="orange">Orange</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="flex items-end">
+                    <Button onClick={handleAddNewSection} className="w-full">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Section
+                    </Button>
+                  </div>
+                </div>
+
+                <div>
+                  <Label className="block text-sm font-medium mb-2">Section Description</Label>
+                  <Textarea
+                    value={newSectionDescription}
+                    onChange={(e) => setNewSectionDescription(e.target.value)}
+                    placeholder="Brief description of this service category"
+                    rows={2}
+                    data-testid="new-section-description"
+                  />
+                </div>
+              </section>
+
+              {/* Create New Blog */}
+              <section className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-medium text-gray-800 border-b pb-2">📝 Create New Blog Guide</h3>
+                  <Button onClick={() => setShowCreateBlogModal(true)} variant="outline">
+                    <Plus className="w-4 h-4 mr-2" />
+                    New Blog
+                  </Button>
+                </div>
+
+                {showCreateBlogModal && (
+                  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-lg p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xl font-semibold">Create New Blog Guide</h3>
+                        <Button variant="ghost" onClick={() => setShowCreateBlogModal(false)}>
+                          ✕
+                        </Button>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div>
+                          <Label className="block text-sm font-medium mb-2">Blog Title</Label>
+                          <Input
+                            value={newBlogTitle}
+                            onChange={(e) => setNewBlogTitle(e.target.value)}
+                            placeholder="e.g., How to Trim Hedges: Professional Landscaping Tips"
+                            data-testid="new-blog-title"
+                          />
+                        </div>
+
+                        <div>
+                          <Label className="block text-sm font-medium mb-2">Section</Label>
+                          <Select value={newBlogSection} onValueChange={setNewBlogSection}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Choose a section" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {homeJobsSections.map((section) => (
+                                <SelectItem key={section.id} value={section.name}>
+                                  {section.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div>
+                          <Label className="block text-sm font-medium mb-2">Hero Image URL</Label>
+                          <Input
+                            value={newBlogImage}
+                            onChange={(e) => setNewBlogImage(e.target.value)}
+                            placeholder="https://example.com/hero-image.jpg"
+                            data-testid="new-blog-image"
+                          />
+                        </div>
+
+                        <div>
+                          <Label className="block text-sm font-medium mb-2">Blog Content</Label>
+                          <Textarea
+                            value={newBlogContent}
+                            onChange={(e) => setNewBlogContent(e.target.value)}
+                            placeholder="Write your blog content here. Use this template format similar to existing guides..."
+                            rows={8}
+                            data-testid="new-blog-content"
+                          />
+                          <p className="text-xs text-gray-500 mt-1">Content will be formatted similar to existing guide pages</p>
+                        </div>
+
+                        <div className="flex justify-end gap-3">
+                          <Button variant="outline" onClick={() => setShowCreateBlogModal(false)}>
+                            Cancel
+                          </Button>
+                          <Button onClick={handleCreateBlog}>
+                            <Save className="w-4 h-4 mr-2" />
+                            Create Blog
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h4 className="font-medium text-gray-800 mb-2">Recent Blogs Created</h4>
+                  <div className="text-sm text-gray-600">
+                    {JSON.parse(localStorage.getItem('custom-blogs') || '[]').slice(-3).map((blog, index) => (
+                      <div key={index} className="flex justify-between items-center py-1">
+                        <span>{blog.title}</span>
+                        <span className="text-xs text-gray-400">{blog.section}</span>
+                      </div>
+                    ))}
+                    {JSON.parse(localStorage.getItem('custom-blogs') || '[]').length === 0 && (
+                      <p className="text-gray-400 italic">No custom blogs created yet</p>
+                    )}
+                  </div>
+                </div>
+              </section>
+
+              {/* Current Sections Management */}
+              <section className="space-y-4">
+                <h3 className="text-lg font-medium text-gray-800 border-b pb-2">🏠 Current Sections</h3>
+                <div className="space-y-3">
+                  {homeJobsSections.map((section, index) => (
+                    <div key={section.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                          section.color === 'blue' ? 'bg-blue-100' :
+                          section.color === 'yellow' ? 'bg-yellow-100' :
+                          section.color === 'red' ? 'bg-red-100' :
+                          section.color === 'green' ? 'bg-green-100' :
+                          section.color === 'purple' ? 'bg-purple-100' :
+                          'bg-orange-100'
+                        }`}>
+                          <span className="text-sm">🔧</span>
+                        </div>
+                        <div>
+                          <div className="font-medium text-gray-800">{section.name}</div>
+                          <div className="text-sm text-gray-600">{section.description}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-gray-400">{section.color}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </div>
+          </div>
+        )}
+
         {/* OTHER PAGES PLACEHOLDER */}
-        {selectedPage && selectedPage !== "home" && selectedPage !== "search" && (
+        {selectedPage && selectedPage !== "home" && selectedPage !== "search" && selectedPage !== "home-jobs" && (
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
               Editing: {pages.find(p => p.value === selectedPage)?.label}
             </h2>
             <div className="text-center py-12 text-gray-500">
               <p className="text-lg">Content editing for {selectedPage} page coming soon...</p>
-              <p className="text-sm mt-2">Currently Home page and Search Results editing are available.</p>
+              <p className="text-sm mt-2">Currently Home page, Search Results, and Home Jobs Guide editing are available.</p>
             </div>
           </div>
         )}

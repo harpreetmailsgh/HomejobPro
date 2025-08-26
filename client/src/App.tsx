@@ -61,6 +61,7 @@ function Router() {
       <Route path="/hvac-noise-guide" component={HVACNoiseGuide} />
       <Route path="/air-filter-replacement-guide" component={AirFilterReplacementGuide} />
       <Route path="/thermostat-not-working-guide" component={ThermostatNotWorkingGuide} />
+      <Route path="/section/:section" component={lazy(() => import("./pages/section-topics"))} />
       <Route component={NotFound} />
     </Switch>
   );

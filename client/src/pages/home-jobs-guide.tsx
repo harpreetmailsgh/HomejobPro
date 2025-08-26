@@ -272,16 +272,32 @@ export default function HomeJobsGuide() {
                   </div>
 
                   {/* + More Button */}
-                  <div className="flex justify-center mb-6">
+                  <div className="flex justify-center gap-3 mb-6">
+                    <Link href={`/section/${category.category.toLowerCase()}`}>
+                      <Button
+                        variant="outline"
+                        className={`flex items-center gap-2 px-6 py-3 border-2 transition-all duration-200 ${
+                          category.color === 'blue' ? 'border-blue-200 hover:border-blue-400 hover:bg-blue-50 text-blue-700' :
+                          category.color === 'yellow' ? 'border-yellow-200 hover:border-yellow-400 hover:bg-yellow-50 text-yellow-700' :
+                          category.color === 'red' ? 'border-red-200 hover:border-red-400 hover:bg-red-50 text-red-700' :
+                          'border-gray-200 hover:border-gray-400 hover:bg-gray-50'
+                        }`}
+                        data-testid={`view-all-${category.category.toLowerCase()}`}
+                      >
+                        <Plus className="w-4 h-4" />
+                        View All {category.category} Topics
+                      </Button>
+                    </Link>
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       onClick={() => toggleSection(category.category)}
-                      className={`flex items-center gap-2 px-6 py-3 border-2 transition-all duration-200 ${
-                        category.color === 'blue' ? 'border-blue-200 hover:border-blue-400 hover:bg-blue-50 text-blue-700' :
-                        category.color === 'yellow' ? 'border-yellow-200 hover:border-yellow-400 hover:bg-yellow-50 text-yellow-700' :
-                        category.color === 'red' ? 'border-red-200 hover:border-red-400 hover:bg-red-50 text-red-700' :
-                        'border-gray-200 hover:border-gray-400 hover:bg-gray-50'
+                      className={`flex items-center gap-2 px-4 py-3 transition-all duration-200 ${
+                        category.color === 'blue' ? 'hover:bg-blue-50 text-blue-600' :
+                        category.color === 'yellow' ? 'hover:bg-yellow-50 text-yellow-600' :
+                        category.color === 'red' ? 'hover:bg-red-50 text-red-600' :
+                        'hover:bg-gray-50 text-gray-600'
                       }`}
+                      data-testid={`toggle-${category.category.toLowerCase()}`}
                     >
                       {expandedSections[category.category] ? (
                         <>
@@ -290,8 +306,8 @@ export default function HomeJobsGuide() {
                         </>
                       ) : (
                         <>
-                          <Plus className="w-4 h-4" />
-                          More {category.category} Topics
+                          <ChevronDown className="w-4 h-4" />
+                          Preview More
                         </>
                       )}
                     </Button>
