@@ -5,6 +5,7 @@ import Logo from './logo';
 
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] = useState(false);
 
   return (
     <header className="bg-white shadow-sm border-b">
@@ -64,20 +65,49 @@ export default function Header() {
                 About Us
               </span>
             </Link>
-            <Link href="/list-business">
-              <span className="text-gray-600 hover:text-blue-grey transition-colors cursor-pointer" data-testid="nav-list-business">
-                List Your Business
-              </span>
-            </Link>
+            {/* Your Business Listing Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setIsBusinessDropdownOpen(!isBusinessDropdownOpen)}
+                className="text-gray-600 hover:text-blue-grey transition-colors cursor-pointer flex items-center"
+                data-testid="nav-your-business-listing"
+              >
+                Your Business Listing
+                <ChevronDown className={`w-4 h-4 ml-1 transition-transform ${isBusinessDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {isBusinessDropdownOpen && (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                  <Link href="/list-business">
+                    <span 
+                      className="block px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-blue-grey transition-colors cursor-pointer"
+                      data-testid="dropdown-list-business"
+                      onClick={() => setIsBusinessDropdownOpen(false)}
+                    >
+                      List your Business
+                    </span>
+                  </Link>
+                  <span 
+                    className="block px-4 py-2 text-gray-400 cursor-not-allowed"
+                    data-testid="dropdown-renew-business"
+                  >
+                    Renew Your Business
+                  </span>
+                </div>
+              )}
+            </div>
           </nav>
         </div>
       </div>
 
       {/* Backdrop to close dropdown when clicking outside */}
-      {isDropdownOpen && (
+      {(isDropdownOpen || isBusinessDropdownOpen) && (
         <div 
           className="fixed inset-0 z-40" 
-          onClick={() => setIsDropdownOpen(false)}
+          onClick={() => {
+            setIsDropdownOpen(false);
+            setIsBusinessDropdownOpen(false);
+          }}
         />
       )}
     </header>
