@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
+import logoImage from "@assets/generated_images/Updated_Homejobspro_logo_design_8be0a3bf.png";
 
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -11,9 +12,13 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Link href="/">
-              <h1 className="text-2xl font-bold text-blue-grey cursor-pointer hover:text-blue-grey-700 transition-colors" data-testid="logo">
-                Homejobspro.com
-              </h1>
+              <div className="cursor-pointer hover:opacity-80 transition-opacity" data-testid="logo">
+                <img 
+                  src={logoImage} 
+                  alt="Homejobspro" 
+                  className="h-10 w-auto"
+                />
+              </div>
             </Link>
           </div>
           <nav className="hidden md:flex space-x-8">
