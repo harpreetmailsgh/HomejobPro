@@ -70,34 +70,44 @@ export default function RenewBusiness() {
 
   useEffect(() => {
     const searchBusiness = async () => {
-      if (watchedValues[0] && watchedValues[1] && watchedValues[1].length >= 10) {
-        setIsSearching(true);
-        setSearchAttempted(false);
+      const industry = watchedValues[0];
+      const phone = watchedValues[1];
+      
+      // Reset states when inputs are incomplete
+      if (!industry || !phone || phone.length < 10) {
         setFoundRecord(null);
+        setSearchAttempted(false);
+        setIsSearching(false);
+        return;
+      }
 
-        try {
-          const response = await apiRequest('POST', '/api/search-business', {
-            industry: watchedValues[0],
-            phone: watchedValues[1],
-          });
+      setIsSearching(true);
+      setSearchAttempted(false);
+      setFoundRecord(null);
 
-          if (response.ok) {
-            const business = await response.json();
-            setFoundRecord(business);
-          } else {
-            setFoundRecord(null);
-          }
-        } catch (error) {
-          console.error('Search error:', error);
+      try {
+        const response = await apiRequest('POST', '/api/search-business', {
+          industry,
+          phone,
+        });
+
+        if (response.ok) {
+          const business = await response.json();
+          setFoundRecord(business);
+        } else {
           setFoundRecord(null);
-        } finally {
-          setIsSearching(false);
-          setSearchAttempted(true);
         }
+      } catch (error) {
+        console.error('Search error:', error);
+        setFoundRecord(null);
+      } finally {
+        setIsSearching(false);
+        setSearchAttempted(true);
       }
     };
 
-    const timeoutId = setTimeout(searchBusiness, 500);
+    // Debounce with longer delay to prevent rapid calls
+    const timeoutId = setTimeout(searchBusiness, 1000);
     return () => clearTimeout(timeoutId);
   }, [watchedValues]);
 
