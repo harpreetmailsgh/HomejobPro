@@ -226,7 +226,7 @@ export default function RenewBusiness() {
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                     <p className="text-red-700">
                       No business found with that phone number in the {watchedValues[0]} industry. 
-                      Please verify your information or contact support.
+                      Please use the phone number listed on your Google listing. If you like, we can change your phone number anytime later.
                     </p>
                   </div>
                 )}
