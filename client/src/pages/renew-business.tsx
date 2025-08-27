@@ -180,8 +180,16 @@ export default function RenewBusiness() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
       <Header />
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-blue-600 to-green-600 text-white py-20">
-        <div className="absolute inset-0 bg-black opacity-10"></div>
+      <div 
+        className="relative text-white py-20"
+        style={{
+          backgroundImage: "url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?q=80&w=1526&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat"
+        }}
+      >
+        <div className="absolute inset-0 bg-black opacity-60"></div>
         <div className="relative container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-5xl font-bold mb-6">
@@ -333,18 +341,12 @@ export default function RenewBusiness() {
                 {/* Promotional Banner */}
                 <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white rounded-xl p-6 shadow-xl mb-8">
                   <div className="text-center">
-                    <div className="flex items-center justify-center mb-4">
-                      <Star className="w-8 h-8 mr-2 fill-current" />
-                      <span className="text-3xl font-bold">40% OFF</span>
-                      <Star className="w-8 h-8 ml-2 fill-current" />
+                    <h2 className="text-2xl font-bold mb-4">Get Promotion if you renew today</h2>
+                    <p className="text-lg mb-4">Use below code on the next page to get discount</p>
+                    <div className="bg-white rounded-lg p-4 mb-4 inline-block border-4 border-dashed border-red-600">
+                      <code className="text-3xl font-mono font-bold text-red-600">40OFF</code>
                     </div>
-                    <h2 className="text-2xl font-bold mb-2">Limited Time Offer!</h2>
-                    <p className="text-lg opacity-90">
-                      Use promo code <strong>40OFF</strong> on both renewal plans
-                    </p>
-                    <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 mt-4 inline-block">
-                      <code className="text-xl font-mono font-bold">40OFF</code>
-                    </div>
+                    <p className="text-lg font-semibold">40% off the base price</p>
                   </div>
                 </div>
 
@@ -413,33 +415,33 @@ export default function RenewBusiness() {
                                     ⭐ Premium Featured Renewal
                                   </Label>
                                   <p className="text-lg font-semibold text-red-600 mb-4">
-                                    🚀 Increase chances of calls by at least 10x by featuring your listing!
+                                    Renew and highlight my business to increase chances of calls by at least 10x
                                   </p>
                                   
                                   <div className="grid md:grid-cols-2 gap-3 mb-6">
                                     <div className="flex items-center text-green-700 font-bold">
                                       <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
-                                      Get Featured tag
+                                      Everything in Essential listing
                                     </div>
                                     <div className="flex items-center text-green-700 font-bold">
                                       <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
-                                      Call button highlighted
+                                      Get Featured tag on your listing
                                     </div>
                                     <div className="flex items-center text-green-700 font-bold">
                                       <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
-                                      Red border highlighting
+                                      Appear on TOP of FRONT page
                                     </div>
                                     <div className="flex items-center text-green-700 font-bold">
                                       <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
-                                      Red company name
+                                      Red border highlighting your business
                                     </div>
                                     <div className="flex items-center text-green-700 font-bold">
                                       <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
-                                      Priority search placement
+                                      Highlighted Call button (boosting priority calls)
                                     </div>
                                     <div className="flex items-center text-green-700 font-bold">
                                       <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
-                                      Enhanced visibility
+                                      Highlighted Company name
                                     </div>
                                   </div>
 
@@ -464,12 +466,6 @@ export default function RenewBusiness() {
                     />
 
                     <div className="mt-12 text-center">
-                      <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-8 mb-8">
-                        <h3 className="text-2xl font-bold text-gray-800 mb-4">🎉 Ready to Renew?</h3>
-                        <p className="text-lg text-gray-600 mb-6">
-                          Don't forget to apply promo code <strong>40OFF</strong> for 40% off your renewal!
-                        </p>
-                        
                         {form.watch('renewalType') === 'featured' ? (
                           <StripeButton buyButtonId="buy_btn_1S0oNoKSLjkNdRA0qai3ohgt">
                             <div className="mb-4">
@@ -497,7 +493,6 @@ export default function RenewBusiness() {
                             </div>
                           </StripeButton>
                         )}
-                      </div>
                     </div>
                   </CardContent>
                 </Card>
