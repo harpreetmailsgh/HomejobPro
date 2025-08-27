@@ -1,4 +1,4 @@
-import { Service, SearchFilters, SearchResults } from "@shared/schema";
+import { Service, SearchFilters, SearchResults, Settings } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -7,10 +7,13 @@ export interface IStorage {
   syncFromGoogleSheets(): Promise<void>;
   getUniqueIndustries(): Promise<string[]>;
   getUniqueCities(): Promise<string[]>;
+  getSettings(): Promise<Settings>;
+  saveSettings(settings: Settings): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
   private services: Map<number, Service> = new Map();
+  private settings: Settings = { id: 'default' };
   private lastSyncTime: number = 0;
 
   constructor() {
@@ -421,6 +424,19 @@ export class MemStorage implements IStorage {
       return parts[1].trim();
     }
     return '';
+  }
+
+  async getSettings(): Promise<Settings> {
+    return this.settings;
+  }
+
+  async saveSettings(settings: Settings): Promise<void> {
+    this.settings = {
+      ...settings,
+      id: 'default',
+      updatedAt: new Date().toISOString()
+    };
+    console.log('Settings saved successfully');
   }
 
   // Method to populate services (will be called from Google Sheets API)

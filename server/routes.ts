@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { searchFiltersSchema } from "@shared/schema";
 import { z } from "zod";
 import { Request, Response } from "express"; // Import Request and Response types
+import type { Settings } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
 
@@ -46,14 +47,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Sync with Google Sheets
+  // Sync data from Google Sheets
   app.post("/api/sync", async (req, res) => {
     try {
       await storage.syncFromGoogleSheets();
-      res.json({ message: "Successfully synced with Google Sheets", timestamp: new Date().toISOString() });
+      res.json({
+        success: true,
+        message: "Data synced successfully",
+        timestamp: new Date().toISOString()
+      });
     } catch (error) {
-      console.error("Error syncing with Google Sheets:", error);
-      res.status(500).json({ error: "Failed to sync with Google Sheets" });
+      console.error("Sync error:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to sync data",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
+  // Get settings
+  app.get("/api/settings", async (req, res) => {
+    try {
+      const settings = await storage.getSettings();
+      res.json(settings);
+    } catch (error) {
+      console.error("Error getting settings:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to get settings",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
+  // Save settings
+  app.post("/api/settings", async (req, res) => {
+    try {
+      const settings: Settings = req.body;
+      await storage.saveSettings(settings);
+      res.json({
+        success: true,
+        message: "Settings saved successfully",
+        timestamp: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error("Error saving settings:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to save settings",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
     }
   });
 

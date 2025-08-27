@@ -242,7 +242,7 @@ export default function Settings() {
     });
   };
 
-  const handleSaveSearchChanges = () => {
+  const handleSaveSearchChanges = async () => {
     const searchSettings = {
       searchPageTitle,
       searchPageSubtitle,
@@ -258,34 +258,125 @@ export default function Settings() {
     };
     
     try {
-      localStorage.setItem('search-results-settings', JSON.stringify(searchSettings));
+      // Get current settings from database and merge
+      const currentSettingsResponse = await fetch('/api/settings');
+      const currentSettings = currentSettingsResponse.ok ? await currentSettingsResponse.json() : {};
       
-      // Dispatch custom event to notify search page of changes
-      window.dispatchEvent(new CustomEvent('searchSettingsChanged'));
-      
-      // Show success message
-      setMessage("Search Results settings saved successfully!");
-      setMessageType("success");
-      
-      // Clear message after 3 seconds
-      setTimeout(() => {
-        setMessage("");
-        setMessageType("");
-      }, 3000);
+      const updatedSettings = {
+        ...currentSettings,
+        ...searchSettings
+      };
+
+      // Save to database via API
+      const response = await fetch('/api/settings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedSettings)
+      });
+
+      if (response.ok) {
+        // Also save to localStorage for backward compatibility
+        localStorage.setItem('search-results-settings', JSON.stringify(searchSettings));
+        
+        // Dispatch custom event to notify search page of changes
+        window.dispatchEvent(new CustomEvent('searchSettingsChanged'));
+        
+        // Show success message
+        setMessage("Search Results settings saved to database successfully!");
+        setMessageType("success");
+      } else {
+        throw new Error('Failed to save to database');
+      }
     } catch (error) {
       console.error('Error saving search settings:', error);
-      setMessage("Error saving settings. Please try again.");
-      setMessageType("error");
       
-      setTimeout(() => {
-        setMessage("");
-        setMessageType("");
-      }, 3000);
+      // Fallback to localStorage only
+      localStorage.setItem('search-results-settings', JSON.stringify(searchSettings));
+      window.dispatchEvent(new CustomEvent('searchSettingsChanged'));
+      
+      setMessage("Settings saved locally but couldn't sync to database.");
+      setMessageType("error");
     }
+    
+    // Clear message after 3 seconds
+    setTimeout(() => {
+      setMessage("");
+      setMessageType("");
+    }, 3000);
   };
 
-  const loadCurrentHomeSettings = () => {
-    // Load actual settings that the home page uses
+  const loadCurrentHomeSettings = async () => {
+    try {
+      // First try to load from database
+      const response = await fetch('/api/settings');
+      if (response.ok) {
+        const settings = await response.json();
+        
+        setHeroTitle(settings.heroTitle || "I am looking for");
+        setHeroSubtitle(settings.heroSubtitle || "Find trusted professionals for all your home service needs");
+        setSiteTitle(settings.siteTitle || "Homejobspro.com");
+        setRotatingServices(Array.isArray(settings.rotatingServices) ? settings.rotatingServices.join(', ') : "Plumber, Electrician, HVAC Technician, Landscaper, Home Services");
+        setBackgroundImage(settings.backgroundImage || "");
+        setPrimaryColor(settings.primaryColor || "#607D8B");
+        setAccentColor(settings.accentColor || "#FF5722");
+
+        // Stats section
+        setStatsTitle(settings.statsTitle || "Trusted by Thousands");
+        setStatsSubtitle(settings.statsSubtitle || "Join the growing community of satisfied homeowners");
+        setStat1Value(settings.stat1Value || "10,000+");
+        setStat1Label(settings.stat1Label || "Happy Customers");
+        setStat2Value(settings.stat2Value || "15,000+");
+        setStat2Label(settings.stat2Label || "Jobs Completed");
+        setStat3Value(settings.stat3Value || "4.8/5");
+        setStat3Label(settings.stat3Label || "Average Rating");
+        setStat4Value(settings.stat4Value || "100%");
+        setStat4Label(settings.stat4Label || "Verified Pros");
+
+        // Featured Services section
+        setFeaturedTitle(settings.featuredTitle || "Featured Services");
+        setFeaturedSubtitle(settings.featuredSubtitle || "Popular home services trusted by thousands of homeowners");
+
+        // How It Works section
+        setHowItWorksTitle(settings.howItWorksTitle || "How It Works");
+        setHowItWorksSubtitle(settings.howItWorksSubtitle || "Get your home project completed in 4 simple steps");
+
+        // Search Box section
+        if (settings.searchPlaceholders && Array.isArray(settings.searchPlaceholders)) {
+          setSearchPlaceholders(settings.searchPlaceholders.join('\n'));
+        } else {
+          setSearchPlaceholders("Find a plumber in Toronto...\nSearch for electricians in Ottawa...\nLooking for HVAC service in Mississauga?\nFind home repair experts in Brampton...\nSearch landscapers in Hamilton...\nNeed a handyman in London?");
+        }
+
+        // Search Results page settings
+        setSearchPageTitle(settings.searchPageTitle || "Search Results");
+        setSearchPageSubtitle(settings.searchPageSubtitle || "Find the perfect professional for your home service needs");
+        setResultsFoundText(settings.resultsFoundText || "professional(s) found");
+        setNoResultsText(settings.noResultsText || "No professionals found matching your criteria. Try adjusting your filters.");
+        setFilterSectionTitle(settings.filterSectionTitle || "Filters");
+        
+        setPlumberImage(settings.plumberImage || "");
+        setElectricianImage(settings.electricianImage || "");
+        setHvacImage(settings.hvacImage || "");
+        
+        setPlumberDescription(settings.plumberDescription || "Professional plumbing services for repairs, installations, and maintenance");
+        setElectricianDescription(settings.electricianDescription || "Licensed electrical services for wiring, repairs, and installations");
+        setHvacDescription(settings.hvacDescription || "Heating, ventilation, and air conditioning experts for your comfort needs");
+
+        // Home Jobs Guide settings
+        if (settings.homeJobsSections) {
+          setHomeJobsSections(settings.homeJobsSections);
+        }
+
+        console.log('Settings loaded from database successfully');
+        return;
+      }
+    } catch (error) {
+      console.error('Error loading settings from database:', error);
+    }
+
+    // Fallback to localStorage if database fails
     const savedSettings = localStorage.getItem('homejobspro-settings');
     if (savedSettings) {
       try {
@@ -325,13 +416,12 @@ export default function Settings() {
           setSearchPlaceholders("Find a plumber in Toronto...\nSearch for electricians in Ottawa...\nLooking for HVAC service in Mississauga?\nFind home repair experts in Brampton...\nSearch landscapers in Hamilton...\nNeed a handyman in London?");
         }
 
+        console.log('Settings loaded from localStorage as fallback');
       } catch (error) {
         console.error('Error loading settings:', error);
-        // Set defaults if loading fails
         setDefaults();
       }
     } else {
-      // Set defaults if no settings found
       setDefaults();
     }
   };
@@ -415,8 +505,7 @@ export default function Settings() {
     }
   };
 
-  const handleSaveHomeChanges = () => {
-    // Save using the correct format that the home page expects
+  const handleSaveHomeChanges = async () => {
     const settings = {
       heroTitle,
       heroSubtitle,
@@ -449,34 +538,66 @@ export default function Settings() {
       // Search Box section
       searchPlaceholders: searchPlaceholders.split('\n').filter(line => line.trim()),
 
-      // Keep other existing settings that might be there
-      enableAnimations: true,
-      rotationSpeed: 3000,
-      fadeSpeed: 200,
-      backgroundGradient: "gradient",
-      cardsPerRow: "4",
-      enableFilters: true,
-      resultsPerPage: 20,
-      heroAnimation: "swirl"
+      // Search Results page settings
+      searchPageTitle,
+      searchPageSubtitle,
+      resultsFoundText,
+      noResultsText,
+      filterSectionTitle,
+      plumberImage,
+      electricianImage,
+      hvacImage,
+      plumberDescription,
+      electricianDescription,
+      hvacDescription,
+
+      // Home Jobs Guide settings
+      homeJobsSections
     };
 
-    // Save to the correct localStorage key
-    localStorage.setItem('homejobspro-settings', JSON.stringify(settings));
-    
-    // Apply CSS custom properties for real-time theme changes
-    document.documentElement.style.setProperty('--blue-grey', primaryColor);
-    document.documentElement.style.setProperty('--orange-primary', accentColor);
-    
-    // Update page title
-    document.title = siteTitle;
-    
-    // Dispatch the correct event that the home page listens for
-    window.dispatchEvent(new CustomEvent('settingsChanged', { detail: settings }));
+    try {
+      // Save to database via API
+      const response = await fetch('/api/settings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(settings)
+      });
 
-    toast({
-      title: "Home Page Updated!",
-      description: "Your changes have been saved and applied. The home page should update immediately.",
-    });
+      if (response.ok) {
+        // Also save to localStorage for backward compatibility and immediate use
+        localStorage.setItem('homejobspro-settings', JSON.stringify(settings));
+        
+        // Apply CSS custom properties for real-time theme changes
+        document.documentElement.style.setProperty('--blue-grey', primaryColor);
+        document.documentElement.style.setProperty('--orange-primary', accentColor);
+        
+        // Update page title
+        document.title = siteTitle;
+        
+        // Dispatch the correct event that the home page listens for
+        window.dispatchEvent(new CustomEvent('settingsChanged', { detail: settings }));
+
+        toast({
+          title: "Settings Saved!",
+          description: "Your changes have been saved to the database and will persist across sessions.",
+        });
+      } else {
+        throw new Error('Failed to save to database');
+      }
+    } catch (error) {
+      console.error('Error saving settings:', error);
+      
+      // Fallback to localStorage only
+      localStorage.setItem('homejobspro-settings', JSON.stringify(settings));
+      
+      toast({
+        title: "Settings Saved Locally",
+        description: "Settings saved locally but couldn't sync to database. Changes may not persist across devices.",
+        variant: "destructive"
+      });
+    }
   };
 
   
@@ -517,6 +638,17 @@ export default function Settings() {
       loadCurrentHomeSettings();
     }
   }, []);
+
+  // Load settings from database when page changes
+  useEffect(() => {
+    if (selectedPage === "home") {
+      loadCurrentHomeSettings();
+    } else if (selectedPage === "search") {
+      loadCurrentSearchSettings();
+    } else if (selectedPage === "home-jobs") {
+      loadHomeJobsSettings();
+    }
+  }, [selectedPage]);
 
   return (
     <div className="min-h-screen bg-gray-50">

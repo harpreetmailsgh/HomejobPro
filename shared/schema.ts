@@ -44,3 +44,68 @@ export const searchResultsSchema = z.object({
 });
 
 export type SearchResults = z.infer<typeof searchResultsSchema>;
+
+export const settingsSchema = z.object({
+  id: z.string().default('default'),
+  // Home page settings
+  heroTitle: z.string().optional(),
+  heroSubtitle: z.string().optional(),
+  siteTitle: z.string().optional(),
+  rotatingServices: z.array(z.string()).optional(),
+  backgroundImage: z.string().optional(),
+  primaryColor: z.string().optional(),
+  accentColor: z.string().optional(),
+  
+  // Stats section
+  statsTitle: z.string().optional(),
+  statsSubtitle: z.string().optional(),
+  stat1Value: z.string().optional(),
+  stat1Label: z.string().optional(),
+  stat2Value: z.string().optional(),
+  stat2Label: z.string().optional(),
+  stat3Value: z.string().optional(),
+  stat3Label: z.string().optional(),
+  stat4Value: z.string().optional(),
+  stat4Label: z.string().optional(),
+
+  // Featured Services section
+  featuredTitle: z.string().optional(),
+  featuredSubtitle: z.string().optional(),
+
+  // How It Works section
+  howItWorksTitle: z.string().optional(),
+  howItWorksSubtitle: z.string().optional(),
+
+  // Search Box section
+  searchPlaceholders: z.array(z.string()).optional(),
+
+  // Search Results page settings
+  searchPageTitle: z.string().optional(),
+  searchPageSubtitle: z.string().optional(),
+  resultsFoundText: z.string().optional(),
+  noResultsText: z.string().optional(),
+  filterSectionTitle: z.string().optional(),
+  
+  // Service type images
+  plumberImage: z.string().optional(),
+  electricianImage: z.string().optional(),
+  hvacImage: z.string().optional(),
+  
+  // Service type descriptions
+  plumberDescription: z.string().optional(),
+  electricianDescription: z.string().optional(),
+  hvacDescription: z.string().optional(),
+
+  // Home Jobs Guide settings
+  homeJobsSections: z.array(z.object({
+    id: z.string(),
+    name: z.string(),
+    icon: z.string(),
+    color: z.string(),
+    description: z.string()
+  })).optional(),
+
+  updatedAt: z.string().optional()
+});
+
+export type Settings = z.infer<typeof settingsSchema>;
