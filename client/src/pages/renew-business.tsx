@@ -13,6 +13,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Check, Star, Phone, MapPin, Mail, Globe, TrendingUp, Users, Award, Zap } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 import { useSEO } from '@/hooks/use-seo';
+import Header from '@/components/header';
 
 const renewalSchema = z.object({
   industry: z.string().min(1, 'Please select an industry'),
@@ -177,6 +178,7 @@ export default function RenewBusiness() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+      <Header />
       {/* Hero Section */}
       <div className="relative bg-gradient-to-r from-blue-600 to-green-600 text-white py-20">
         <div className="absolute inset-0 bg-black opacity-10"></div>
