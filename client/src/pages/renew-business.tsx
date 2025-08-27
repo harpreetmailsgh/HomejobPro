@@ -183,7 +183,7 @@ export default function RenewBusiness() {
       <div 
         className="relative text-white py-20"
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?q=80&w=1526&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+          backgroundImage: "url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat"
@@ -338,18 +338,6 @@ export default function RenewBusiness() {
 
             {foundRecord && (
               <>
-                {/* Promotional Banner */}
-                <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white rounded-xl p-6 shadow-xl mb-8">
-                  <div className="text-center">
-                    <h2 className="text-2xl font-bold mb-4">Get Promotion if you renew today</h2>
-                    <p className="text-lg mb-4">Use below code on the next page to get discount</p>
-                    <div className="bg-white rounded-lg p-4 mb-4 inline-block border-4 border-dashed border-red-600">
-                      <code className="text-3xl font-mono font-bold text-red-600">40OFF</code>
-                    </div>
-                    <p className="text-lg font-semibold">40% off the base price</p>
-                  </div>
-                </div>
-
                 <Card className="shadow-xl border-0">
                   <CardHeader className="bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-t-lg">
                     <CardTitle className="text-2xl flex items-center">
@@ -371,38 +359,6 @@ export default function RenewBusiness() {
                             value={field.value}
                             className="space-y-6"
                           >
-                            <div className="border-2 border-gray-200 rounded-xl p-8 hover:border-blue-300 transition-all duration-300 hover:shadow-lg">
-                              <div className="flex items-start space-x-4 mb-4">
-                                <RadioGroupItem value="basic" id="basic" data-testid="radio-basic" className="mt-1" />
-                                <div className="flex-1">
-                                  <Label htmlFor="basic" className="text-2xl font-bold text-gray-800 cursor-pointer block mb-2">
-                                    💼 Essential Renewal
-                                  </Label>
-                                  <p className="text-gray-600 text-lg mb-4">
-                                    Keep your business visible and maintain your current listing status
-                                  </p>
-                                  <div className="grid md:grid-cols-2 gap-4">
-                                    <div className="flex items-center text-green-600 font-medium">
-                                      <Check className="w-5 h-5 mr-2" />
-                                      Stay searchable
-                                    </div>
-                                    <div className="flex items-center text-green-600 font-medium">
-                                      <Check className="w-5 h-5 mr-2" />
-                                      Maintain ratings
-                                    </div>
-                                    <div className="flex items-center text-green-600 font-medium">
-                                      <Check className="w-5 h-5 mr-2" />
-                                      Customer contact info
-                                    </div>
-                                    <div className="flex items-center text-green-600 font-medium">
-                                      <Check className="w-5 h-5 mr-2" />
-                                      12-month listing
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
                             <div className="border-2 border-red-300 rounded-xl p-8 bg-gradient-to-br from-red-50 to-orange-50 shadow-lg relative overflow-hidden">
                               <div className="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold transform rotate-12 shadow-lg">
                                 🔥 MOST POPULAR
@@ -460,6 +416,38 @@ export default function RenewBusiness() {
                                 </div>
                               </div>
                             </div>
+
+                            <div className="border-2 border-gray-200 rounded-xl p-8 hover:border-blue-300 transition-all duration-300 hover:shadow-lg">
+                              <div className="flex items-start space-x-4 mb-4">
+                                <RadioGroupItem value="basic" id="basic" data-testid="radio-basic" className="mt-1" />
+                                <div className="flex-1">
+                                  <Label htmlFor="basic" className="text-2xl font-bold text-gray-800 cursor-pointer block mb-2">
+                                    💼 Essential Renewal
+                                  </Label>
+                                  <p className="text-gray-600 text-lg mb-4">
+                                    Keep my business visible and maintain my current listing status
+                                  </p>
+                                  <div className="grid md:grid-cols-2 gap-4">
+                                    <div className="flex items-center text-green-600 font-medium">
+                                      <Check className="w-5 h-5 mr-2" />
+                                      Stay searchable
+                                    </div>
+                                    <div className="flex items-center text-green-600 font-medium">
+                                      <Check className="w-5 h-5 mr-2" />
+                                      Maintain ratings
+                                    </div>
+                                    <div className="flex items-center text-green-600 font-medium">
+                                      <Check className="w-5 h-5 mr-2" />
+                                      Customer contact info
+                                    </div>
+                                    <div className="flex items-center text-green-600 font-medium">
+                                      <Check className="w-5 h-5 mr-2" />
+                                      12-month listing
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </RadioGroup>
                         </FormItem>
                       )}
@@ -496,6 +484,18 @@ export default function RenewBusiness() {
                     </div>
                   </CardContent>
                 </Card>
+
+                {/* Promotional Banner - Smaller version */}
+                <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white rounded-lg p-4 shadow-lg mb-6">
+                  <div className="text-center">
+                    <h3 className="text-lg font-bold mb-2">Get Promotion if you renew today</h3>
+                    <p className="text-sm mb-3">Use below code on the next page to get discount</p>
+                    <div className="bg-white rounded p-2 mb-2 inline-block border-2 border-dashed border-red-600">
+                      <code className="text-xl font-mono font-bold text-red-600">40OFF</code>
+                    </div>
+                    <p className="text-sm font-semibold">40% off the base price</p>
+                  </div>
+                </div>
                 
                 {/* Trust and Security Section */}
                 <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
