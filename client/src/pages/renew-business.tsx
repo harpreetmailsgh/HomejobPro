@@ -32,23 +32,7 @@ interface ServiceRecord {
   industry: string;
 }
 
-const industryOptions = [
-  'Plumbing',
-  'Electrical',
-  'HVAC',
-  'Landscaping',
-  'Roofing',
-  'Painting',
-  'Cleaning Services',
-  'Handyman',
-  'Flooring',
-  'Windows & Doors',
-  'Pest Control',
-  'Security Systems',
-  'Pool Services',
-  'Moving Services',
-  'Appliance Repair',
-];
+// We'll fetch the actual industries from the API
 
 export default function RenewBusiness() {
   useSEO({
@@ -58,6 +42,16 @@ export default function RenewBusiness() {
 
   const [foundRecord, setFoundRecord] = useState<ServiceRecord | null>(null);
   const [searchAttempted, setSearchAttempted] = useState(false);
+
+  // Fetch available industries from the API
+  const { data: industries = [] } = useQuery({
+    queryKey: ['/api/industries'],
+    queryFn: async () => {
+      const response = await apiRequest('GET', '/api/industries');
+      if (!response.ok) throw new Error('Failed to fetch industries');
+      return response.json();
+    },
+  });
 
   const form = useForm<RenewFormData>({
     resolver: zodResolver(renewFormSchema),
@@ -156,7 +150,7 @@ export default function RenewBusiness() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {industryOptions.map((industry) => (
+                          {industries.map((industry: string) => (
                             <SelectItem key={industry} value={industry}>
                               {industry}
                             </SelectItem>

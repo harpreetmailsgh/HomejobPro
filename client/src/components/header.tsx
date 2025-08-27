@@ -87,12 +87,15 @@ export default function Header() {
                       List your Business
                     </span>
                   </Link>
-                  <span 
-                    className="block px-4 py-2 text-gray-400 cursor-not-allowed"
-                    data-testid="dropdown-renew-business"
-                  >
-                    Renew Your Business
-                  </span>
+                  <Link href="/renew-business">
+                    <span 
+                      className="block px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-blue-grey transition-colors cursor-pointer"
+                      data-testid="dropdown-renew-business"
+                      onClick={() => setIsBusinessDropdownOpen(false)}
+                    >
+                      Renew Your Business
+                    </span>
+                  </Link>
                 </div>
               )}
             </div>
