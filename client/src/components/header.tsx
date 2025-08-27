@@ -93,7 +93,7 @@ export default function Header() {
                       data-testid="dropdown-renew-business"
                       onClick={() => setIsBusinessDropdownOpen(false)}
                     >
-                      Renew Your Business
+                      Renew Your Business Listing
                     </span>
                   </Link>
                 </div>

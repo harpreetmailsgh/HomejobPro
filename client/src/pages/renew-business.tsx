@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -68,23 +68,38 @@ export default function RenewBusiness() {
     staleTime: 5 * 60 * 1000,
   });
 
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastSearchRef = useRef<string>('');
+
   useEffect(() => {
-    const searchBusiness = async () => {
-      const industry = watchedValues[0];
-      const phone = watchedValues[1];
-      
-      // Reset states when inputs are incomplete
-      if (!industry || !phone || phone.length < 10) {
-        setFoundRecord(null);
-        setSearchAttempted(false);
-        setIsSearching(false);
-        return;
-      }
+    const industry = watchedValues[0];
+    const phone = watchedValues[1];
+    
+    // Create a unique key for this search
+    const searchKey = `${industry}-${phone}`;
+    
+    // Clear any existing timeout
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
 
-      setIsSearching(true);
-      setSearchAttempted(false);
+    // Reset states when inputs are incomplete
+    if (!industry || !phone || phone.length < 10) {
       setFoundRecord(null);
+      setSearchAttempted(false);
+      setIsSearching(false);
+      lastSearchRef.current = '';
+      return;
+    }
 
+    // Don't search if it's the same as the last search
+    if (searchKey === lastSearchRef.current) {
+      return;
+    }
+
+    setIsSearching(true);
+    
+    const searchBusiness = async () => {
       try {
         const response = await apiRequest('POST', '/api/search-business', {
           industry,
@@ -103,12 +118,19 @@ export default function RenewBusiness() {
       } finally {
         setIsSearching(false);
         setSearchAttempted(true);
+        lastSearchRef.current = searchKey;
       }
     };
 
-    // Debounce with longer delay to prevent rapid calls
-    const timeoutId = setTimeout(searchBusiness, 1000);
-    return () => clearTimeout(timeoutId);
+    // Debounce search with 1.5 second delay
+    searchTimeoutRef.current = setTimeout(searchBusiness, 1500);
+
+    // Cleanup function
+    return () => {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+      }
+    };
   }, [watchedValues]);
 
   const onSubmit = (data: RenewalForm) => {
