@@ -75,12 +75,10 @@ export default function RenewBusiness() {
     const industry = watchedValues[0];
     const phone = watchedValues[1];
     
-    // Create a unique key for this search
-    const searchKey = `${industry}-${phone}`;
-    
     // Clear any existing timeout
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current);
+      searchTimeoutRef.current = null;
     }
 
     // Reset states when inputs are incomplete
@@ -92,14 +90,23 @@ export default function RenewBusiness() {
       return;
     }
 
-    // Don't search if it's the same as the last search
+    // Create a unique key for this search
+    const searchKey = `${industry}-${phone}`;
+    
+    // Don't search if it's the same as the last successful search
     if (searchKey === lastSearchRef.current) {
       return;
     }
 
-    setIsSearching(true);
-    
     const searchBusiness = async () => {
+      // Double check we should still search (component might have unmounted)
+      if (!industry || !phone || phone.length < 10) {
+        return;
+      }
+
+      setIsSearching(true);
+      setSearchAttempted(false);
+      
       try {
         const response = await apiRequest('POST', '/api/search-business', {
           industry,
@@ -109,6 +116,7 @@ export default function RenewBusiness() {
         if (response.ok) {
           const business = await response.json();
           setFoundRecord(business);
+          lastSearchRef.current = searchKey;
         } else {
           setFoundRecord(null);
         }
@@ -118,17 +126,17 @@ export default function RenewBusiness() {
       } finally {
         setIsSearching(false);
         setSearchAttempted(true);
-        lastSearchRef.current = searchKey;
       }
     };
 
-    // Debounce search with 1.5 second delay
-    searchTimeoutRef.current = setTimeout(searchBusiness, 1500);
+    // Debounce search with 1 second delay
+    searchTimeoutRef.current = setTimeout(searchBusiness, 1000);
 
     // Cleanup function
     return () => {
       if (searchTimeoutRef.current) {
         clearTimeout(searchTimeoutRef.current);
+        searchTimeoutRef.current = null;
       }
     };
   }, [watchedValues]);
