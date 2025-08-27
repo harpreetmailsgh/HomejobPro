@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -18,9 +18,6 @@ import Header from '@/components/header';
 const renewalSchema = z.object({
   industry: z.string().min(1, 'Please select an industry'),
   phone: z.string().min(1, 'Please enter your phone number'),
-  renewalType: z.enum(['basic', 'featured'], {
-    required_error: 'Please select a renewal type',
-  }),
 });
 
 type RenewalForm = z.infer<typeof renewalSchema>;
@@ -57,7 +54,6 @@ export default function RenewBusiness() {
     defaultValues: {
       industry: '',
       phone: '',
-      renewalType: 'basic',
     },
   });
 
@@ -147,34 +143,7 @@ export default function RenewBusiness() {
     // Payment processing will be implemented later
   };
 
-  // Stripe button component for buy buttons
-  const StripeButton = ({ buyButtonId, children }: { buyButtonId: string; children: React.ReactNode }) => {
-    useEffect(() => {
-      // Load Stripe script
-      const script = document.createElement('script');
-      script.src = 'https://js.stripe.com/v3/buy-button.js';
-      script.async = true;
-      document.head.appendChild(script);
-
-      return () => {
-        document.head.removeChild(script);
-      };
-    }, []);
-
-    return (
-      <div>
-        {children}
-        <div
-          dangerouslySetInnerHTML={{
-            __html: `<stripe-buy-button
-              buy-button-id="${buyButtonId}"
-              publishable-key="pk_live_51RJIuFKSLjkNdRA0OGFrnl7BO4TgXPBfMRaVtuge1GaHHYvBtsjtwOU8jEDKNuAxjJ6uGQkBevDWdmV0DN5oOeiu00Gasg6ubC">
-            </stripe-buy-button>`
-          }}
-        />
-      </div>
-    );
-  };
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
@@ -349,145 +318,139 @@ export default function RenewBusiness() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="p-8">
-                    <FormField
-                      control={form.control}
-                      name="renewalType"
-                      render={({ field }) => (
-                        <FormItem className="space-y-6">
-                          <RadioGroup
-                            onValueChange={field.onChange}
-                            value={field.value}
-                            className="space-y-6"
-                          >
-                            <div className="border-2 border-red-300 rounded-xl p-8 bg-gradient-to-br from-red-50 to-orange-50 shadow-lg relative overflow-hidden">
-                              <div className="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold transform rotate-12 shadow-lg">
-                                🔥 MOST POPULAR
-                              </div>
-                              
-                              <div className="flex items-start space-x-4 mb-6">
-                                <RadioGroupItem value="featured" id="featured" data-testid="radio-featured" className="mt-1" />
-                                <div className="flex-1">
-                                  <Label htmlFor="featured" className="text-2xl font-bold text-red-700 cursor-pointer block mb-2">
-                                    ⭐ Premium Featured Renewal
-                                  </Label>
-                                  <p className="text-lg font-semibold text-red-600 mb-4">
-                                    Renew and highlight my business to increase chances of calls by at least 10x
-                                  </p>
-                                  
-                                  <div className="grid md:grid-cols-2 gap-3 mb-6">
-                                    <div className="flex items-center text-green-700 font-bold">
-                                      <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
-                                      Everything in Essential Renewal
-                                    </div>
-                                    <div className="flex items-center text-green-700 font-bold">
-                                      <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
-                                      Get Featured tag on your listing
-                                    </div>
-                                    <div className="flex items-center text-green-700 font-bold">
-                                      <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
-                                      Appear on TOP of FRONT page
-                                    </div>
-                                    <div className="flex items-center text-green-700 font-bold">
-                                      <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
-                                      Red border highlighting your business
-                                    </div>
-                                    <div className="flex items-center text-green-700 font-bold">
-                                      <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
-                                      Highlighted Call button (boosting priority calls)
-                                    </div>
-                                    <div className="flex items-center text-green-700 font-bold">
-                                      <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
-                                      Highlighted Company name
-                                    </div>
-                                  </div>
-
-                                  <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4 border-2 border-orange-300">
-                                    <div className="flex items-center justify-between">
-                                      <div>
-                                        <p className="text-lg font-semibold text-gray-800">💰 Value Comparison</p>
-                                        <p className="text-sm text-gray-600">Compared to traditional advertising</p>
-                                      </div>
-                                      <div className="text-right">
-                                        <div className="text-2xl font-bold text-green-600">10x</div>
-                                        <div className="text-sm text-gray-600">More effective</div>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div className="mt-6">
-                                    <StripeButton buyButtonId="buy_btn_1S0oNoKSLjkNdRA0qai3ohgt">
-                                      <Button
-                                        type="button"
-                                        size="lg"
-                                        className="w-full px-8 py-4 text-xl bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 shadow-xl transform hover:scale-105 transition-all duration-300"
-                                        data-testid="button-featured-renewal-top"
-                                      >
-                                        🚀 Get Premium Featured Renewal Now
-                                      </Button>
-                                    </StripeButton>
-                                  </div>
-                                </div>
-                              </div>
+                    <div className="space-y-6">
+                      <div className="border-2 border-red-300 rounded-xl p-8 bg-gradient-to-br from-red-50 to-orange-50 shadow-lg relative overflow-hidden">
+                        <div className="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold transform rotate-12 shadow-lg">
+                          🔥 MOST POPULAR
+                        </div>
+                        
+                        <div className="mb-6">
+                          <h3 className="text-2xl font-bold text-red-700 mb-2">
+                            ⭐ Premium Featured Renewal
+                          </h3>
+                          <p className="text-lg font-semibold text-red-600 mb-4">
+                            Renew and highlight my business to increase chances of calls by at least 10x
+                          </p>
+                          
+                          <div className="grid md:grid-cols-2 gap-3 mb-6">
+                            <div className="flex items-center text-green-700 font-bold">
+                              <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
+                              Everything in Essential Renewal
                             </div>
-
-                            <div className="border-2 border-gray-200 rounded-xl p-8 hover:border-blue-300 transition-all duration-300 hover:shadow-lg">
-                              <div className="flex items-start space-x-4 mb-4">
-                                <RadioGroupItem value="basic" id="basic" data-testid="radio-basic" className="mt-1" />
-                                <div className="flex-1">
-                                  <Label htmlFor="basic" className="text-2xl font-bold text-gray-800 cursor-pointer block mb-2">
-                                    💼 Essential Renewal
-                                  </Label>
-                                  <p className="text-gray-600 text-lg mb-4">
-                                    Keep my business visible and maintain my current listing status
-                                  </p>
-                                  <div className="grid md:grid-cols-2 gap-4 mb-6">
-                                    <div className="flex items-center text-green-600 font-medium">
-                                      <Check className="w-5 h-5 mr-2" />
-                                      Stay searchable
-                                    </div>
-                                    <div className="flex items-center text-green-600 font-medium">
-                                      <Check className="w-5 h-5 mr-2" />
-                                      Maintain ratings
-                                    </div>
-                                    <div className="flex items-center text-green-600 font-medium">
-                                      <Check className="w-5 h-5 mr-2" />
-                                      Customer contact info
-                                    </div>
-                                    <div className="flex items-center text-green-600 font-medium">
-                                      <Check className="w-5 h-5 mr-2" />
-                                      12-month listing
-                                    </div>
-                                  </div>
-
-                                  <div className="mt-4">
-                                    <StripeButton buyButtonId="buy_btn_1S0oG9KSLjkNdRA0s71IvRKU">
-                                      <Button
-                                        type="button"
-                                        size="lg"
-                                        className="w-full px-8 py-4 text-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 shadow-lg transform hover:scale-105 transition-all duration-300"
-                                        data-testid="button-essential-renewal-inline"
-                                      >
-                                        💼 Get Essential Renewal
-                                      </Button>
-                                    </StripeButton>
-                                  </div>
-                                </div>
-                              </div>
+                            <div className="flex items-center text-green-700 font-bold">
+                              <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
+                              Get Featured tag on your listing
                             </div>
-                          </RadioGroup>
-                        </FormItem>
-                      )}
-                    />
-
-                    <div className="mt-8 p-4 bg-gradient-to-r from-orange-100 to-red-100 rounded-lg border-2 border-dashed border-orange-400">
-                      <div className="text-center">
-                        <p className="text-sm font-semibold text-orange-800 mb-2">🎯 Limited Time Offer</p>
-                        <div className="flex items-center justify-center space-x-3">
-                          <span className="text-orange-700 font-medium">Use code:</span>
-                          <div className="bg-white px-3 py-1 rounded border-2 border-dashed border-red-500">
-                            <code className="text-lg font-mono font-bold text-red-600">40OFF</code>
+                            <div className="flex items-center text-green-700 font-bold">
+                              <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
+                              Appear on TOP of FRONT page
+                            </div>
+                            <div className="flex items-center text-green-700 font-bold">
+                              <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
+                              Red border highlighting your business
+                            </div>
+                            <div className="flex items-center text-green-700 font-bold">
+                              <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
+                              Highlighted Call button (boosting priority calls)
+                            </div>
+                            <div className="flex items-center text-green-700 font-bold">
+                              <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
+                              Highlighted Company name
+                            </div>
                           </div>
-                          <span className="text-orange-700 font-medium">for 40% off</span>
+
+                          <div className="bg-gradient-to-r from-orange-100 to-red-100 rounded-lg border-2 border-dashed border-orange-400 p-3 mb-4">
+                            <div className="text-center">
+                              <p className="text-sm font-bold text-orange-800 mb-1">⚡ EXCLUSIVE TODAY ONLY!</p>
+                              <p className="text-xs text-orange-700">Lock in premium visibility before your competitors do - Limited spots available!</p>
+                            </div>
+                          </div>
+
+                          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4 border-2 border-orange-300 mb-6">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="text-lg font-semibold text-gray-800">💰 Value Comparison</p>
+                                <p className="text-sm text-gray-600">Compared to traditional advertising</p>
+                              </div>
+                              <div className="text-right">
+                                <div className="text-2xl font-bold text-green-600">10x</div>
+                                <div className="text-sm text-gray-600">More effective</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="mt-6">
+                            <a 
+                              href="https://buy.stripe.com/14A28sfoZ8Ale9idBkgfu03" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="block"
+                            >
+                              <Button
+                                type="button"
+                                size="lg"
+                                className="w-full px-8 py-4 text-xl bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 shadow-xl transform hover:scale-105 transition-all duration-300"
+                                data-testid="button-featured-renewal-top"
+                              >
+                                🚀 Get Premium Featured Renewal Now
+                              </Button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="border-2 border-gray-200 rounded-xl p-8 hover:border-blue-300 transition-all duration-300 hover:shadow-lg">
+                        <div className="mb-4">
+                          <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                            💼 Essential Renewal
+                          </h3>
+                          <p className="text-gray-600 text-lg mb-4">
+                            Keep my business visible and maintain my current listing status
+                          </p>
+                          
+                          <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg border-2 border-dashed border-blue-400 p-3 mb-4">
+                            <div className="text-center">
+                              <p className="text-sm font-bold text-blue-800 mb-1">🎯 SECURE YOUR SPOT TODAY!</p>
+                              <p className="text-xs text-blue-700">Don't lose your online presence - Renew now and stay competitive!</p>
+                            </div>
+                          </div>
+
+                          <div className="grid md:grid-cols-2 gap-4 mb-6">
+                            <div className="flex items-center text-green-600 font-medium">
+                              <Check className="w-5 h-5 mr-2" />
+                              Stay searchable
+                            </div>
+                            <div className="flex items-center text-green-600 font-medium">
+                              <Check className="w-5 h-5 mr-2" />
+                              Maintain ratings
+                            </div>
+                            <div className="flex items-center text-green-600 font-medium">
+                              <Check className="w-5 h-5 mr-2" />
+                              Customer contact info
+                            </div>
+                            <div className="flex items-center text-green-600 font-medium">
+                              <Check className="w-5 h-5 mr-2" />
+                              12-month listing
+                            </div>
+                          </div>
+
+                          <div className="mt-4">
+                            <a 
+                              href="https://buy.stripe.com/28EaEY2CdbMxe9ibtcgfu02" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="block"
+                            >
+                              <Button
+                                type="button"
+                                size="lg"
+                                className="w-full px-8 py-4 text-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 shadow-lg transform hover:scale-105 transition-all duration-300"
+                                data-testid="button-essential-renewal-inline"
+                              >
+                                💼 Get Essential Renewal
+                              </Button>
+                            </a>
+                          </div>
                         </div>
                       </div>
                     </div>
