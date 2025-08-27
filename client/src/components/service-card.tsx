@@ -67,7 +67,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
   return (
     <div className={`bg-white rounded-xl overflow-hidden card-hover ${
       isFeatured 
-        ? 'border-2 border-red-500 shadow-lg shadow-red-200' 
+        ? 'border-[3px] border-red-500 shadow-lg shadow-red-200' 
         : 'shadow-md'
     }`} data-testid={`service-card-${service.id}`}>
       <img 
@@ -77,11 +77,11 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         data-testid={`service-image-${service.id}`}
       />
       <div className="p-6">
-        <div className="flex items-start justify-between mb-2">
-          <h3 className="text-xl font-semibold text-gray-800 flex-1" data-testid={`service-title-${service.id}`}>
+        <div className="mb-2">
+          <h3 className="text-xl font-semibold text-gray-800 truncate mb-2" data-testid={`service-title-${service.id}`} title={service.title}>
             {service.title}
           </h3>
-          <div className="flex items-center space-x-2 ml-2">
+          <div className="flex flex-wrap gap-2">
             {isFeatured && (
               <div className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center">
                 <Star className="w-3 h-3 mr-1 fill-current" />
