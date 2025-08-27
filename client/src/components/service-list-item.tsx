@@ -80,7 +80,9 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
 
       <div className="flex-1 min-w-0">
         <div className="mb-2">
-          <h3 className="text-xl font-semibold text-gray-800 truncate mb-2" data-testid={`service-list-title-${service.id}`} title={service.title}>
+          <h3 className={`text-xl font-semibold truncate mb-2 ${
+            isFeatured ? 'text-red-600' : 'text-gray-800'
+          }`} data-testid={`service-list-title-${service.id}`} title={service.title}>
             {service.title}
           </h3>
           <div className="flex flex-wrap gap-2 mb-2">
