@@ -359,14 +359,7 @@ export default function RenewBusiness() {
                             </div>
                           </div>
 
-                          <div className="bg-gradient-to-r from-orange-100 to-red-100 rounded-lg border-2 border-dashed border-orange-400 p-3 mb-4">
-                            <div className="text-center">
-                              <p className="text-sm font-bold text-orange-800 mb-1">⚡ EXCLUSIVE TODAY ONLY!</p>
-                              <p className="text-xs text-orange-700">Lock in premium visibility before your competitors do - Limited spots available!</p>
-                            </div>
-                          </div>
-
-                          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4 border-2 border-orange-300 mb-6">
+                          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4 border-2 border-orange-300 mb-4">
                             <div className="flex items-center justify-between">
                               <div>
                                 <p className="text-lg font-semibold text-gray-800">💰 Value Comparison</p>
@@ -376,6 +369,23 @@ export default function RenewBusiness() {
                                 <div className="text-2xl font-bold text-green-600">10x</div>
                                 <div className="text-sm text-gray-600">More effective</div>
                               </div>
+                            </div>
+                          </div>
+
+                          <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-4 border-2 border-green-300 mb-4">
+                            <div className="text-center">
+                              <p className="text-2xl font-bold text-gray-800 mb-1">$197.00</p>
+                              <p className="text-sm text-gray-600">One-time renewal fee</p>
+                            </div>
+                          </div>
+
+                          <div className="bg-gradient-to-r from-orange-100 to-red-100 rounded-lg border-2 border-dashed border-orange-400 p-3 mb-6">
+                            <div className="text-center">
+                              <p className="text-sm font-bold text-orange-800 mb-1">🎉 EXCLUSIVE DISCOUNT CODE</p>
+                              <div className="bg-white border-2 border-dashed border-red-500 rounded-lg p-2 my-2">
+                                <p className="text-xl font-bold text-red-600">40OFF</p>
+                              </div>
+                              <p className="text-xs text-orange-700">40% off the base price - Apply at checkout!</p>
                             </div>
                           </div>
 
@@ -408,14 +418,7 @@ export default function RenewBusiness() {
                             Keep my business visible and maintain my current listing status
                           </p>
                           
-                          <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg border-2 border-dashed border-blue-400 p-3 mb-4">
-                            <div className="text-center">
-                              <p className="text-sm font-bold text-blue-800 mb-1">🎯 SECURE YOUR SPOT TODAY!</p>
-                              <p className="text-xs text-blue-700">Don't lose your online presence - Renew now and stay competitive!</p>
-                            </div>
-                          </div>
-
-                          <div className="grid md:grid-cols-2 gap-4 mb-6">
+                          <div className="grid md:grid-cols-2 gap-4 mb-4">
                             <div className="flex items-center text-green-600 font-medium">
                               <Check className="w-5 h-5 mr-2" />
                               Stay searchable
@@ -431,6 +434,23 @@ export default function RenewBusiness() {
                             <div className="flex items-center text-green-600 font-medium">
                               <Check className="w-5 h-5 mr-2" />
                               12-month listing
+                            </div>
+                          </div>
+
+                          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 border-2 border-blue-300 mb-4">
+                            <div className="text-center">
+                              <p className="text-2xl font-bold text-gray-800 mb-1">$97.00</p>
+                              <p className="text-sm text-gray-600">One-time renewal fee</p>
+                            </div>
+                          </div>
+
+                          <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg border-2 border-dashed border-blue-400 p-3 mb-4">
+                            <div className="text-center">
+                              <p className="text-sm font-bold text-blue-800 mb-1">🎉 EXCLUSIVE DISCOUNT CODE</p>
+                              <div className="bg-white border-2 border-dashed border-red-500 rounded-lg p-2 my-2">
+                                <p className="text-xl font-bold text-red-600">40OFF</p>
+                              </div>
+                              <p className="text-xs text-blue-700">40% off the base price - Apply at checkout!</p>
                             </div>
                           </div>
 
