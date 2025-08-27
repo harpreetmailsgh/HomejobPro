@@ -30,6 +30,7 @@ import HVACNoiseGuide from "./pages/hvac-noise-guide";
 import AirFilterReplacementGuide from "./pages/air-filter-replacement-guide";
 import ThermostatNotWorkingGuide from "./pages/thermostat-not-working-guide";
 import SectionTopics from "./pages/section-topics";
+import RenewBusiness from "./pages/renew-business";
 import { lazy, Suspense } from "react";
 import NotFound from "./pages/not-found";
 
@@ -62,6 +63,7 @@ function Router() {
       <Route path="/hvac-noise-guide" component={HVACNoiseGuide} />
       <Route path="/air-filter-replacement-guide" component={AirFilterReplacementGuide} />
       <Route path="/thermostat-not-working-guide" component={ThermostatNotWorkingGuide} />
+      <Route path="/renew-business" component={RenewBusiness} />
       <Route path="/section/:section" component={SectionTopics} />
       <Route component={NotFound} />
     </Switch>

@@ -9,6 +9,7 @@ export interface IStorage {
   getUniqueCities(): Promise<string[]>;
   getSettings(): Promise<Settings>;
   saveSettings(settings: Settings): Promise<void>;
+  searchBusinessByPhone(industry: string, phone: string): Promise<Service | null>;
 }
 
 export class MemStorage implements IStorage {
@@ -456,6 +457,24 @@ export class MemStorage implements IStorage {
       updatedAt: new Date().toISOString()
     };
     console.log('Settings saved successfully');
+  }
+
+  async searchBusinessByPhone(industry: string, phone: string): Promise<Service | null> {
+    const services = Array.from(this.services.values()).filter(s => !s.duplicate);
+    
+    // Clean the phone number for matching (remove all non-digits)
+    const cleanSearchPhone = phone.replace(/\D/g, '');
+    
+    // Find business that matches both industry and phone
+    const business = services.find(service => {
+      const servicePhone = service.phone.replace(/\D/g, '');
+      const industryMatch = service.industry.toLowerCase() === industry.toLowerCase();
+      const phoneMatch = servicePhone === cleanSearchPhone;
+      
+      return industryMatch && phoneMatch;
+    });
+    
+    return business || null;
   }
 
   // Method to populate services (will be called from Google Sheets API)

@@ -123,6 +123,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Search for business by industry and phone for renewal
+  app.post("/api/search-business", async (req, res) => {
+    try {
+      const { industry, phone } = req.body;
+      
+      if (!industry || !phone) {
+        return res.status(400).json({ error: "Industry and phone are required" });
+      }
+
+      // Clean phone number for matching (remove formatting)
+      const cleanPhone = phone.replace(/\D/g, '');
+      
+      const business = await storage.searchBusinessByPhone(industry, cleanPhone);
+      
+      if (!business) {
+        return res.status(404).json({ error: "Business not found" });
+      }
+
+      res.json(business);
+    } catch (error: any) {
+      console.error("Error searching for business:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
