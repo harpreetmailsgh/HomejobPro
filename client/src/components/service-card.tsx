@@ -8,6 +8,7 @@ interface ServiceCardProps {
 }
 
 export default function ServiceCard({ service }: ServiceCardProps) {
+  const isFeatured = service.featured?.toLowerCase() === 'yes';
   const getServiceTypeImage = (industry: string): string => {
   // Check if there's a custom image from settings
   const customImageFn = (window as any).getServiceTypeImage;
@@ -64,7 +65,11 @@ export default function ServiceCard({ service }: ServiceCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden card-hover" data-testid={`service-card-${service.id}`}>
+    <div className={`bg-white rounded-xl overflow-hidden card-hover ${
+      isFeatured 
+        ? 'border-2 border-red-500 shadow-lg shadow-red-200' 
+        : 'shadow-md'
+    }`} data-testid={`service-card-${service.id}`}>
       <img 
         src={imageUrl} 
         alt={`${service.industry} professional tools and equipment`}
@@ -77,6 +82,12 @@ export default function ServiceCard({ service }: ServiceCardProps) {
             {service.title}
           </h3>
           <div className="flex items-center space-x-2 ml-2">
+            {isFeatured && (
+              <div className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                <Star className="w-3 h-3 mr-1 fill-current" />
+                Featured
+              </div>
+            )}
             {service.verified?.toLowerCase() === 'yes' && (
               <div className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
                 <CheckCircle className="w-3 h-3 mr-1" />

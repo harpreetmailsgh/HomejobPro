@@ -8,6 +8,7 @@ interface ServiceListItemProps {
 }
 
 export default function ServiceListItem({ service }: ServiceListItemProps) {
+  const isFeatured = service.featured?.toLowerCase() === 'yes';
   const getServiceTypeImage = (industry: string): string => {
     // Check if there's a custom image from settings
     const customImageFn = (window as any).getServiceTypeImage;
@@ -65,7 +66,11 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden p-6 flex items-center space-x-6" data-testid={`service-list-${service.id}`}>
+    <div className={`bg-white rounded-xl overflow-hidden p-6 flex items-center space-x-6 ${
+      isFeatured 
+        ? 'border-2 border-red-500 shadow-lg shadow-red-200' 
+        : 'shadow-md'
+    }`} data-testid={`service-list-${service.id}`}>
       <img 
         src={imageUrl} 
         alt={`${service.industry} professional tools and equipment`}
@@ -79,6 +84,12 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
             {service.title}
           </h3>
           <div className="flex items-center space-x-2 ml-2">
+            {isFeatured && (
+              <div className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                <Star className="w-3 h-3 mr-1 fill-current" />
+                Featured
+              </div>
+            )}
             {service.verified?.toLowerCase() === 'yes' && (
               <div className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
                 <CheckCircle className="w-3 h-3 mr-1" />

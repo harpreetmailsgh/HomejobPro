@@ -64,7 +64,7 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
       companyName: undefined,
       postCode: undefined,
       phone: undefined,
-      sortBy: 'rating_desc' as any,
+      sortBy: 'featured' as any,
       page: 1,
       limit: 20
     };

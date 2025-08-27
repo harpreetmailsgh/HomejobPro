@@ -75,6 +75,24 @@ export class MemStorage implements IStorage {
 
     // Sort services
     switch (filters.sortBy) {
+      case 'featured':
+        services.sort((a, b) => {
+          // First, sort by featured status (yes/no)
+          const aFeatured = a.featured?.toLowerCase() === 'yes' ? 1 : 0;
+          const bFeatured = b.featured?.toLowerCase() === 'yes' ? 1 : 0;
+          if (aFeatured !== bFeatured) {
+            return bFeatured - aFeatured; // Featured first
+          }
+          
+          // Within same featured status, sort by rating (highest first)
+          if (a.rating !== b.rating) {
+            return b.rating - a.rating;
+          }
+          
+          // Within same rating, sort alphabetically by title
+          return a.title.localeCompare(b.title);
+        });
+        break;
       case 'rating_desc':
         services.sort((a, b) => b.rating - a.rating);
         break;
@@ -220,6 +238,7 @@ export class MemStorage implements IStorage {
             email: row['Email'] || undefined,
             verified: row['Verified'] || undefined,
             licensed: row['Licensed'] || undefined,
+            featured: row['Featured'] || undefined,
             duplicate: row['duplicate']?.toLowerCase() === 'true' || false
           };
 

@@ -95,7 +95,7 @@ export default function Search() {
     city: urlParams.get('city') || undefined,
     minRating: urlParams.get('minRating') ? parseFloat(urlParams.get('minRating')!) : undefined,
     companyName: urlParams.get('companyName') || undefined,
-    sortBy: (urlParams.get('sortBy') as any) || 'rating_desc',
+    sortBy: (urlParams.get('sortBy') as any) || 'featured',
     page: parseInt(urlParams.get('page') || '1'),
     limit: 20
   });
@@ -247,6 +247,7 @@ export default function Search() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="featured">Featured</SelectItem>
                     <SelectItem value="rating_desc">Rating (High to Low)</SelectItem>
                     <SelectItem value="rating_asc">Rating (Low to High)</SelectItem>
                     <SelectItem value="reviews_desc">Most Reviews</SelectItem>

@@ -15,6 +15,7 @@ export const serviceSchema = z.object({
   email: z.string().email().optional(),
   verified: z.string().optional(),
   licensed: z.string().optional(),
+  featured: z.string().optional(),
   duplicate: z.boolean().optional()
 });
 
@@ -26,7 +27,7 @@ export const searchFiltersSchema = z.object({
   minRating: z.number().min(0).max(5).optional(),
   companyName: z.string().optional(),
   phone: z.string().optional(),
-  sortBy: z.enum(['rating_desc', 'rating_asc', 'name_asc', 'reviews_desc']).default('rating_desc'),
+  sortBy: z.enum(['featured', 'rating_desc', 'rating_asc', 'name_asc', 'reviews_desc']).default('featured'),
   page: z.number().min(1).default(1),
   limit: z.number().min(1).max(50).default(20)
 });
