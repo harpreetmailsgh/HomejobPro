@@ -183,7 +183,7 @@ export default function RenewBusiness() {
       <div 
         className="relative text-white py-20"
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+          backgroundImage: "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat"
@@ -377,7 +377,7 @@ export default function RenewBusiness() {
                                   <div className="grid md:grid-cols-2 gap-3 mb-6">
                                     <div className="flex items-center text-green-700 font-bold">
                                       <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
-                                      Everything in Essential listing
+                                      Everything in Essential Renewal
                                     </div>
                                     <div className="flex items-center text-green-700 font-bold">
                                       <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
@@ -413,6 +413,19 @@ export default function RenewBusiness() {
                                       </div>
                                     </div>
                                   </div>
+
+                                  <div className="mt-6">
+                                    <StripeButton buyButtonId="buy_btn_1S0oNoKSLjkNdRA0qai3ohgt">
+                                      <Button
+                                        type="button"
+                                        size="lg"
+                                        className="w-full px-8 py-4 text-xl bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 shadow-xl transform hover:scale-105 transition-all duration-300"
+                                        data-testid="button-featured-renewal-top"
+                                      >
+                                        🚀 Get Premium Featured Renewal Now
+                                      </Button>
+                                    </StripeButton>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -427,7 +440,7 @@ export default function RenewBusiness() {
                                   <p className="text-gray-600 text-lg mb-4">
                                     Keep my business visible and maintain my current listing status
                                   </p>
-                                  <div className="grid md:grid-cols-2 gap-4">
+                                  <div className="grid md:grid-cols-2 gap-4 mb-6">
                                     <div className="flex items-center text-green-600 font-medium">
                                       <Check className="w-5 h-5 mr-2" />
                                       Stay searchable
@@ -445,6 +458,19 @@ export default function RenewBusiness() {
                                       12-month listing
                                     </div>
                                   </div>
+
+                                  <div className="mt-4">
+                                    <StripeButton buyButtonId="buy_btn_1S0oG9KSLjkNdRA0s71IvRKU">
+                                      <Button
+                                        type="button"
+                                        size="lg"
+                                        className="w-full px-8 py-4 text-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 shadow-lg transform hover:scale-105 transition-all duration-300"
+                                        data-testid="button-essential-renewal-inline"
+                                      >
+                                        💼 Get Essential Renewal
+                                      </Button>
+                                    </StripeButton>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -453,49 +479,22 @@ export default function RenewBusiness() {
                       )}
                     />
 
-                    <div className="mt-12 text-center">
-                        {form.watch('renewalType') === 'featured' ? (
-                          <StripeButton buyButtonId="buy_btn_1S0oNoKSLjkNdRA0qai3ohgt">
-                            <div className="mb-4">
-                              <Button
-                                type="button"
-                                size="lg"
-                                className="px-12 py-4 text-xl bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 shadow-xl transform hover:scale-105 transition-all duration-300"
-                                data-testid="button-featured-renewal"
-                              >
-                                🚀 Get Premium Featured Renewal
-                              </Button>
-                            </div>
-                          </StripeButton>
-                        ) : (
-                          <StripeButton buyButtonId="buy_btn_1S0oG9KSLjkNdRA0s71IvRKU">
-                            <div className="mb-4">
-                              <Button
-                                type="button"
-                                size="lg"
-                                className="px-12 py-4 text-xl bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 shadow-xl transform hover:scale-105 transition-all duration-300"
-                                data-testid="button-basic-renewal"
-                              >
-                                💼 Get Essential Renewal
-                              </Button>
-                            </div>
-                          </StripeButton>
-                        )}
+                    <div className="mt-8 p-4 bg-gradient-to-r from-orange-100 to-red-100 rounded-lg border-2 border-dashed border-orange-400">
+                      <div className="text-center">
+                        <p className="text-sm font-semibold text-orange-800 mb-2">🎯 Limited Time Offer</p>
+                        <div className="flex items-center justify-center space-x-3">
+                          <span className="text-orange-700 font-medium">Use code:</span>
+                          <div className="bg-white px-3 py-1 rounded border-2 border-dashed border-red-500">
+                            <code className="text-lg font-mono font-bold text-red-600">40OFF</code>
+                          </div>
+                          <span className="text-orange-700 font-medium">for 40% off</span>
+                        </div>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                {/* Promotional Banner - Smaller version */}
-                <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white rounded-lg p-4 shadow-lg mb-6">
-                  <div className="text-center">
-                    <h3 className="text-lg font-bold mb-2">Get Promotion if you renew today</h3>
-                    <p className="text-sm mb-3">Use below code on the next page to get discount</p>
-                    <div className="bg-white rounded p-2 mb-2 inline-block border-2 border-dashed border-red-600">
-                      <code className="text-xl font-mono font-bold text-red-600">40OFF</code>
-                    </div>
-                    <p className="text-sm font-semibold">40% off the base price</p>
-                  </div>
-                </div>
+                
                 
                 {/* Trust and Security Section */}
                 <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
