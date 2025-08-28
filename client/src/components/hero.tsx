@@ -62,7 +62,7 @@ export default function Hero() {
 
   const heroStyle = backgroundImage 
     ? { 
-        backgroundImage: `linear-gradient(rgba(96, 125, 139, 0.8), rgba(96, 125, 139, 0.9)), url(${backgroundImage})`,
+        backgroundImage: `linear-gradient(rgba(96, 125, 139, 0.6), rgba(96, 125, 139, 0.675)), url(${backgroundImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
