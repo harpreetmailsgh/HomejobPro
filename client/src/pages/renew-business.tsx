@@ -14,6 +14,7 @@ import { Check, Star, Phone, MapPin, Mail, Globe, TrendingUp, Users, Award, Zap 
 import { apiRequest } from '@/lib/queryClient';
 import { useSEO } from '@/hooks/use-seo';
 import Header from '@/components/header';
+import renewBusinessHero from '@assets/generated_images/Business_growth_analytics_dashboard_d24d677d.png';
 
 const renewalSchema = z.object({
   industry: z.string().min(1, 'Please select an industry'),
@@ -152,7 +153,7 @@ export default function RenewBusiness() {
       <div 
         className="relative text-white py-20"
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+          backgroundImage: `url(${renewBusinessHero})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat"
