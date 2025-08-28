@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import EnhancedSearchBar from "./enhanced-search-bar";
-import defaultHeroImage from "@assets/generated_images/Home_services_hero_background_93ca73f0.png";
+import defaultHeroImage from "@assets/generated_images/Home_service_professionals_hero_c06a679e.png";
 
 export default function Hero() {
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
