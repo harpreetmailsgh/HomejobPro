@@ -14,7 +14,7 @@ import { Check, Star, Phone, MapPin, Mail, Globe, TrendingUp, Users, Award, Zap 
 import { apiRequest } from '@/lib/queryClient';
 import { useSEO } from '@/hooks/use-seo';
 import Header from '@/components/header';
-import renewBusinessHero from '@assets/generated_images/Business_growth_analytics_dashboard_d24d677d.png';
+import renewBusinessHero from '@assets/generated_images/Business_owner_renewal_success_7ce79ea4.png';
 
 const renewalSchema = z.object({
   industry: z.string().min(1, 'Please select an industry'),
