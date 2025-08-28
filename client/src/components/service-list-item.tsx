@@ -130,14 +130,14 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
           asChild
           variant="ghost"
           size="sm"
-          className={`p-2 rounded-lg ${
+          className={`p-2 rounded-lg min-w-[60px] ${
             isFeatured 
               ? 'bg-red-600 text-white hover:bg-red-700 shadow-lg' 
               : 'hover:bg-gray-100'
           }`}
           data-testid={`service-list-phone-${service.id}`}
         >
-          <a href={`tel:${service.phone}`} className="flex flex-col items-center">
+          <a href={`tel:${service.phone}`} className="flex flex-col items-center justify-center">
             <Phone className={`w-5 h-5 ${isFeatured ? 'text-white' : 'text-green-600'}`} />
             <span className={`text-xs mt-1 ${isFeatured ? 'text-white font-medium' : 'text-gray-600'}`}>Call Now</span>
           </a>
@@ -148,40 +148,44 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
             asChild
             variant="ghost"
             size="sm"
-            className="p-2 hover:bg-gray-100 rounded-lg"
+            className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px]"
             data-testid={`service-list-maps-${service.id}`}
           >
-            <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center">
+            <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center">
               <MapPin className="w-5 h-5 text-red-600" />
               <span className="text-xs text-gray-600 mt-1">Location</span>
             </a>
           </Button>
         )}
 
-        {service.email && (
-          <Button
-            asChild
-            variant="ghost"
-            size="sm"
-            className="p-2 hover:bg-gray-100 rounded-lg"
-            data-testid={`service-list-email-${service.id}`}
-          >
-            <a href={`mailto:${service.email}`} className="flex flex-col items-center">
-              <Mail className="w-5 h-5 text-purple-600" />
-              <span className="text-xs text-gray-600 mt-1">Email</span>
-            </a>
-          </Button>
-        )}
+        <Button
+          variant="ghost"
+          size="sm"
+          className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px]"
+          data-testid={`service-list-email-${service.id}`}
+          onClick={() => {
+            if (service.email) {
+              window.location.href = `mailto:${service.email}`;
+            } else {
+              alert('Email not available for this service provider.');
+            }
+          }}
+        >
+          <div className="flex flex-col items-center justify-center">
+            <Mail className="w-5 h-5 text-purple-600" />
+            <span className="text-xs text-gray-600 mt-1">Email</span>
+          </div>
+        </Button>
 
         {service.website && (
           <Button
             asChild
             variant="ghost"
             size="sm"
-            className="p-2 hover:bg-gray-100 rounded-lg"
+            className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px]"
             data-testid={`service-list-website-${service.id}`}
           >
-            <a href={service.website} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center">
+            <a href={service.website} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center">
               <ExternalLink className="w-5 h-5 text-blue-600" />
               <span className="text-xs text-gray-600 mt-1">Website</span>
             </a>
