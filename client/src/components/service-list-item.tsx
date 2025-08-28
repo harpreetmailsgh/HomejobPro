@@ -130,7 +130,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
           asChild
           variant="ghost"
           size="sm"
-          className={`px-4 py-3 min-w-[80px] ${
+          className={`px-4 py-4 min-w-[80px] ${
             isFeatured 
               ? 'bg-red-600 text-white hover:bg-red-700 shadow-lg border border-red-700 rounded-none' 
               : 'hover:bg-gray-100 rounded-lg'
