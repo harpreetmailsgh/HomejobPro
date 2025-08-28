@@ -614,7 +614,7 @@ export default function RenewBusiness() {
                               </p>
 
                               <div className="flex items-center space-x-2">
-                                <button className="px-4 py-6 min-w-[80px] bg-red-600 text-white hover:bg-red-700 shadow-lg border border-red-700 rounded-none flex flex-col items-center justify-center">
+                                <button className="px-3 py-5 min-w-[80px] bg-red-600 text-white hover:bg-red-700 shadow-lg border border-red-700 rounded-none flex flex-col items-center justify-center">
                                   <Phone className="w-5 h-5 mb-1" />
                                   <span className="text-xs">Call Now</span>
                                 </button>
