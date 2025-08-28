@@ -66,10 +66,10 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
   };
 
   return (
-    <div className={`bg-white rounded-xl overflow-hidden p-6 flex items-center space-x-6 ${
+    <div className={`rounded-xl overflow-hidden p-6 flex items-center space-x-6 ${
       isFeatured 
-        ? 'border-[3px] border-red-500 shadow-lg shadow-red-200' 
-        : 'shadow-md'
+        ? 'bg-red-50 border-[3px] border-red-500 shadow-lg shadow-red-200' 
+        : 'bg-white shadow-md'
     }`} data-testid={`service-list-${service.id}`}>
       <img 
         src={imageUrl} 
@@ -130,11 +130,16 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
           asChild
           variant="ghost"
           size="sm"
-          className="p-2 hover:bg-gray-100 rounded-full"
+          className={`p-2 rounded-lg ${
+            isFeatured 
+              ? 'bg-green-600 text-white hover:bg-green-700 shadow-lg' 
+              : 'hover:bg-gray-100'
+          }`}
           data-testid={`service-list-phone-${service.id}`}
         >
           <a href={`tel:${service.phone}`} className="flex flex-col items-center">
-            <Phone className="w-5 h-5 text-green-600" />
+            <Phone className={`w-5 h-5 ${isFeatured ? 'text-white' : 'text-green-600'}`} />
+            <span className={`text-xs mt-1 ${isFeatured ? 'text-white font-medium' : 'text-gray-600'}`}>Call Now</span>
           </a>
         </Button>
 
@@ -143,11 +148,12 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
             asChild
             variant="ghost"
             size="sm"
-            className="p-2 hover:bg-gray-100 rounded-full"
+            className="p-2 hover:bg-gray-100 rounded-lg"
             data-testid={`service-list-maps-${service.id}`}
           >
             <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center">
               <MapPin className="w-5 h-5 text-red-600" />
+              <span className="text-xs text-gray-600 mt-1">Location</span>
             </a>
           </Button>
         )}
@@ -157,11 +163,12 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
             asChild
             variant="ghost"
             size="sm"
-            className="p-2 hover:bg-gray-100 rounded-full"
+            className="p-2 hover:bg-gray-100 rounded-lg"
             data-testid={`service-list-email-${service.id}`}
           >
             <a href={`mailto:${service.email}`} className="flex flex-col items-center">
               <Mail className="w-5 h-5 text-purple-600" />
+              <span className="text-xs text-gray-600 mt-1">Email</span>
             </a>
           </Button>
         )}
@@ -171,11 +178,12 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
             asChild
             variant="ghost"
             size="sm"
-            className="p-2 hover:bg-gray-100 rounded-full"
+            className="p-2 hover:bg-gray-100 rounded-lg"
             data-testid={`service-list-website-${service.id}`}
           >
             <a href={service.website} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center">
               <ExternalLink className="w-5 h-5 text-blue-600" />
+              <span className="text-xs text-gray-600 mt-1">Website</span>
             </a>
           </Button>
         )}
