@@ -483,19 +483,20 @@ export default function RenewBusiness() {
                       {/* Regular Listing Example */}
                       <div>
                         <h4 className="text-lg font-bold text-gray-700 mb-4 text-center">🔷 Essential Renewal</h4>
-                        <div className="bg-white rounded-xl overflow-hidden p-6 flex items-center space-x-6 shadow-md">
-                          <img 
-                            src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=400&h=300&fit=crop&crop=center"
-                            alt={`${foundRecord?.industry || 'Plumber'} professional tools and equipment`}
-                            className="w-24 h-24 object-cover rounded-lg flex-shrink-0"
-                          />
+                        <div className="bg-white rounded-xl overflow-hidden p-4 shadow-md">
+                          <div className="flex items-start space-x-3">
+                            <img 
+                              src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=400&h=300&fit=crop&crop=center"
+                              alt={`${foundRecord?.industry || 'Plumber'} professional tools and equipment`}
+                              className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
+                            />
 
-                          <div className="flex-1 min-w-0">
-                            <div className="mb-2">
-                              <h3 className="text-xl font-semibold truncate mb-2 text-gray-800" title={foundRecord?.title || 'ABC Plumbing Services'}>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="text-lg font-semibold truncate mb-1 text-gray-800" title={foundRecord?.title || 'ABC Plumbing Services'}>
                                 {foundRecord?.title || 'ABC Plumbing Services'}
                               </h3>
-                              <div className="flex flex-wrap gap-2 mb-2">
+                              
+                              <div className="flex flex-wrap gap-1 mb-2">
                                 <div className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
                                   <CheckCircle className="w-3 h-3 mr-1" />
                                   Verified
@@ -505,63 +506,79 @@ export default function RenewBusiness() {
                                   Licensed
                                 </div>
                               </div>
-                            </div>
 
-                            <div className="flex items-center mb-2">
-                              <div className="flex items-center star-rating">
-                                {[...Array(4)].map((_, i) => (
-                                  <Star key={i} className="w-4 h-4 fill-current text-yellow-400" />
-                                ))}
-                                <Star className="w-4 h-4 text-gray-300" />
+                              <div className="flex items-center mb-1">
+                                <div className="flex items-center star-rating">
+                                  {[...Array(4)].map((_, i) => (
+                                    <Star key={i} className="w-3 h-3 fill-current text-yellow-400" />
+                                  ))}
+                                  <Star className="w-3 h-3 text-gray-300" />
+                                </div>
+                                <span className="ml-2 text-sm text-gray-600">
+                                  {foundRecord?.rating || '4.2'} ({foundRecord?.reviews || '23'} reviews)
+                                </span>
                               </div>
-                              <span className="ml-2 text-gray-600">
-                                {foundRecord?.rating || '4.2'}
-                              </span>
-                              <span className="ml-1 text-gray-500">
-                                ({foundRecord?.reviews || '23'} reviews)
-                              </span>
+
+                              <p className="text-gray-600 text-xs mb-2">
+                                {foundRecord?.address || foundRecord?.city || 'Downtown Toronto'}
+                              </p>
+
+                              <div className="flex items-center space-x-2">
+                                <button className="p-1 hover:bg-gray-100 rounded-full">
+                                  <Phone className="w-4 h-4 text-green-600" />
+                                </button>
+                                <button className="p-1 hover:bg-gray-100 rounded-full">
+                                  <MapPin className="w-4 h-4 text-red-600" />
+                                </button>
+                                <button className="p-1 hover:bg-gray-100 rounded-full">
+                                  <Mail className="w-4 h-4 text-purple-600" />
+                                </button>
+                                <button className="p-1 hover:bg-gray-100 rounded-full">
+                                  <ExternalLink className="w-4 h-4 text-blue-600" />
+                                </button>
+                              </div>
                             </div>
-
-                            <p className="text-gray-600 text-sm mb-4">
-                              {foundRecord?.address || foundRecord?.city || 'Downtown Toronto'}
-                            </p>
-                          </div>
-
-                          {/* Action Icons */}
-                          <div className="flex items-center space-x-3 flex-shrink-0">
-                            <button className="p-2 hover:bg-gray-100 rounded-full">
-                              <Phone className="w-5 h-5 text-green-600" />
-                            </button>
-                            <button className="p-2 hover:bg-gray-100 rounded-full">
-                              <MapPin className="w-5 h-5 text-red-600" />
-                            </button>
-                            <button className="p-2 hover:bg-gray-100 rounded-full">
-                              <Mail className="w-5 h-5 text-purple-600" />
-                            </button>
-                            <button className="p-2 hover:bg-gray-100 rounded-full">
-                              <ExternalLink className="w-5 h-5 text-blue-600" />
-                            </button>
                           </div>
                         </div>
-                        <p className="text-center text-sm text-gray-600 mt-2">Standard visibility in search results</p>
+                        <p className="text-center text-sm text-gray-600 mt-2 mb-4">Standard visibility in search results</p>
+                        
+                        {/* Essential Renewal Button */}
+                        <div>
+                          <a 
+                            href="https://buy.stripe.com/28EaEY2CdbMxe9ibtcgfu02" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="block"
+                          >
+                            <Button
+                              type="button"
+                              size="lg"
+                              className="w-full px-4 py-3 text-sm bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 shadow-lg transform hover:scale-105 transition-all duration-300"
+                              data-testid="button-essential-renewal-example"
+                            >
+                              💼 Get Essential Renewal
+                            </Button>
+                          </a>
+                        </div>
                       </div>
 
                       {/* Featured Listing Example */}
                       <div>
                         <h4 className="text-lg font-bold text-red-600 mb-4 text-center">⭐ Premium Featured</h4>
-                        <div className="bg-white rounded-xl overflow-hidden p-6 flex items-center space-x-6 border-[3px] border-red-500 shadow-lg shadow-red-200">
-                          <img 
-                            src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=400&h=300&fit=crop&crop=center"
-                            alt={`${foundRecord?.industry || 'Plumber'} professional tools and equipment`}
-                            className="w-24 h-24 object-cover rounded-lg flex-shrink-0"
-                          />
+                        <div className="bg-white rounded-xl overflow-hidden p-4 border-[3px] border-red-500 shadow-lg shadow-red-200">
+                          <div className="flex items-start space-x-3">
+                            <img 
+                              src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=400&h=300&fit=crop&crop=center"
+                              alt={`${foundRecord?.industry || 'Plumber'} professional tools and equipment`}
+                              className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
+                            />
 
-                          <div className="flex-1 min-w-0">
-                            <div className="mb-2">
-                              <h3 className="text-xl font-semibold truncate mb-2 text-red-600" title={foundRecord?.title || 'ABC Plumbing Services'}>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="text-lg font-semibold truncate mb-1 text-red-600" title={foundRecord?.title || 'ABC Plumbing Services'}>
                                 {foundRecord?.title || 'ABC Plumbing Services'}
                               </h3>
-                              <div className="flex flex-wrap gap-2 mb-2">
+                              
+                              <div className="flex flex-wrap gap-1 mb-2">
                                 <div className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center">
                                   <Star className="w-3 h-3 mr-1 fill-current" />
                                   Featured
@@ -575,45 +592,60 @@ export default function RenewBusiness() {
                                   Licensed
                                 </div>
                               </div>
-                            </div>
 
-                            <div className="flex items-center mb-2">
-                              <div className="flex items-center star-rating">
-                                {[...Array(4)].map((_, i) => (
-                                  <Star key={i} className="w-4 h-4 fill-current text-yellow-400" />
-                                ))}
-                                <Star className="w-4 h-4 text-gray-300" />
+                              <div className="flex items-center mb-1">
+                                <div className="flex items-center star-rating">
+                                  {[...Array(4)].map((_, i) => (
+                                    <Star key={i} className="w-3 h-3 fill-current text-yellow-400" />
+                                  ))}
+                                  <Star className="w-3 h-3 text-gray-300" />
+                                </div>
+                                <span className="ml-2 text-sm text-gray-600 font-semibold">
+                                  {foundRecord?.rating || '4.2'} ({foundRecord?.reviews || '23'} reviews)
+                                </span>
                               </div>
-                              <span className="ml-2 text-gray-600">
-                                {foundRecord?.rating || '4.2'}
-                              </span>
-                              <span className="ml-1 text-gray-500">
-                                ({foundRecord?.reviews || '23'} reviews)
-                              </span>
+
+                              <p className="text-gray-700 text-xs mb-2 font-medium">
+                                {foundRecord?.address || foundRecord?.city || 'Downtown Toronto'}
+                              </p>
+
+                              <div className="flex items-center space-x-2">
+                                <button className="p-1 hover:bg-gray-100 rounded-full">
+                                  <Phone className="w-4 h-4 text-green-600" />
+                                </button>
+                                <button className="p-1 hover:bg-gray-100 rounded-full">
+                                  <MapPin className="w-4 h-4 text-red-600" />
+                                </button>
+                                <button className="p-1 hover:bg-gray-100 rounded-full">
+                                  <Mail className="w-4 h-4 text-purple-600" />
+                                </button>
+                                <button className="p-1 hover:bg-gray-100 rounded-full">
+                                  <ExternalLink className="w-4 h-4 text-blue-600" />
+                                </button>
+                              </div>
                             </div>
-
-                            <p className="text-gray-600 text-sm mb-4">
-                              {foundRecord?.address || foundRecord?.city || 'Downtown Toronto'}
-                            </p>
-                          </div>
-
-                          {/* Action Icons */}
-                          <div className="flex items-center space-x-3 flex-shrink-0">
-                            <button className="p-2 hover:bg-gray-100 rounded-full">
-                              <Phone className="w-5 h-5 text-green-600" />
-                            </button>
-                            <button className="p-2 hover:bg-gray-100 rounded-full">
-                              <MapPin className="w-5 h-5 text-red-600" />
-                            </button>
-                            <button className="p-2 hover:bg-gray-100 rounded-full">
-                              <Mail className="w-5 h-5 text-purple-600" />
-                            </button>
-                            <button className="p-2 hover:bg-gray-100 rounded-full">
-                              <ExternalLink className="w-5 h-5 text-blue-600" />
-                            </button>
                           </div>
                         </div>
-                        <p className="text-center text-sm text-red-600 font-semibold mt-2">Appears at TOP + highlighted border + priority call button</p>
+                        <p className="text-center text-sm text-red-600 font-semibold mt-2 mb-4">Appears at TOP + highlighted border + priority call button</p>
+                        
+                        {/* Premium Featured Button */}
+                        <div>
+                          <a 
+                            href="https://buy.stripe.com/14A28sfoZ8Ale9idBkgfu03" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="block"
+                          >
+                            <Button
+                              type="button"
+                              size="lg"
+                              className="w-full px-4 py-3 text-sm bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 shadow-lg transform hover:scale-105 transition-all duration-300"
+                              data-testid="button-premium-featured-example"
+                            >
+                              ⭐ Get Premium Featured
+                            </Button>
+                          </a>
+                        </div>
                       </div>
                     </div>
 
