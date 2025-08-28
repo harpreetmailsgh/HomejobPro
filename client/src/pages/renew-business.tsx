@@ -374,20 +374,13 @@ export default function RenewBusiness() {
                           </div>
 
                           <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-4 border-2 border-green-300 mb-4">
-                            <div className="flex justify-between items-center">
-                              <div>
-                                <p className="text-2xl font-bold text-gray-800 mb-1">$15.99/month</p>
-                                <p className="text-sm text-gray-600">Monthly subscription</p>
+                            <div className="text-center">
+                              <div className="mb-2">
+                                <span className="text-lg text-gray-500 line-through">$15.99/month</span>
+                                <span className="ml-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">40% OFF FIRST YEAR</span>
                               </div>
-                              <div className="text-center">
-                                <div className="bg-gradient-to-r from-orange-100 to-red-100 rounded-lg border-2 border-dashed border-orange-400 p-2">
-                                  <p className="text-xs font-bold text-orange-800 mb-1">🎉 DISCOUNT CODE</p>
-                                  <div className="bg-white border border-red-400 rounded p-1">
-                                    <p className="text-sm font-bold text-red-600">40OFF</p>
-                                  </div>
-                                  <p className="text-xs text-orange-700">Apply at checkout!</p>
-                                </div>
-                              </div>
+                              <p className="text-2xl font-bold text-green-600 mb-1">$9.60/month</p>
+                              <p className="text-sm text-gray-600">Billed annually</p>
                             </div>
                           </div>
 
@@ -440,20 +433,13 @@ export default function RenewBusiness() {
                           </div>
 
                           <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 border-2 border-blue-300 mb-4">
-                            <div className="flex justify-between items-center">
-                              <div>
-                                <p className="text-2xl font-bold text-gray-800 mb-1">$10.99/month</p>
-                                <p className="text-sm text-gray-600">Monthly subscription</p>
+                            <div className="text-center">
+                              <div className="mb-2">
+                                <span className="text-lg text-gray-500 line-through">$10.99/month</span>
+                                <span className="ml-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">40% OFF FIRST YEAR</span>
                               </div>
-                              <div className="text-center">
-                                <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg border-2 border-dashed border-blue-400 p-2">
-                                  <p className="text-xs font-bold text-blue-800 mb-1">🎉 DISCOUNT CODE</p>
-                                  <div className="bg-white border border-red-400 rounded p-1">
-                                    <p className="text-sm font-bold text-red-600">40OFF</p>
-                                  </div>
-                                  <p className="text-xs text-blue-700">Apply at checkout!</p>
-                                </div>
-                              </div>
+                              <p className="text-2xl font-bold text-green-600 mb-1">$6.59/month</p>
+                              <p className="text-sm text-gray-600">Billed annually</p>
                             </div>
                           </div>
 
@@ -480,7 +466,91 @@ export default function RenewBusiness() {
                   </CardContent>
                 </Card>
 
-                
+                {/* Listing Comparison Section */}
+                <Card className="shadow-xl border-0">
+                  <CardHeader className="bg-gradient-to-r from-gray-600 to-gray-800 text-white rounded-t-lg">
+                    <CardTitle className="text-2xl flex items-center">
+                      <TrendingUp className="w-6 h-6 mr-3" />
+                      See The Difference: Regular vs Featured
+                    </CardTitle>
+                    <CardDescription className="text-gray-100">
+                      Compare how your business appears with each renewal option
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="p-8">
+                    <div className="grid md:grid-cols-2 gap-8">
+                      {/* Regular Listing Example */}
+                      <div>
+                        <h4 className="text-lg font-bold text-gray-700 mb-4 text-center">🔷 Essential Renewal</h4>
+                        <div className="border rounded-lg p-4 bg-white">
+                          <div className="flex items-start space-x-3">
+                            <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center">
+                              <div className="text-2xl">🔧</div>
+                            </div>
+                            <div className="flex-1">
+                              <h5 className="font-semibold text-gray-800">ABC Plumbing Services</h5>
+                              <div className="flex items-center space-x-1 text-sm">
+                                <div className="flex text-yellow-400">★★★★☆</div>
+                                <span className="text-gray-600">4.2 (23 reviews)</span>
+                              </div>
+                              <p className="text-sm text-gray-600 mt-1">📍 Downtown Toronto</p>
+                              <p className="text-xs text-gray-500 mt-1">Professional plumbing services</p>
+                            </div>
+                            <button className="bg-blue-500 text-white px-4 py-2 rounded text-sm">Call</button>
+                          </div>
+                        </div>
+                        <p className="text-center text-sm text-gray-600 mt-2">Standard visibility in search results</p>
+                      </div>
+
+                      {/* Featured Listing Example */}
+                      <div>
+                        <h4 className="text-lg font-bold text-red-600 mb-4 text-center">⭐ Premium Featured</h4>
+                        <div className="border-4 border-red-500 rounded-lg p-4 bg-gradient-to-r from-red-50 to-orange-50 shadow-lg">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold">✨ FEATURED</span>
+                            <span className="text-red-600 font-bold text-sm">🔥 TOP LISTING</span>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center border-2 border-red-300">
+                              <div className="text-2xl">🔧</div>
+                            </div>
+                            <div className="flex-1">
+                              <h5 className="font-bold text-red-700 text-lg">ABC Plumbing Services</h5>
+                              <div className="flex items-center space-x-1 text-sm">
+                                <div className="flex text-yellow-400">★★★★☆</div>
+                                <span className="text-gray-600 font-semibold">4.2 (23 reviews)</span>
+                              </div>
+                              <p className="text-sm text-gray-700 mt-1 font-medium">📍 Downtown Toronto</p>
+                              <p className="text-xs text-gray-600 mt-1">Professional plumbing services</p>
+                            </div>
+                            <button className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-3 rounded-lg text-sm font-bold shadow-lg transform hover:scale-105">📞 Call Now</button>
+                          </div>
+                        </div>
+                        <p className="text-center text-sm text-red-600 font-semibold mt-2">Appears at TOP + highlighted border + priority call button</p>
+                      </div>
+                    </div>
+
+                    <div className="mt-8 bg-yellow-50 border-2 border-yellow-300 rounded-lg p-6">
+                      <div className="text-center">
+                        <h4 className="text-xl font-bold text-yellow-800 mb-2">🚀 Featured Benefits Summary</h4>
+                        <div className="grid md:grid-cols-3 gap-4 text-sm">
+                          <div className="text-center">
+                            <div className="text-red-500 font-bold">10x More Visible</div>
+                            <p className="text-gray-600">Top placement in all searches</p>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-red-500 font-bold">Eye-Catching Design</div>
+                            <p className="text-gray-600">Red border + gradient highlights</p>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-red-500 font-bold">Priority Call Button</div>
+                            <p className="text-gray-600">Larger, more prominent contact</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
                 
                 {/* Trust and Security Section */}
                 <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
