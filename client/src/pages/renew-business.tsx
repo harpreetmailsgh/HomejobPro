@@ -374,19 +374,20 @@ export default function RenewBusiness() {
                           </div>
 
                           <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-4 border-2 border-green-300 mb-4">
-                            <div className="text-center">
-                              <p className="text-2xl font-bold text-gray-800 mb-1">$197.00</p>
-                              <p className="text-sm text-gray-600">One-time renewal fee</p>
-                            </div>
-                          </div>
-
-                          <div className="bg-gradient-to-r from-orange-100 to-red-100 rounded-lg border-2 border-dashed border-orange-400 p-3 mb-6">
-                            <div className="text-center">
-                              <p className="text-sm font-bold text-orange-800 mb-1">🎉 EXCLUSIVE DISCOUNT CODE</p>
-                              <div className="bg-white border-2 border-dashed border-red-500 rounded-lg p-2 my-2">
-                                <p className="text-xl font-bold text-red-600">40OFF</p>
+                            <div className="flex justify-between items-center">
+                              <div>
+                                <p className="text-2xl font-bold text-gray-800 mb-1">$15.99/month</p>
+                                <p className="text-sm text-gray-600">Monthly subscription</p>
                               </div>
-                              <p className="text-xs text-orange-700">40% off the base price - Apply at checkout!</p>
+                              <div className="text-center">
+                                <div className="bg-gradient-to-r from-orange-100 to-red-100 rounded-lg border-2 border-dashed border-orange-400 p-2">
+                                  <p className="text-xs font-bold text-orange-800 mb-1">🎉 DISCOUNT CODE</p>
+                                  <div className="bg-white border border-red-400 rounded p-1">
+                                    <p className="text-sm font-bold text-red-600">40OFF</p>
+                                  </div>
+                                  <p className="text-xs text-orange-700">Apply at checkout!</p>
+                                </div>
+                              </div>
                             </div>
                           </div>
 
@@ -439,19 +440,20 @@ export default function RenewBusiness() {
                           </div>
 
                           <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 border-2 border-blue-300 mb-4">
-                            <div className="text-center">
-                              <p className="text-2xl font-bold text-gray-800 mb-1">$97.00</p>
-                              <p className="text-sm text-gray-600">One-time renewal fee</p>
-                            </div>
-                          </div>
-
-                          <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg border-2 border-dashed border-blue-400 p-3 mb-4">
-                            <div className="text-center">
-                              <p className="text-sm font-bold text-blue-800 mb-1">🎉 EXCLUSIVE DISCOUNT CODE</p>
-                              <div className="bg-white border-2 border-dashed border-red-500 rounded-lg p-2 my-2">
-                                <p className="text-xl font-bold text-red-600">40OFF</p>
+                            <div className="flex justify-between items-center">
+                              <div>
+                                <p className="text-2xl font-bold text-gray-800 mb-1">$10.99/month</p>
+                                <p className="text-sm text-gray-600">Monthly subscription</p>
                               </div>
-                              <p className="text-xs text-blue-700">40% off the base price - Apply at checkout!</p>
+                              <div className="text-center">
+                                <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg border-2 border-dashed border-blue-400 p-2">
+                                  <p className="text-xs font-bold text-blue-800 mb-1">🎉 DISCOUNT CODE</p>
+                                  <div className="bg-white border border-red-400 rounded p-1">
+                                    <p className="text-sm font-bold text-red-600">40OFF</p>
+                                  </div>
+                                  <p className="text-xs text-blue-700">Apply at checkout!</p>
+                                </div>
+                              </div>
                             </div>
                           </div>
 
