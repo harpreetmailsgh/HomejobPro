@@ -130,16 +130,16 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
           asChild
           variant="ghost"
           size="sm"
-          className={`px-4 py-2 rounded-md ${
+          className={`p-2 rounded-lg ${
             isFeatured 
-              ? 'bg-red-700 text-white hover:bg-red-800 shadow-lg' 
-              : 'bg-red-600 text-white hover:bg-red-700'
+              ? 'bg-red-600 text-white hover:bg-red-700 shadow-lg' 
+              : 'hover:bg-gray-100'
           }`}
           data-testid={`service-list-phone-${service.id}`}
         >
-          <a href={`tel:${service.phone}`} className="flex items-center space-x-2">
-            <Phone className="w-4 h-4 text-white" />
-            <span className="text-sm font-medium text-white">Call Now</span>
+          <a href={`tel:${service.phone}`} className="flex flex-col items-center">
+            <Phone className={`w-5 h-5 ${isFeatured ? 'text-white' : 'text-green-600'}`} />
+            <span className={`text-xs mt-1 ${isFeatured ? 'text-white font-medium' : 'text-gray-600'}`}>Call Now</span>
           </a>
         </Button>
 
