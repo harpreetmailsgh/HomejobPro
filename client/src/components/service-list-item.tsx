@@ -130,9 +130,9 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
           asChild
           variant="ghost"
           size="sm"
-          className={`p-2 rounded-lg min-w-[60px] ${
+          className={`px-3 py-2 rounded-lg min-w-[70px] ${
             isFeatured 
-              ? 'bg-red-600 text-white hover:bg-red-700 shadow-lg' 
+              ? 'bg-red-600 text-white hover:bg-red-700 shadow-lg border border-red-700' 
               : 'hover:bg-gray-100'
           }`}
           data-testid={`service-list-phone-${service.id}`}
@@ -177,20 +177,24 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
           </div>
         </Button>
 
-        {service.website && (
-          <Button
-            asChild
-            variant="ghost"
-            size="sm"
-            className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px]"
-            data-testid={`service-list-website-${service.id}`}
-          >
-            <a href={service.website} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center">
-              <ExternalLink className="w-5 h-5 text-blue-600" />
-              <span className="text-xs text-gray-600 mt-1">Website</span>
-            </a>
-          </Button>
-        )}
+        <Button
+          variant="ghost"
+          size="sm"
+          className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px]"
+          data-testid={`service-list-website-${service.id}`}
+          onClick={() => {
+            if (service.website) {
+              window.open(service.website, '_blank', 'noopener,noreferrer');
+            } else {
+              alert('Website not available for this service provider.');
+            }
+          }}
+        >
+          <div className="flex flex-col items-center justify-center">
+            <ExternalLink className="w-5 h-5 text-blue-600" />
+            <span className="text-xs text-gray-600 mt-1">Website</span>
+          </div>
+        </Button>
       </div>
     </div>
   );
