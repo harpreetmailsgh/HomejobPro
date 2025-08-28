@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import EnhancedSearchBar from "./enhanced-search-bar";
+import defaultHeroImage from "@assets/generated_images/Professional_home_services_team_bee192f1.png";
 
 export default function Hero() {
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
@@ -21,7 +22,7 @@ export default function Hero() {
           setHeroSubtitle(settings.heroSubtitle || "Find trusted professionals for all your home service needs");
           setServices(Array.isArray(settings.rotatingServices) ? settings.rotatingServices : ['Plumber', 'Electrician', 'HVAC Technician', 'Landscaper', 'Home Services']);
           setRotationSpeed(settings.rotationSpeed || 3000);
-          setBackgroundImage(settings.backgroundImage || "");
+          setBackgroundImage(settings.backgroundImage || defaultHeroImage);
           
           // Update document title
           if (settings.siteTitle) {
