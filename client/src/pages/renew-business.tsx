@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Check, Star, Phone, MapPin, Mail, Globe, TrendingUp, Users, Award, Zap } from 'lucide-react';
+import { Check, Star, Phone, MapPin, Mail, Globe, TrendingUp, Users, Award, Zap, CheckCircle, Shield, ExternalLink } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 import { useSEO } from '@/hooks/use-seo';
 import Header from '@/components/header';
@@ -329,7 +329,7 @@ export default function RenewBusiness() {
                             Keep my business searchable and visible to customers
                           </p>
                           
-                          <div className="grid md:grid-cols-1 gap-4 mb-4">
+                          <div className="grid md:grid-cols-2 gap-4 mb-4">
                             <div className="flex items-center text-green-600 font-medium">
                               <Check className="w-5 h-5 mr-2" />
                               Stay searchable to 100,000+ Customers
@@ -342,6 +342,10 @@ export default function RenewBusiness() {
                               <Check className="w-5 h-5 mr-2" />
                               12-month listing guarantee
                             </div>
+                            <div className="flex items-center text-green-600 font-medium">
+                              <Check className="w-5 h-5 mr-2" />
+                              Boost your Online presence
+                            </div>
                           </div>
 
                           <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 border-2 border-blue-300 mb-4">
@@ -351,7 +355,7 @@ export default function RenewBusiness() {
                                 <span className="ml-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">40% OFF FIRST YEAR</span>
                               </div>
                               <p className="text-2xl font-bold text-green-600 mb-1">$6.59/month</p>
-                              <p className="text-sm text-gray-600">Billed annually</p>
+                              <p className="text-sm text-gray-600">Apply Promo Code <span className="bg-white border-2 border-dashed border-red-500 px-2 py-1 rounded text-red-600 font-bold">40OFF</span> on next page</p>
                             </div>
                           </div>
 
@@ -435,7 +439,7 @@ export default function RenewBusiness() {
                                 <span className="ml-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">40% OFF FIRST YEAR</span>
                               </div>
                               <p className="text-2xl font-bold text-green-600 mb-1">$9.60/month</p>
-                              <p className="text-sm text-gray-600">Billed annually</p>
+                              <p className="text-sm text-gray-600">Apply Promo Code <span className="bg-white border-2 border-dashed border-red-500 px-2 py-1 rounded text-red-600 font-bold">40OFF</span> on next page</p>
                             </div>
                           </div>
 
@@ -479,21 +483,64 @@ export default function RenewBusiness() {
                       {/* Regular Listing Example */}
                       <div>
                         <h4 className="text-lg font-bold text-gray-700 mb-4 text-center">🔷 Essential Renewal</h4>
-                        <div className="border rounded-lg p-4 bg-white">
-                          <div className="flex items-start space-x-3">
-                            <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center">
-                              <div className="text-2xl">🔧</div>
-                            </div>
-                            <div className="flex-1">
-                              <h5 className="font-semibold text-gray-800">{foundRecord?.title || 'ABC Plumbing Services'}</h5>
-                              <div className="flex items-center space-x-1 text-sm">
-                                <div className="flex text-yellow-400">★★★★☆</div>
-                                <span className="text-gray-600">{foundRecord?.rating || '4.2'} ({foundRecord?.reviews || '23'} reviews)</span>
+                        <div className="bg-white rounded-xl overflow-hidden p-6 flex items-center space-x-6 shadow-md">
+                          <img 
+                            src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=400&h=300&fit=crop&crop=center"
+                            alt={`${foundRecord?.industry || 'Plumber'} professional tools and equipment`}
+                            className="w-24 h-24 object-cover rounded-lg flex-shrink-0"
+                          />
+
+                          <div className="flex-1 min-w-0">
+                            <div className="mb-2">
+                              <h3 className="text-xl font-semibold truncate mb-2 text-gray-800" title={foundRecord?.title || 'ABC Plumbing Services'}>
+                                {foundRecord?.title || 'ABC Plumbing Services'}
+                              </h3>
+                              <div className="flex flex-wrap gap-2 mb-2">
+                                <div className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                                  <CheckCircle className="w-3 h-3 mr-1" />
+                                  Verified
+                                </div>
+                                <div className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                                  <Shield className="w-3 h-3 mr-1" />
+                                  Licensed
+                                </div>
                               </div>
-                              <p className="text-sm text-gray-600 mt-1">📍 {foundRecord?.city || 'Downtown Toronto'}</p>
-                              <p className="text-xs text-gray-500 mt-1">Professional {foundRecord?.industry.toLowerCase() || 'plumbing'} services</p>
                             </div>
-                            <button className="bg-blue-500 text-white px-4 py-2 rounded text-sm">Call</button>
+
+                            <div className="flex items-center mb-2">
+                              <div className="flex items-center star-rating">
+                                {[...Array(4)].map((_, i) => (
+                                  <Star key={i} className="w-4 h-4 fill-current text-yellow-400" />
+                                ))}
+                                <Star className="w-4 h-4 text-gray-300" />
+                              </div>
+                              <span className="ml-2 text-gray-600">
+                                {foundRecord?.rating || '4.2'}
+                              </span>
+                              <span className="ml-1 text-gray-500">
+                                ({foundRecord?.reviews || '23'} reviews)
+                              </span>
+                            </div>
+
+                            <p className="text-gray-600 text-sm mb-4">
+                              {foundRecord?.address || foundRecord?.city || 'Downtown Toronto'}
+                            </p>
+                          </div>
+
+                          {/* Action Icons */}
+                          <div className="flex items-center space-x-3 flex-shrink-0">
+                            <button className="p-2 hover:bg-gray-100 rounded-full">
+                              <Phone className="w-5 h-5 text-green-600" />
+                            </button>
+                            <button className="p-2 hover:bg-gray-100 rounded-full">
+                              <MapPin className="w-5 h-5 text-red-600" />
+                            </button>
+                            <button className="p-2 hover:bg-gray-100 rounded-full">
+                              <Mail className="w-5 h-5 text-purple-600" />
+                            </button>
+                            <button className="p-2 hover:bg-gray-100 rounded-full">
+                              <ExternalLink className="w-5 h-5 text-blue-600" />
+                            </button>
                           </div>
                         </div>
                         <p className="text-center text-sm text-gray-600 mt-2">Standard visibility in search results</p>
@@ -502,25 +549,68 @@ export default function RenewBusiness() {
                       {/* Featured Listing Example */}
                       <div>
                         <h4 className="text-lg font-bold text-red-600 mb-4 text-center">⭐ Premium Featured</h4>
-                        <div className="border-4 border-red-500 rounded-lg p-4 bg-gradient-to-r from-red-50 to-orange-50 shadow-lg">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold">✨ FEATURED</span>
-                            <span className="text-red-600 font-bold text-sm">🔥 TOP LISTING</span>
-                          </div>
-                          <div className="flex items-start space-x-3">
-                            <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center border-2 border-red-300">
-                              <div className="text-2xl">🔧</div>
-                            </div>
-                            <div className="flex-1">
-                              <h5 className="font-bold text-red-700 text-lg">{foundRecord?.title || 'ABC Plumbing Services'}</h5>
-                              <div className="flex items-center space-x-1 text-sm">
-                                <div className="flex text-yellow-400">★★★★☆</div>
-                                <span className="text-gray-600 font-semibold">{foundRecord?.rating || '4.2'} ({foundRecord?.reviews || '23'} reviews)</span>
+                        <div className="bg-white rounded-xl overflow-hidden p-6 flex items-center space-x-6 border-[3px] border-red-500 shadow-lg shadow-red-200">
+                          <img 
+                            src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=400&h=300&fit=crop&crop=center"
+                            alt={`${foundRecord?.industry || 'Plumber'} professional tools and equipment`}
+                            className="w-24 h-24 object-cover rounded-lg flex-shrink-0"
+                          />
+
+                          <div className="flex-1 min-w-0">
+                            <div className="mb-2">
+                              <h3 className="text-xl font-semibold truncate mb-2 text-red-600" title={foundRecord?.title || 'ABC Plumbing Services'}>
+                                {foundRecord?.title || 'ABC Plumbing Services'}
+                              </h3>
+                              <div className="flex flex-wrap gap-2 mb-2">
+                                <div className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                                  <Star className="w-3 h-3 mr-1 fill-current" />
+                                  Featured
+                                </div>
+                                <div className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                                  <CheckCircle className="w-3 h-3 mr-1" />
+                                  Verified
+                                </div>
+                                <div className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                                  <Shield className="w-3 h-3 mr-1" />
+                                  Licensed
+                                </div>
                               </div>
-                              <p className="text-sm text-gray-700 mt-1 font-medium">📍 {foundRecord?.city || 'Downtown Toronto'}</p>
-                              <p className="text-xs text-gray-600 mt-1">Professional {foundRecord?.industry.toLowerCase() || 'plumbing'} services</p>
                             </div>
-                            <button className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-3 rounded-lg text-sm font-bold shadow-lg transform hover:scale-105">📞 Call Now</button>
+
+                            <div className="flex items-center mb-2">
+                              <div className="flex items-center star-rating">
+                                {[...Array(4)].map((_, i) => (
+                                  <Star key={i} className="w-4 h-4 fill-current text-yellow-400" />
+                                ))}
+                                <Star className="w-4 h-4 text-gray-300" />
+                              </div>
+                              <span className="ml-2 text-gray-600">
+                                {foundRecord?.rating || '4.2'}
+                              </span>
+                              <span className="ml-1 text-gray-500">
+                                ({foundRecord?.reviews || '23'} reviews)
+                              </span>
+                            </div>
+
+                            <p className="text-gray-600 text-sm mb-4">
+                              {foundRecord?.address || foundRecord?.city || 'Downtown Toronto'}
+                            </p>
+                          </div>
+
+                          {/* Action Icons */}
+                          <div className="flex items-center space-x-3 flex-shrink-0">
+                            <button className="p-2 hover:bg-gray-100 rounded-full">
+                              <Phone className="w-5 h-5 text-green-600" />
+                            </button>
+                            <button className="p-2 hover:bg-gray-100 rounded-full">
+                              <MapPin className="w-5 h-5 text-red-600" />
+                            </button>
+                            <button className="p-2 hover:bg-gray-100 rounded-full">
+                              <Mail className="w-5 h-5 text-purple-600" />
+                            </button>
+                            <button className="p-2 hover:bg-gray-100 rounded-full">
+                              <ExternalLink className="w-5 h-5 text-blue-600" />
+                            </button>
                           </div>
                         </div>
                         <p className="text-center text-sm text-red-600 font-semibold mt-2">Appears at TOP + highlighted border + priority call button</p>
@@ -530,16 +620,16 @@ export default function RenewBusiness() {
                     <div className="mt-8 bg-yellow-50 border-2 border-yellow-300 rounded-lg p-6">
                       <div className="text-center">
                         <h4 className="text-xl font-bold text-yellow-800 mb-2">🚀 Featured Benefits Summary</h4>
-                        <div className="grid md:grid-cols-3 gap-4 text-sm">
-                          <div className="text-center">
+                        <div className="grid md:grid-cols-3 gap-4 text-sm text-center">
+                          <div>
                             <div className="text-red-500 font-bold">10x More Visible</div>
                             <p className="text-gray-600">Top placement in all searches</p>
                           </div>
-                          <div className="text-center">
+                          <div>
                             <div className="text-red-500 font-bold">Eye-Catching Design</div>
                             <p className="text-gray-600">Red border + gradient highlights</p>
                           </div>
-                          <div className="text-center">
+                          <div>
                             <div className="text-red-500 font-bold">Priority Call Button</div>
                             <p className="text-gray-600">Larger, more prominent contact</p>
                           </div>
