@@ -72,7 +72,7 @@ export default function RenewBusiness() {
   useEffect(() => {
     const industry = watchedValues[0];
     const phone = watchedValues[1];
-    
+
     // Clear any existing timeout
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current);
@@ -90,7 +90,7 @@ export default function RenewBusiness() {
 
     // Create a unique key for this search
     const searchKey = `${industry}-${phone}`;
-    
+
     // Don't search if it's the same as the last successful search
     if (searchKey === lastSearchRef.current) {
       return;
@@ -104,7 +104,7 @@ export default function RenewBusiness() {
 
       setIsSearching(true);
       setSearchAttempted(false);
-      
+
       try {
         const response = await apiRequest('POST', '/api/search-business', {
           industry,
@@ -144,7 +144,7 @@ export default function RenewBusiness() {
     // Payment processing will be implemented later
   };
 
-  
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
@@ -328,7 +328,7 @@ export default function RenewBusiness() {
                           <p className="text-gray-600 text-lg mb-4">
                             Keep my business searchable and visible to customers
                           </p>
-                          
+
                           <div className="grid md:grid-cols-2 gap-4 mb-4">
                             <div className="flex items-center text-green-600 font-medium">
                               <Check className="w-5 h-5 mr-2" />
@@ -383,7 +383,7 @@ export default function RenewBusiness() {
                         <div className="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold transform rotate-12 shadow-lg">
                           🔥 MOST POPULAR
                         </div>
-                        
+
                         <div className="mb-6">
                           <h3 className="text-2xl font-bold text-red-700 mb-2">
                             ⭐ Premium Featured Renewal
@@ -391,7 +391,7 @@ export default function RenewBusiness() {
                           <p className="text-lg font-semibold text-red-600 mb-4">
                             Renew and highlight my business to increase chances of calls by at least 10x
                           </p>
-                          
+
                           <div className="grid md:grid-cols-2 gap-3 mb-6">
                             <div className="flex items-center text-green-700 font-bold">
                               <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
@@ -495,7 +495,7 @@ export default function RenewBusiness() {
                               <h3 className="text-lg font-semibold truncate mb-1 text-gray-800" title={foundRecord?.title || 'ABC Plumbing Services'}>
                                 {foundRecord?.title || 'ABC Plumbing Services'}
                               </h3>
-                              
+
                               <div className="flex flex-wrap gap-1 mb-2">
                                 <div className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
                                   <CheckCircle className="w-3 h-3 mr-1" />
@@ -524,24 +524,28 @@ export default function RenewBusiness() {
                               </p>
 
                               <div className="flex items-center space-x-2">
-                                <button className="p-1 hover:bg-gray-100 rounded-full">
-                                  <Phone className="w-4 h-4 text-green-600" />
+                                <button className="px-4 py-4 min-w-[80px] hover:bg-gray-100 rounded-lg flex flex-col items-center justify-center">
+                                  <Phone className="w-5 h-5 text-green-600 mb-1" />
+                                  <span className="text-xs text-gray-600">Call Now</span>
                                 </button>
-                                <button className="p-1 hover:bg-gray-100 rounded-full">
-                                  <MapPin className="w-4 h-4 text-red-600" />
+                                <button className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px] flex flex-col items-center justify-center">
+                                  <MapPin className="w-5 h-5 text-red-600" />
+                                  <span className="text-xs text-gray-600 mt-1">Location</span>
                                 </button>
-                                <button className="p-1 hover:bg-gray-100 rounded-full">
-                                  <Mail className="w-4 h-4 text-purple-600" />
+                                <button className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px] flex flex-col items-center justify-center">
+                                  <Mail className="w-5 h-5 text-purple-600" />
+                                  <span className="text-xs text-gray-600 mt-1">Email</span>
                                 </button>
-                                <button className="p-1 hover:bg-gray-100 rounded-full">
-                                  <ExternalLink className="w-4 h-4 text-blue-600" />
+                                <button className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px] flex flex-col items-center justify-center">
+                                  <ExternalLink className="w-5 h-5 text-blue-600" />
+                                  <span className="text-xs text-gray-600 mt-1">Website</span>
                                 </button>
                               </div>
                             </div>
                           </div>
                         </div>
                         <p className="text-center text-sm text-gray-600 mt-2 mb-4">Standard visibility in search results</p>
-                        
+
                         {/* Essential Renewal Button */}
                         <div>
                           <a 
@@ -577,7 +581,7 @@ export default function RenewBusiness() {
                               <h3 className="text-lg font-semibold truncate mb-1 text-red-600" title={foundRecord?.title || 'ABC Plumbing Services'}>
                                 {foundRecord?.title || 'ABC Plumbing Services'}
                               </h3>
-                              
+
                               <div className="flex flex-wrap gap-1 mb-2">
                                 <div className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center">
                                   <Star className="w-3 h-3 mr-1 fill-current" />
@@ -610,24 +614,28 @@ export default function RenewBusiness() {
                               </p>
 
                               <div className="flex items-center space-x-2">
-                                <button className="p-1 hover:bg-gray-100 rounded-full">
-                                  <Phone className="w-4 h-4 text-green-600" />
+                                <button className="px-4 py-6 min-w-[80px] bg-red-600 text-white hover:bg-red-700 shadow-lg border border-red-700 rounded-none flex flex-col items-center justify-center">
+                                  <Phone className="w-5 h-5 mb-1" />
+                                  <span className="text-xs">Call Now</span>
                                 </button>
-                                <button className="p-1 hover:bg-gray-100 rounded-full">
-                                  <MapPin className="w-4 h-4 text-red-600" />
+                                <button className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px] flex flex-col items-center justify-center">
+                                  <MapPin className="w-5 h-5 text-red-600" />
+                                  <span className="text-xs text-gray-600 mt-1">Location</span>
                                 </button>
-                                <button className="p-1 hover:bg-gray-100 rounded-full">
-                                  <Mail className="w-4 h-4 text-purple-600" />
+                                <button className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px] flex flex-col items-center justify-center">
+                                  <Mail className="w-5 h-5 text-purple-600" />
+                                  <span className="text-xs text-gray-600 mt-1">Email</span>
                                 </button>
-                                <button className="p-1 hover:bg-gray-100 rounded-full">
-                                  <ExternalLink className="w-4 h-4 text-blue-600" />
+                                <button className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px] flex flex-col items-center justify-center">
+                                  <ExternalLink className="w-5 h-5 text-blue-600" />
+                                  <span className="text-xs text-gray-600 mt-1">Website</span>
                                 </button>
                               </div>
                             </div>
                           </div>
                         </div>
                         <p className="text-center text-sm text-red-600 font-semibold mt-2 mb-4">Appears at TOP + highlighted border + priority call button</p>
-                        
+
                         {/* Premium Featured Button */}
                         <div>
                           <a 
@@ -670,7 +678,7 @@ export default function RenewBusiness() {
                     </div>
                   </CardContent>
                 </Card>
-                
+
                 {/* Trust and Security Section */}
                 <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
                   <div className="text-center mb-6">
