@@ -470,7 +470,7 @@ export default function RenewBusiness() {
                                 data-testid="button-featured-renewal-top"
                               >
                                 <span className="text-center break-words">
-                                  🚀 Get Premium Featured Renewal Now
+                                  🚀 Premium Featured Renewal
                                 </span>
                               </Button>
                             </a>
