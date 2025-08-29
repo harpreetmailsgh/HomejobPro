@@ -7,6 +7,8 @@ export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
+  const [isMobileBusinessDropdownOpen, setIsMobileBusinessDropdownOpen] = useState(false);
 
   return (
     <header className="bg-white shadow-sm border-b">
@@ -126,24 +128,47 @@ export default function Header() {
                 Browse Services
               </span>
             </Link>
-            <Link href="/faq">
-              <span 
-                className="block px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer"
-                onClick={() => setIsMobileMenuOpen(false)}
-                data-testid="mobile-nav-faqs"
+            
+            {/* Common Home Jobs Mobile Dropdown */}
+            <div>
+              <button
+                onClick={() => setIsMobileDropdownOpen(!isMobileDropdownOpen)}
+                className="w-full text-left px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer flex items-center justify-between"
+                data-testid="mobile-nav-common-home-jobs"
               >
-                FAQs
-              </span>
-            </Link>
-            <Link href="/home-jobs-guide">
-              <span 
-                className="block px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer"
-                onClick={() => setIsMobileMenuOpen(false)}
-                data-testid="mobile-nav-home-jobs-guide"
-              >
-                Home Jobs Guide
-              </span>
-            </Link>
+                Common Home Jobs
+                <ChevronDown className={`w-4 h-4 transition-transform ${isMobileDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {isMobileDropdownOpen && (
+                <div className="ml-4 mt-1 space-y-1">
+                  <Link href="/faq">
+                    <span 
+                      className="block px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsMobileDropdownOpen(false);
+                      }}
+                      data-testid="mobile-nav-faqs"
+                    >
+                      FAQs
+                    </span>
+                  </Link>
+                  <Link href="/home-jobs-guide">
+                    <span 
+                      className="block px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsMobileDropdownOpen(false);
+                      }}
+                      data-testid="mobile-nav-home-jobs-guide"
+                    >
+                      Home Jobs Guide
+                    </span>
+                  </Link>
+                </div>
+              )}
+            </div>
+            
             <Link href="/about">
               <span 
                 className="block px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer"
@@ -153,24 +178,46 @@ export default function Header() {
                 About Us
               </span>
             </Link>
-            <Link href="/list-business">
-              <span 
-                className="block px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer"
-                onClick={() => setIsMobileMenuOpen(false)}
-                data-testid="mobile-nav-list-business"
+            
+            {/* Your Business Listing Mobile Dropdown */}
+            <div>
+              <button
+                onClick={() => setIsMobileBusinessDropdownOpen(!isMobileBusinessDropdownOpen)}
+                className="w-full text-left px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer flex items-center justify-between"
+                data-testid="mobile-nav-your-business-listing"
               >
-                List your Business
-              </span>
-            </Link>
-            <Link href="/renew-business">
-              <span 
-                className="block px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer"
-                onClick={() => setIsMobileMenuOpen(false)}
-                data-testid="mobile-nav-renew-business"
-              >
-                Renew Your Business Listing
-              </span>
-            </Link>
+                Your Business Listing
+                <ChevronDown className={`w-4 h-4 transition-transform ${isMobileBusinessDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {isMobileBusinessDropdownOpen && (
+                <div className="ml-4 mt-1 space-y-1">
+                  <Link href="/list-business">
+                    <span 
+                      className="block px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsMobileBusinessDropdownOpen(false);
+                      }}
+                      data-testid="mobile-nav-list-business"
+                    >
+                      List your Business
+                    </span>
+                  </Link>
+                  <Link href="/renew-business">
+                    <span 
+                      className="block px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsMobileBusinessDropdownOpen(false);
+                      }}
+                      data-testid="mobile-nav-renew-business"
+                    >
+                      Renew Your Business Listing
+                    </span>
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -183,6 +230,8 @@ export default function Header() {
             setIsDropdownOpen(false);
             setIsBusinessDropdownOpen(false);
             setIsMobileMenuOpen(false);
+            setIsMobileDropdownOpen(false);
+            setIsMobileBusinessDropdownOpen(false);
           }}
         />
       )}
