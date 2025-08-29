@@ -125,19 +125,19 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         </div>
 
         {/* Action Icons */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <div className="flex justify-center items-center gap-2 flex-wrap">
           <Button
             asChild
             variant="ghost"
             size="sm"
-            className={`p-0 h-16 w-full ${
+            className={`p-0 h-16 px-4 ${
               isFeatured 
                 ? 'bg-red-600 text-white hover:bg-red-700 shadow-lg border border-red-700' 
                 : 'hover:bg-gray-100'
             }`}
             data-testid={`service-phone-${service.id}`}
           >
-            <a href={`tel:${service.phone}`} className="flex flex-col items-center justify-center h-full w-full gap-1">
+            <a href={`tel:${service.phone}`} className="flex flex-col items-center justify-center h-full px-2 gap-1">
               <Phone className={`w-5 h-5 ${isFeatured ? 'text-white' : 'text-green-600'}`} />
               <span className={`text-sm ${isFeatured ? 'text-white font-medium' : 'text-gray-600'}`}>Call Now</span>
             </a>
@@ -148,10 +148,10 @@ export default function ServiceCard({ service }: ServiceCardProps) {
               asChild
               variant="ghost"
               size="sm"
-              className="p-0 hover:bg-gray-100 h-16 w-full"
+              className="p-0 hover:bg-gray-100 h-16 px-4"
               data-testid={`service-maps-${service.id}`}
             >
-              <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center h-full w-full gap-1">
+              <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center h-full px-2 gap-1">
                 <MapPin className="w-5 h-5 text-red-600" />
                 <span className="text-sm text-gray-600">Location</span>
               </a>
@@ -160,10 +160,10 @@ export default function ServiceCard({ service }: ServiceCardProps) {
             <Button
               variant="ghost"
               size="sm"
-              className="p-0 hover:bg-gray-100 h-16 w-full opacity-50 cursor-not-allowed"
+              className="p-0 hover:bg-gray-100 h-16 px-4 opacity-50 cursor-not-allowed"
               disabled
             >
-              <div className="flex flex-col items-center justify-center h-full w-full gap-1">
+              <div className="flex flex-col items-center justify-center h-full px-2 gap-1">
                 <MapPin className="w-5 h-5 text-gray-400" />
                 <span className="text-sm text-gray-400">Location</span>
               </div>
@@ -173,7 +173,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           <Button
             variant="ghost"
             size="sm"
-            className="p-0 hover:bg-gray-100 h-16 w-full"
+            className="p-0 hover:bg-gray-100 h-16 px-4"
             data-testid={`service-email-${service.id}`}
             onClick={() => {
               if (service.email) {
@@ -183,7 +183,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
               }
             }}
           >
-            <div className="flex flex-col items-center justify-center h-full w-full gap-1">
+            <div className="flex flex-col items-center justify-center h-full px-2 gap-1">
               <Mail className={`w-5 h-5 ${service.email ? 'text-purple-600' : 'text-gray-400'}`} />
               <span className={`text-sm ${service.email ? 'text-gray-600' : 'text-gray-400'}`}>Email</span>
             </div>
@@ -192,7 +192,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           <Button
             variant="ghost"
             size="sm"
-            className="p-0 hover:bg-gray-100 h-16 w-full"
+            className="p-0 hover:bg-gray-100 h-16 px-4"
             data-testid={`service-website-${service.id}`}
             onClick={() => {
               if (service.website) {
@@ -202,7 +202,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
               }
             }}
           >
-            <div className="flex flex-col items-center justify-center h-full w-full gap-1">
+            <div className="flex flex-col items-center justify-center h-full px-2 gap-1">
               <ExternalLink className={`w-5 h-5 ${service.website ? 'text-blue-600' : 'text-gray-400'}`} />
               <span className={`text-sm ${service.website ? 'text-gray-600' : 'text-gray-400'}`}>Website</span>
             </div>
