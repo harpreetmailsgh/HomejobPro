@@ -466,10 +466,12 @@ export default function RenewBusiness() {
                               <Button
                                 type="button"
                                 size="lg"
-                                className="w-full px-8 py-4 text-xl bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 shadow-xl transform hover:scale-105 transition-all duration-300"
+                                className="w-full px-4 sm:px-8 py-6 sm:py-4 text-base sm:text-xl bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 shadow-xl transform hover:scale-105 transition-all duration-300 min-h-[60px] sm:min-h-auto leading-tight"
                                 data-testid="button-featured-renewal-top"
                               >
-                                🚀 Get Premium Featured Renewal Now
+                                <span className="text-center break-words">
+                                  🚀 Get Premium Featured Renewal Now
+                                </span>
                               </Button>
                             </a>
                           </div>
