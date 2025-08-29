@@ -125,12 +125,12 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
       </div>
 
       {/* Action Icons */}
-      <div className="flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 flex-shrink-0 flex-wrap gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full sm:w-auto flex-shrink-0">
         <Button
           asChild
           variant="ghost"
           size="sm"
-          className={`p-0 min-w-[80px] h-16 ${
+          className={`p-0 h-16 w-full sm:min-w-[80px] ${
             isFeatured 
               ? 'bg-red-600 text-white hover:bg-red-700 shadow-lg border border-red-700' 
               : 'hover:bg-gray-100'
@@ -143,12 +143,12 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
           </a>
         </Button>
 
-        {service.googleMapsLink && (
+        {service.googleMapsLink ? (
           <Button
             asChild
             variant="ghost"
             size="sm"
-            className="p-0 hover:bg-gray-100 min-w-[80px] h-16"
+            className="p-0 hover:bg-gray-100 h-16 w-full sm:min-w-[80px]"
             data-testid={`service-list-maps-${service.id}`}
           >
             <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center h-full w-full gap-1">
@@ -156,12 +156,24 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
               <span className="text-sm text-gray-600">Location</span>
             </a>
           </Button>
+        ) : (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="p-0 hover:bg-gray-100 h-16 w-full sm:min-w-[80px] opacity-50 cursor-not-allowed"
+            disabled
+          >
+            <div className="flex flex-col items-center justify-center h-full w-full gap-1">
+              <MapPin className="w-5 h-5 text-gray-400" />
+              <span className="text-sm text-gray-400">Location</span>
+            </div>
+          </Button>
         )}
 
         <Button
           variant="ghost"
           size="sm"
-          className="p-0 hover:bg-gray-100 min-w-[70px] sm:min-w-[80px] h-12 sm:h-16"
+          className="p-0 hover:bg-gray-100 h-16 w-full sm:min-w-[80px]"
           data-testid={`service-list-email-${service.id}`}
           onClick={() => {
             if (service.email) {
@@ -172,15 +184,15 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
           }}
         >
           <div className="flex flex-col items-center justify-center h-full w-full gap-1">
-            <Mail className="w-5 h-5 text-purple-600" />
-            <span className="text-sm text-gray-600">Email</span>
+            <Mail className={`w-5 h-5 ${service.email ? 'text-purple-600' : 'text-gray-400'}`} />
+            <span className={`text-sm ${service.email ? 'text-gray-600' : 'text-gray-400'}`}>Email</span>
           </div>
         </Button>
 
         <Button
           variant="ghost"
           size="sm"
-          className="p-0 hover:bg-gray-100 min-w-[70px] sm:min-w-[80px] h-12 sm:h-16"
+          className="p-0 hover:bg-gray-100 h-16 w-full sm:min-w-[80px]"
           data-testid={`service-list-website-${service.id}`}
           onClick={() => {
             if (service.website) {
@@ -191,8 +203,8 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
           }}
         >
           <div className="flex flex-col items-center justify-center h-full w-full gap-1">
-            <ExternalLink className="w-5 h-5 text-blue-600" />
-            <span className="text-sm text-gray-600">Website</span>
+            <ExternalLink className={`w-5 h-5 ${service.website ? 'text-blue-600' : 'text-gray-400'}`} />
+            <span className={`text-sm ${service.website ? 'text-gray-600' : 'text-gray-400'}`}>Website</span>
           </div>
         </Button>
       </div>

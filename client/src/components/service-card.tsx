@@ -125,68 +125,88 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         </div>
 
         {/* Action Icons */}
-        <div className="flex justify-center space-x-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           <Button
             asChild
             variant="ghost"
             size="sm"
-            className={`p-3 ${
+            className={`p-0 h-16 w-full ${
               isFeatured 
                 ? 'bg-red-600 text-white hover:bg-red-700 shadow-lg border border-red-700' 
                 : 'hover:bg-gray-100'
             }`}
             data-testid={`service-phone-${service.id}`}
           >
-            <a href={`tel:${service.phone}`} className="flex flex-col items-center">
-              <Phone className={`w-6 h-6 mb-1 ${isFeatured ? 'text-white' : 'text-green-600'}`} />
-              <span className={`text-sm ${isFeatured ? 'text-white font-medium' : 'text-gray-600'}`}>Call</span>
+            <a href={`tel:${service.phone}`} className="flex flex-col items-center justify-center h-full w-full gap-1">
+              <Phone className={`w-5 h-5 ${isFeatured ? 'text-white' : 'text-green-600'}`} />
+              <span className={`text-sm ${isFeatured ? 'text-white font-medium' : 'text-gray-600'}`}>Call Now</span>
             </a>
           </Button>
 
-          {service.googleMapsLink && (
+          {service.googleMapsLink ? (
             <Button
               asChild
               variant="ghost"
               size="sm"
-              className="p-3 hover:bg-gray-100"
+              className="p-0 hover:bg-gray-100 h-16 w-full"
               data-testid={`service-maps-${service.id}`}
             >
-              <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center">
-                <MapPin className="w-6 h-6 text-red-600 mb-1" />
-                <span className="text-sm text-gray-600">Maps</span>
+              <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center h-full w-full gap-1">
+                <MapPin className="w-5 h-5 text-red-600" />
+                <span className="text-sm text-gray-600">Location</span>
               </a>
+            </Button>
+          ) : (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="p-0 hover:bg-gray-100 h-16 w-full opacity-50 cursor-not-allowed"
+              disabled
+            >
+              <div className="flex flex-col items-center justify-center h-full w-full gap-1">
+                <MapPin className="w-5 h-5 text-gray-400" />
+                <span className="text-sm text-gray-400">Location</span>
+              </div>
             </Button>
           )}
 
-          {service.email && (
-            <Button
-              asChild
-              variant="ghost"
-              size="sm"
-              className="p-3 hover:bg-gray-100"
-              data-testid={`service-email-${service.id}`}
-            >
-              <a href={`mailto:${service.email}`} className="flex flex-col items-center">
-                <Mail className="w-6 h-6 text-purple-600 mb-1" />
-                <span className="text-sm text-gray-600">Email</span>
-              </a>
-            </Button>
-          )}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="p-0 hover:bg-gray-100 h-16 w-full"
+            data-testid={`service-email-${service.id}`}
+            onClick={() => {
+              if (service.email) {
+                window.location.href = `mailto:${service.email}`;
+              } else {
+                alert('Email not available for this service provider.');
+              }
+            }}
+          >
+            <div className="flex flex-col items-center justify-center h-full w-full gap-1">
+              <Mail className={`w-5 h-5 ${service.email ? 'text-purple-600' : 'text-gray-400'}`} />
+              <span className={`text-sm ${service.email ? 'text-gray-600' : 'text-gray-400'}`}>Email</span>
+            </div>
+          </Button>
 
-          {service.website && (
-            <Button
-              asChild
-              variant="ghost"
-              size="sm"
-              className="p-3 hover:bg-gray-100"
-              data-testid={`service-website-${service.id}`}
-            >
-              <a href={service.website} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center">
-                <ExternalLink className="w-6 h-6 text-blue-600 mb-1" />
-                <span className="text-sm text-gray-600">Website</span>
-              </a>
-            </Button>
-          )}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="p-0 hover:bg-gray-100 h-16 w-full"
+            data-testid={`service-website-${service.id}`}
+            onClick={() => {
+              if (service.website) {
+                window.open(service.website, '_blank', 'noopener,noreferrer');
+              } else {
+                alert('Website not available for this service provider.');
+              }
+            }}
+          >
+            <div className="flex flex-col items-center justify-center h-full w-full gap-1">
+              <ExternalLink className={`w-5 h-5 ${service.website ? 'text-blue-600' : 'text-gray-400'}`} />
+              <span className={`text-sm ${service.website ? 'text-gray-600' : 'text-gray-400'}`}>Website</span>
+            </div>
+          </Button>
         </div>
       </div>
     </div>
