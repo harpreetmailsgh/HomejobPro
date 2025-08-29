@@ -125,7 +125,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         </div>
 
         {/* Action Icons */}
-        <div className="flex justify-center items-center gap-2 flex-wrap">
+        <div className="grid grid-cols-2 gap-2">
           <Button
             asChild
             variant="ghost"

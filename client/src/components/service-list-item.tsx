@@ -125,7 +125,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
       </div>
 
       {/* Action Icons */}
-      <div className="flex justify-center sm:justify-start items-center gap-2 flex-wrap flex-shrink-0">
+      <div className="grid grid-cols-2 gap-2 w-full max-w-[200px] mx-auto sm:mx-0 flex-shrink-0">
         <Button
           asChild
           variant="ghost"
