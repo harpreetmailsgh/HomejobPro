@@ -125,12 +125,12 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
       </div>
 
       {/* Action Icons */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0">
+      <div className="flex flex-wrap justify-center gap-2 sm:grid sm:grid-cols-4 flex-shrink-0">
         <Button
           asChild
           variant="ghost"
           size="sm"
-          className={`p-0 h-16 px-3 rounded-none w-full ${
+          className={`p-0 h-16 px-3 rounded-none w-auto sm:w-full ${
             isFeatured 
               ? 'bg-red-600 text-white hover:bg-red-700 shadow-lg border border-red-700' 
               : 'hover:bg-gray-100'

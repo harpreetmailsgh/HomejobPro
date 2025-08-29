@@ -125,16 +125,16 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         </div>
 
         {/* Action Icons */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <div className="flex flex-wrap justify-center gap-2 sm:grid sm:grid-cols-4">
           <Button
             asChild
             variant="ghost"
             size="sm"
-            className={`p-0 h-16 px-3 rounded-none w-full ${
+            className={`p-0 h-16 px-3 rounded-none w-full sm:w-full ${
               isFeatured 
                 ? 'bg-red-600 text-white hover:bg-red-700 shadow-lg border border-red-700' 
                 : 'hover:bg-gray-100'
-            }`}
+            } sm:${isFeatured ? 'bg-red-600' : 'hover:bg-gray-100'}`}
             data-testid={`service-phone-${service.id}`}
           >
             <a href={`tel:${service.phone}`} className="flex flex-col items-center justify-center h-full px-2 gap-1">
