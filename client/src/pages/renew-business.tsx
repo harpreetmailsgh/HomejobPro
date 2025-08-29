@@ -151,7 +151,7 @@ export default function RenewBusiness() {
       <Header />
       {/* Hero Section */}
       <div 
-        className="relative text-white py-20"
+        className="relative text-white py-12 sm:py-16 md:py-20"
         style={{
           backgroundImage: `url(${renewBusinessHero})`,
           backgroundSize: "cover",
@@ -162,26 +162,26 @@ export default function RenewBusiness() {
         <div className="absolute inset-0 bg-black opacity-60"></div>
         <div className="relative container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-5xl font-bold mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
               Renew Your Business Listing
             </h1>
-            <p className="text-xl mb-8 opacity-90">
+            <p className="text-lg sm:text-xl mb-6 sm:mb-8 opacity-90 px-2">
               Stay visible to thousands of local customers actively searching for your services
             </p>
-            <div className="grid md:grid-cols-3 gap-6 mt-12">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                <TrendingUp className="w-12 h-12 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">Increase Visibility</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mt-8 sm:mt-12">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 sm:p-6">
+                <TrendingUp className="w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-4" />
+                <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2">Increase Visibility</h3>
                 <p className="text-sm opacity-90">Get found by more customers in your area</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                <Users className="w-12 h-12 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">More Leads</h3>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 sm:p-6">
+                <Users className="w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-4" />
+                <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2">More Leads</h3>
                 <p className="text-sm opacity-90">Connect with customers ready to hire</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                <Award className="w-12 h-12 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">Build Trust</h3>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 sm:p-6 sm:col-span-2 md:col-span-1">
+                <Award className="w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-4" />
+                <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2">Build Trust</h3>
                 <p className="text-sm opacity-90">Showcase your verified status and ratings</p>
               </div>
             </div>
@@ -189,21 +189,21 @@ export default function RenewBusiness() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 max-w-6xl -mt-10 relative z-10">
+      <div className="container mx-auto px-4 max-w-6xl -mt-6 sm:-mt-10 relative z-10">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 sm:space-y-8">
             <Card className="shadow-xl border-0">
-              <CardHeader className="bg-gradient-to-r from-blue-500 to-green-500 text-white rounded-t-lg">
-                <CardTitle className="text-2xl flex items-center">
-                  <Zap className="w-6 h-6 mr-3" />
+              <CardHeader className="bg-gradient-to-r from-blue-500 to-green-500 text-white rounded-t-lg p-4 sm:p-6">
+                <CardTitle className="text-xl sm:text-2xl flex items-center">
+                  <Zap className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3" />
                   Find Your Business
                 </CardTitle>
-                <CardDescription className="text-blue-100">
+                <CardDescription className="text-blue-100 text-sm sm:text-base">
                   Select your industry and enter your phone number to locate your listing
                 </CardDescription>
               </CardHeader>
-              <CardContent className="p-6 space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
+              <CardContent className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   <FormField
                     control={form.control}
                     name="industry"
@@ -262,31 +262,32 @@ export default function RenewBusiness() {
                 )}
 
                 {foundRecord && (
-                  <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-300 rounded-xl p-6 shadow-lg">
-                    <h3 className="text-xl font-bold text-green-800 mb-4 flex items-center">
-                      <Check className="w-6 h-6 mr-3 bg-green-500 text-white rounded-full p-1" />
+                  <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-300 rounded-xl p-4 sm:p-6 shadow-lg">
+                    <h3 className="text-lg sm:text-xl font-bold text-green-800 mb-3 sm:mb-4 flex items-center">
+                      <Check className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 bg-green-500 text-white rounded-full p-1" />
                       ✨ Business Found Successfully!
                     </h3>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div className="flex items-center text-gray-700">
-                        <strong className="mr-2">Company:</strong> {foundRecord.title}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                      <div className="flex items-start text-gray-700 text-sm sm:text-base">
+                        <strong className="mr-2 flex-shrink-0">Company:</strong> 
+                        <span className="break-words">{foundRecord.title}</span>
                       </div>
-                      <div className="flex items-center text-gray-700">
-                        <Phone className="w-4 h-4 mr-2" />
-                        {foundRecord.phone}
+                      <div className="flex items-center text-gray-700 text-sm sm:text-base">
+                        <Phone className="w-4 h-4 mr-2 flex-shrink-0" />
+                        <span className="break-all">{foundRecord.phone}</span>
                       </div>
-                      <div className="flex items-center text-gray-700">
-                        <MapPin className="w-4 h-4 mr-2" />
-                        {foundRecord.address}
+                      <div className="flex items-start text-gray-700 text-sm sm:text-base sm:col-span-2">
+                        <MapPin className="w-4 h-4 mr-2 flex-shrink-0 mt-0.5" />
+                        <span className="break-words">{foundRecord.address}</span>
                       </div>
-                      <div className="flex items-center text-gray-700">
-                        <Mail className="w-4 h-4 mr-2" />
-                        {foundRecord.email}
+                      <div className="flex items-center text-gray-700 text-sm sm:text-base">
+                        <Mail className="w-4 h-4 mr-2 flex-shrink-0" />
+                        <span className="break-all">{foundRecord.email}</span>
                       </div>
                       {foundRecord.website && (
-                        <div className="flex items-center text-gray-700 md:col-span-2">
-                          <Globe className="w-4 h-4 mr-2" />
-                          {foundRecord.website}
+                        <div className="flex items-center text-gray-700 text-sm sm:text-base">
+                          <Globe className="w-4 h-4 mr-2 flex-shrink-0" />
+                          <span className="break-all">{foundRecord.website}</span>
                         </div>
                       )}
                     </div>
@@ -309,53 +310,59 @@ export default function RenewBusiness() {
             {foundRecord && (
               <>
                 <Card className="shadow-xl border-0">
-                  <CardHeader className="bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-t-lg">
-                    <CardTitle className="text-2xl flex items-center">
-                      <Award className="w-6 h-6 mr-3" />
+                  <CardHeader className="bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-t-lg p-4 sm:p-6">
+                    <CardTitle className="text-xl sm:text-2xl flex items-center">
+                      <Award className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3" />
                       Choose Your Renewal Plan
                     </CardTitle>
-                    <CardDescription className="text-purple-100">
+                    <CardDescription className="text-purple-100 text-sm sm:text-base">
                       Select the best option to grow your business and reach more customers
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="p-8">
-                    <div className="space-y-6">
-                      <div className="border-2 border-gray-200 rounded-xl p-8 hover:border-blue-300 transition-all duration-300 hover:shadow-lg">
+                  <CardContent className="p-4 sm:p-6 md:p-8">
+                    <div className="space-y-4 sm:space-y-6">
+                      <div className="border-2 border-gray-200 rounded-xl p-4 sm:p-6 md:p-8 hover:border-blue-300 transition-all duration-300 hover:shadow-lg">
                         <div className="mb-4">
-                          <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                          <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
                             💼 Essential Renewal
                           </h3>
-                          <p className="text-gray-600 text-lg mb-4">
+                          <p className="text-gray-600 text-base sm:text-lg mb-4">
                             Keep my business searchable and visible to customers
                           </p>
 
-                          <div className="grid md:grid-cols-2 gap-4 mb-4">
-                            <div className="flex items-center text-green-600 font-medium">
-                              <Check className="w-5 h-5 mr-2" />
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4">
+                            <div className="flex items-center text-green-600 font-medium text-sm sm:text-base">
+                              <Check className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                               Stay searchable to 100,000+ Customers
                             </div>
-                            <div className="flex items-center text-green-600 font-medium">
-                              <Check className="w-5 h-5 mr-2" />
+                            <div className="flex items-center text-green-600 font-medium text-sm sm:text-base">
+                              <Check className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                               Maintain Google ratings
                             </div>
-                            <div className="flex items-center text-green-600 font-medium">
-                              <Check className="w-5 h-5 mr-2" />
+                            <div className="flex items-center text-green-600 font-medium text-sm sm:text-base">
+                              <Check className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                               12-month listing guarantee
                             </div>
-                            <div className="flex items-center text-green-600 font-medium">
-                              <Check className="w-5 h-5 mr-2" />
+                            <div className="flex items-center text-green-600 font-medium text-sm sm:text-base">
+                              <Check className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                               Boost your Online presence
                             </div>
                           </div>
 
-                          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 border-2 border-blue-300 mb-4">
+                          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-3 sm:p-4 border-2 border-blue-300 mb-4">
                             <div className="text-center">
                               <div className="mb-2">
-                                <span className="text-lg text-gray-500 line-through">$10.99/month</span>
-                                <span className="ml-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">40% OFF FIRST YEAR</span>
+                                <span className="text-base sm:text-lg text-gray-500 line-through">$10.99/month</span>
+                                <div className="mt-1 sm:mt-0 sm:ml-2">
+                                  <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">40% OFF FIRST YEAR</span>
+                                </div>
                               </div>
-                              <p className="text-2xl font-bold text-green-600 mb-1">$6.59/month</p>
-                              <p className="text-sm text-gray-600">Apply Promo Code <span className="bg-white border-2 border-dashed border-red-500 px-2 py-1 rounded text-red-600 font-bold">40OFF</span> on next page</p>
+                              <p className="text-xl sm:text-2xl font-bold text-green-600 mb-1">$6.59/month</p>
+                              <p className="text-xs sm:text-sm text-gray-600">
+                                Apply Promo Code 
+                                <span className="bg-white border-2 border-dashed border-red-500 px-2 py-1 rounded text-red-600 font-bold ml-1">40OFF</span> 
+                                on next page
+                              </p>
                             </div>
                           </div>
 
@@ -379,42 +386,42 @@ export default function RenewBusiness() {
                         </div>
                       </div>
 
-                      <div className="border-2 border-red-300 rounded-xl p-8 bg-gradient-to-br from-red-50 to-orange-50 shadow-lg relative overflow-hidden">
-                        <div className="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold transform rotate-12 shadow-lg">
+                      <div className="border-2 border-red-300 rounded-xl p-4 sm:p-6 md:p-8 bg-gradient-to-br from-red-50 to-orange-50 shadow-lg relative overflow-hidden">
+                        <div className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-gradient-to-r from-red-500 to-orange-500 text-white px-2 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold transform rotate-12 shadow-lg">
                           🔥 MOST POPULAR
                         </div>
 
-                        <div className="mb-6">
-                          <h3 className="text-2xl font-bold text-red-700 mb-2">
+                        <div className="mb-4 sm:mb-6">
+                          <h3 className="text-xl sm:text-2xl font-bold text-red-700 mb-2">
                             ⭐ Premium Featured Renewal
                           </h3>
-                          <p className="text-lg font-semibold text-red-600 mb-4">
+                          <p className="text-base sm:text-lg font-semibold text-red-600 mb-4">
                             Renew and highlight my business to increase chances of calls by at least 10x
                           </p>
 
-                          <div className="grid md:grid-cols-2 gap-3 mb-6">
-                            <div className="flex items-center text-green-700 font-bold">
-                              <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mb-4 sm:mb-6">
+                            <div className="flex items-center text-green-700 font-bold text-sm sm:text-base">
+                              <Check className="w-4 h-4 sm:w-5 sm:h-5 mr-2 bg-green-500 text-white rounded-full p-0.5 flex-shrink-0" />
                               Everything in Essential Renewal
                             </div>
-                            <div className="flex items-center text-green-700 font-bold">
-                              <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
+                            <div className="flex items-center text-green-700 font-bold text-sm sm:text-base">
+                              <Check className="w-4 h-4 sm:w-5 sm:h-5 mr-2 bg-green-500 text-white rounded-full p-0.5 flex-shrink-0" />
                               Get Featured tag on your listing
                             </div>
-                            <div className="flex items-center text-green-700 font-bold">
-                              <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
+                            <div className="flex items-center text-green-700 font-bold text-sm sm:text-base">
+                              <Check className="w-4 h-4 sm:w-5 sm:h-5 mr-2 bg-green-500 text-white rounded-full p-0.5 flex-shrink-0" />
                               Appear on TOP of FRONT page
                             </div>
-                            <div className="flex items-center text-green-700 font-bold">
-                              <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
+                            <div className="flex items-center text-green-700 font-bold text-sm sm:text-base">
+                              <Check className="w-4 h-4 sm:w-5 sm:h-5 mr-2 bg-green-500 text-white rounded-full p-0.5 flex-shrink-0" />
                               Red border highlighting your business
                             </div>
-                            <div className="flex items-center text-green-700 font-bold">
-                              <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
+                            <div className="flex items-center text-green-700 font-bold text-sm sm:text-base">
+                              <Check className="w-4 h-4 sm:w-5 sm:h-5 mr-2 bg-green-500 text-white rounded-full p-0.5 flex-shrink-0" />
                               Highlighted Call button (boosting priority calls)
                             </div>
-                            <div className="flex items-center text-green-700 font-bold">
-                              <Check className="w-5 h-5 mr-2 bg-green-500 text-white rounded-full p-0.5" />
+                            <div className="flex items-center text-green-700 font-bold text-sm sm:text-base">
+                              <Check className="w-4 h-4 sm:w-5 sm:h-5 mr-2 bg-green-500 text-white rounded-full p-0.5 flex-shrink-0" />
                               Highlighted Company name
                             </div>
                           </div>
@@ -432,14 +439,20 @@ export default function RenewBusiness() {
                             </div>
                           </div>
 
-                          <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-4 border-2 border-green-300 mb-4">
+                          <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-3 sm:p-4 border-2 border-green-300 mb-4">
                             <div className="text-center">
                               <div className="mb-2">
-                                <span className="text-lg text-gray-500 line-through">$15.99/month</span>
-                                <span className="ml-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">40% OFF FIRST YEAR</span>
+                                <span className="text-base sm:text-lg text-gray-500 line-through">$15.99/month</span>
+                                <div className="mt-1 sm:mt-0 sm:ml-2">
+                                  <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">40% OFF FIRST YEAR</span>
+                                </div>
                               </div>
-                              <p className="text-2xl font-bold text-green-600 mb-1">$9.60/month</p>
-                              <p className="text-sm text-gray-600">Apply Promo Code <span className="bg-white border-2 border-dashed border-red-500 px-2 py-1 rounded text-red-600 font-bold">40OFF</span> on next page</p>
+                              <p className="text-xl sm:text-2xl font-bold text-green-600 mb-1">$9.60/month</p>
+                              <p className="text-xs sm:text-sm text-gray-600">
+                                Apply Promo Code 
+                                <span className="bg-white border-2 border-dashed border-red-500 px-2 py-1 rounded text-red-600 font-bold ml-1">40OFF</span> 
+                                on next page
+                              </p>
                             </div>
                           </div>
 
@@ -469,40 +482,40 @@ export default function RenewBusiness() {
 
                 {/* Listing Comparison Section */}
                 <Card className="shadow-xl border-0">
-                  <CardHeader className="bg-gradient-to-r from-gray-600 to-gray-800 text-white rounded-t-lg">
-                    <CardTitle className="text-2xl flex items-center">
-                      <TrendingUp className="w-6 h-6 mr-3" />
+                  <CardHeader className="bg-gradient-to-r from-gray-600 to-gray-800 text-white rounded-t-lg p-4 sm:p-6">
+                    <CardTitle className="text-xl sm:text-2xl flex items-center">
+                      <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3" />
                       See The Difference: Regular vs Featured
                     </CardTitle>
-                    <CardDescription className="text-gray-100">
+                    <CardDescription className="text-gray-100 text-sm sm:text-base">
                       Compare how your business appears with each renewal option
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="p-8">
-                    <div className="grid md:grid-cols-2 gap-8">
+                  <CardContent className="p-4 sm:p-6 md:p-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
                       {/* Regular Listing Example */}
                       <div>
-                        <h4 className="text-lg font-bold text-gray-700 mb-4 text-center">🔷 Essential Renewal</h4>
-                        <div className="bg-white rounded-xl overflow-hidden p-4 shadow-md">
-                          <div className="flex items-start space-x-3">
+                        <h4 className="text-base sm:text-lg font-bold text-gray-700 mb-3 sm:mb-4 text-center">🔷 Essential Renewal</h4>
+                        <div className="bg-white rounded-xl overflow-hidden p-3 sm:p-4 shadow-md">
+                          <div className="flex items-start space-x-2 sm:space-x-3">
                             <img 
                               src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=400&h=300&fit=crop&crop=center"
                               alt={`${foundRecord?.industry || 'Plumber'} professional tools and equipment`}
-                              className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
+                              className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded-lg flex-shrink-0"
                             />
 
                             <div className="flex-1 min-w-0">
-                              <h3 className="text-lg font-semibold truncate mb-1 text-gray-800" title={foundRecord?.title || 'ABC Plumbing Services'}>
+                              <h3 className="text-base sm:text-lg font-semibold truncate mb-1 text-gray-800" title={foundRecord?.title || 'ABC Plumbing Services'}>
                                 {foundRecord?.title || 'ABC Plumbing Services'}
                               </h3>
 
                               <div className="flex flex-wrap gap-1 mb-2">
-                                <div className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
-                                  <CheckCircle className="w-3 h-3 mr-1" />
+                                <div className="bg-red-100 text-red-700 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full text-xs font-medium flex items-center">
+                                  <CheckCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-0.5 sm:mr-1" />
                                   Verified
                                 </div>
-                                <div className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
-                                  <Shield className="w-3 h-3 mr-1" />
+                                <div className="bg-blue-100 text-blue-700 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full text-xs font-medium flex items-center">
+                                  <Shield className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-0.5 sm:mr-1" />
                                   Licensed
                                 </div>
                               </div>
@@ -510,35 +523,35 @@ export default function RenewBusiness() {
                               <div className="flex items-center mb-1">
                                 <div className="flex items-center star-rating">
                                   {[...Array(4)].map((_, i) => (
-                                    <Star key={i} className="w-3 h-3 fill-current text-yellow-400" />
+                                    <Star key={i} className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-current text-yellow-400" />
                                   ))}
-                                  <Star className="w-3 h-3 text-gray-300" />
+                                  <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-gray-300" />
                                 </div>
-                                <span className="ml-2 text-sm text-gray-600">
+                                <span className="ml-1 sm:ml-2 text-xs sm:text-sm text-gray-600">
                                   {foundRecord?.rating || '4.2'} ({foundRecord?.reviews || '23'} reviews)
                                 </span>
                               </div>
 
-                              <p className="text-gray-600 text-xs mb-2">
+                              <p className="text-gray-600 text-xs mb-2 truncate">
                                 {foundRecord?.address || foundRecord?.city || 'Downtown Toronto'}
                               </p>
 
-                              <div className="flex items-center space-x-2">
-                                <button className="px-4 py-4 min-w-[80px] hover:bg-gray-100 rounded-lg flex flex-col items-center justify-center">
-                                  <Phone className="w-5 h-5 text-green-600 mb-1" />
-                                  <span className="text-xs text-gray-600">Call Now</span>
+                              <div className="grid grid-cols-4 gap-1 sm:gap-2">
+                                <button className="px-2 py-2 sm:py-3 hover:bg-gray-100 rounded-lg flex flex-col items-center justify-center">
+                                  <Phone className="w-3 h-3 sm:w-4 sm:h-4 text-green-600 mb-0.5" />
+                                  <span className="text-xs text-gray-600 hidden sm:block">Call</span>
                                 </button>
-                                <button className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px] flex flex-col items-center justify-center">
-                                  <MapPin className="w-5 h-5 text-red-600" />
-                                  <span className="text-xs text-gray-600 mt-1">Location</span>
+                                <button className="p-1 sm:p-2 hover:bg-gray-100 rounded-lg flex flex-col items-center justify-center">
+                                  <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-red-600" />
+                                  <span className="text-xs text-gray-600 hidden sm:block mt-0.5">Map</span>
                                 </button>
-                                <button className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px] flex flex-col items-center justify-center">
-                                  <Mail className="w-5 h-5 text-purple-600" />
-                                  <span className="text-xs text-gray-600 mt-1">Email</span>
+                                <button className="p-1 sm:p-2 hover:bg-gray-100 rounded-lg flex flex-col items-center justify-center">
+                                  <Mail className="w-3 h-3 sm:w-4 sm:h-4 text-purple-600" />
+                                  <span className="text-xs text-gray-600 hidden sm:block mt-0.5">Email</span>
                                 </button>
-                                <button className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px] flex flex-col items-center justify-center">
-                                  <ExternalLink className="w-5 h-5 text-blue-600" />
-                                  <span className="text-xs text-gray-600 mt-1">Website</span>
+                                <button className="p-1 sm:p-2 hover:bg-gray-100 rounded-lg flex flex-col items-center justify-center">
+                                  <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
+                                  <span className="text-xs text-gray-600 hidden sm:block mt-0.5">Web</span>
                                 </button>
                               </div>
                             </div>
@@ -568,31 +581,31 @@ export default function RenewBusiness() {
 
                       {/* Featured Listing Example */}
                       <div>
-                        <h4 className="text-lg font-bold text-red-600 mb-4 text-center">⭐ Premium Featured</h4>
-                        <div className="bg-white rounded-xl overflow-hidden p-4 border-[3px] border-red-500 shadow-lg shadow-red-200">
-                          <div className="flex items-start space-x-3">
+                        <h4 className="text-base sm:text-lg font-bold text-red-600 mb-3 sm:mb-4 text-center">⭐ Premium Featured</h4>
+                        <div className="bg-white rounded-xl overflow-hidden p-3 sm:p-4 border-[3px] border-red-500 shadow-lg shadow-red-200">
+                          <div className="flex items-start space-x-2 sm:space-x-3">
                             <img 
                               src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=400&h=300&fit=crop&crop=center"
                               alt={`${foundRecord?.industry || 'Plumber'} professional tools and equipment`}
-                              className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
+                              className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded-lg flex-shrink-0"
                             />
 
                             <div className="flex-1 min-w-0">
-                              <h3 className="text-lg font-semibold truncate mb-1 text-red-600" title={foundRecord?.title || 'ABC Plumbing Services'}>
+                              <h3 className="text-base sm:text-lg font-semibold truncate mb-1 text-red-600" title={foundRecord?.title || 'ABC Plumbing Services'}>
                                 {foundRecord?.title || 'ABC Plumbing Services'}
                               </h3>
 
                               <div className="flex flex-wrap gap-1 mb-2">
-                                <div className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center">
-                                  <Star className="w-3 h-3 mr-1 fill-current" />
+                                <div className="bg-red-500 text-white px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full text-xs font-medium flex items-center">
+                                  <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-0.5 sm:mr-1 fill-current" />
                                   Featured
                                 </div>
-                                <div className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
-                                  <CheckCircle className="w-3 h-3 mr-1" />
+                                <div className="bg-red-100 text-red-700 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full text-xs font-medium flex items-center">
+                                  <CheckCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-0.5 sm:mr-1" />
                                   Verified
                                 </div>
-                                <div className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
-                                  <Shield className="w-3 h-3 mr-1" />
+                                <div className="bg-blue-100 text-blue-700 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full text-xs font-medium flex items-center">
+                                  <Shield className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-0.5 sm:mr-1" />
                                   Licensed
                                 </div>
                               </div>
@@ -600,35 +613,35 @@ export default function RenewBusiness() {
                               <div className="flex items-center mb-1">
                                 <div className="flex items-center star-rating">
                                   {[...Array(4)].map((_, i) => (
-                                    <Star key={i} className="w-3 h-3 fill-current text-yellow-400" />
+                                    <Star key={i} className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-current text-yellow-400" />
                                   ))}
-                                  <Star className="w-3 h-3 text-gray-300" />
+                                  <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-gray-300" />
                                 </div>
-                                <span className="ml-2 text-sm text-gray-600 font-semibold">
+                                <span className="ml-1 sm:ml-2 text-xs sm:text-sm text-gray-600 font-semibold">
                                   {foundRecord?.rating || '4.2'} ({foundRecord?.reviews || '23'} reviews)
                                 </span>
                               </div>
 
-                              <p className="text-gray-700 text-xs mb-2 font-medium">
+                              <p className="text-gray-700 text-xs mb-2 font-medium truncate">
                                 {foundRecord?.address || foundRecord?.city || 'Downtown Toronto'}
                               </p>
 
-                              <div className="flex items-center space-x-2">
-                                <button className="px-2 py-4 min-w-[64px] bg-red-600 text-white hover:bg-red-700 shadow-lg border border-red-700 rounded-none flex flex-col items-center justify-center">
-                                  <Phone className="w-4 h-4 mb-1" />
-                                  <span className="text-xs">Call Now</span>
+                              <div className="grid grid-cols-4 gap-1 sm:gap-2">
+                                <button className="px-1 py-2 sm:px-2 sm:py-3 bg-red-600 text-white hover:bg-red-700 shadow-lg border border-red-700 rounded-none flex flex-col items-center justify-center">
+                                  <Phone className="w-3 h-3 sm:w-4 sm:h-4 mb-0.5" />
+                                  <span className="text-xs hidden sm:block">Call</span>
                                 </button>
-                                <button className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px] flex flex-col items-center justify-center">
-                                  <MapPin className="w-5 h-5 text-red-600" />
-                                  <span className="text-xs text-gray-600 mt-1">Location</span>
+                                <button className="p-1 sm:p-2 hover:bg-gray-100 rounded-lg flex flex-col items-center justify-center">
+                                  <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-red-600" />
+                                  <span className="text-xs text-gray-600 hidden sm:block mt-0.5">Map</span>
                                 </button>
-                                <button className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px] flex flex-col items-center justify-center">
-                                  <Mail className="w-5 h-5 text-purple-600" />
-                                  <span className="text-xs text-gray-600 mt-1">Email</span>
+                                <button className="p-1 sm:p-2 hover:bg-gray-100 rounded-lg flex flex-col items-center justify-center">
+                                  <Mail className="w-3 h-3 sm:w-4 sm:h-4 text-purple-600" />
+                                  <span className="text-xs text-gray-600 hidden sm:block mt-0.5">Email</span>
                                 </button>
-                                <button className="p-2 hover:bg-gray-100 rounded-lg min-w-[60px] flex flex-col items-center justify-center">
-                                  <ExternalLink className="w-5 h-5 text-blue-600" />
-                                  <span className="text-xs text-gray-600 mt-1">Website</span>
+                                <button className="p-1 sm:p-2 hover:bg-gray-100 rounded-lg flex flex-col items-center justify-center">
+                                  <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
+                                  <span className="text-xs text-gray-600 hidden sm:block mt-0.5">Web</span>
                                 </button>
                               </div>
                             </div>
@@ -657,15 +670,15 @@ export default function RenewBusiness() {
                       </div>
                     </div>
 
-                    <div className="mt-8 bg-yellow-50 border-2 border-yellow-300 rounded-lg p-6">
+                    <div className="mt-6 sm:mt-8 bg-yellow-50 border-2 border-yellow-300 rounded-lg p-4 sm:p-6">
                       <div className="text-center">
-                        <h4 className="text-xl font-bold text-yellow-800 mb-2">🚀 Featured Benefits Summary</h4>
-                        <div className="grid md:grid-cols-3 gap-4 text-sm text-center">
-                          <div>
+                        <h4 className="text-lg sm:text-xl font-bold text-yellow-800 mb-3 sm:mb-4">🚀 Featured Benefits Summary</h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-sm text-center">
+                          <div className="pb-3 sm:pb-0">
                             <div className="text-red-500 font-bold">10x More Visible</div>
                             <p className="text-gray-600">Top placement in all searches</p>
                           </div>
-                          <div>
+                          <div className="pb-3 sm:pb-0">
                             <div className="text-red-500 font-bold">Eye-Catching Design</div>
                             <p className="text-gray-600">Red border + gradient highlights</p>
                           </div>
@@ -680,31 +693,31 @@ export default function RenewBusiness() {
                 </Card>
 
                 {/* Trust and Security Section */}
-                <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
-                  <div className="text-center mb-6">
-                    <h3 className="text-2xl font-bold text-gray-800 mb-2">🔒 Secure & Trusted</h3>
-                    <p className="text-gray-600">Your payment and business information is protected</p>
+                <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 md:p-8 border border-gray-100">
+                  <div className="text-center mb-4 sm:mb-6">
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">🔒 Secure & Trusted</h3>
+                    <p className="text-gray-600 text-sm sm:text-base">Your payment and business information is protected</p>
                   </div>
-                  <div className="grid md:grid-cols-3 gap-6">
-                    <div className="text-center">
-                      <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <Check className="w-8 h-8 text-green-600" />
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+                    <div className="text-center pb-4 sm:pb-0">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                        <Check className="w-6 h-6 sm:w-8 sm:h-8 text-green-600" />
                       </div>
-                      <h4 className="font-semibold mb-2">SSL Encrypted</h4>
+                      <h4 className="font-semibold mb-1 sm:mb-2">SSL Encrypted</h4>
                       <p className="text-sm text-gray-600">Bank-level security</p>
                     </div>
-                    <div className="text-center">
-                      <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <Users className="w-8 h-8 text-blue-600" />
+                    <div className="text-center pb-4 sm:pb-0">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                        <Users className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
                       </div>
-                      <h4 className="font-semibold mb-2">Trusted by 1000+</h4>
+                      <h4 className="font-semibold mb-1 sm:mb-2">Trusted by 1000+</h4>
                       <p className="text-sm text-gray-600">Local businesses</p>
                     </div>
                     <div className="text-center">
-                      <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <Award className="w-8 h-8 text-purple-600" />
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                        <Award className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600" />
                       </div>
-                      <h4 className="font-semibold mb-2">Money Back</h4>
+                      <h4 className="font-semibold mb-1 sm:mb-2">Money Back</h4>
                       <p className="text-sm text-gray-600">30-day guarantee</p>
                     </div>
                   </div>
