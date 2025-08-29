@@ -23,7 +23,7 @@ export default function Hero() {
           setServices(Array.isArray(settings.rotatingServices) ? settings.rotatingServices : ['Plumber', 'Electrician', 'HVAC Technician', 'Landscaper', 'Home Services']);
           setRotationSpeed(settings.rotationSpeed || 3000);
           setBackgroundImage(settings.backgroundImage || defaultHeroImage);
-          
+
           // Update document title
           if (settings.siteTitle) {
             document.title = settings.siteTitle;
@@ -38,7 +38,7 @@ export default function Hero() {
     };
 
     loadSettings();
-    
+
     // Listen for settings changes
     const handleSettingsChange = (event: any) => {
       loadSettings();
@@ -60,8 +60,8 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [services.length, rotationSpeed]);
 
-  const heroStyle = backgroundImage 
-    ? { 
+  const heroStyle = backgroundImage
+    ? {
         backgroundImage: `linear-gradient(rgba(96, 125, 139, 0.6), rgba(96, 125, 139, 0.675)), url(${backgroundImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -70,24 +70,24 @@ export default function Hero() {
     : {};
 
   return (
-    <section 
+    <section
       className="hero-section bg-gradient-to-br from-blue-grey to-blue-grey-800 text-white py-12 sm:py-16 md:py-20"
       style={heroStyle}
     >
-      <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-6 sm:mb-8 animate-fade-in-up">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-6 sm:mb-8 animate-fade-in-up text-center">
           {heroTitle}{' '}
-          <span 
+          <span
             className={`rotating-text text-orange-primary drop-animation ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}
             data-testid="rotating-service"
           >
             {services[currentServiceIndex]}
           </span>
         </h2>
-        <p className="text-lg sm:text-xl md:text-2xl mb-8 sm:mb-12 text-blue-grey-100 animate-fade-in-up">
+        <p className="text-lg sm:text-xl md:text-2xl mb-8 sm:mb-12 text-blue-grey-100 animate-fade-in-up text-center">
           {heroSubtitle}
         </p>
-        
+
         <div className="max-w-2xl mx-auto animate-fade-in-up">
           <EnhancedSearchBar />
         </div>

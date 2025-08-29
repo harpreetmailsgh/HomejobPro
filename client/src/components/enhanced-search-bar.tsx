@@ -16,12 +16,12 @@ export default function EnhancedSearchBar() {
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [isPlaceholderVisible, setIsPlaceholderVisible] = useState(true);
   const [searchPlaceholders, setSearchPlaceholders] = useState([
-    `Find a plumber in ${getRandomCity()}...`,
-    `Search for electricians in ${getRandomCity()}...`, 
-    `Looking for HVAC service in ${getRandomCity()}?`,
-    `Find home repair experts in ${getRandomCity()}...`,
-    `Search landscapers in ${getRandomCity()}...`,
-    `Need a handyman in ${getRandomCity()}?`,
+    `Find plumber in ${getRandomCity()}`,
+    `Search electricians ${getRandomCity()}`, 
+    `HVAC service ${getRandomCity()}`,
+    `Home repair ${getRandomCity()}`,
+    `Landscapers ${getRandomCity()}`,
+    `Handyman ${getRandomCity()}`,
   ]);
 
   // Load custom placeholders from settings
