@@ -139,7 +139,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
         >
           <a href={`tel:${service.phone}`} className="flex flex-col items-center justify-center h-full w-full gap-1">
             <Phone className={`w-5 h-5 ${isFeatured ? 'text-white' : 'text-green-600'}`} />
-            <span className={`text-xs ${isFeatured ? 'text-white font-medium' : 'text-gray-600'}`}>Call Now</span>
+            <span className={`text-sm ${isFeatured ? 'text-white font-medium' : 'text-gray-600'}`}>Call Now</span>
           </a>
         </Button>
 
@@ -153,7 +153,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
           >
             <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center h-full w-full gap-1">
               <MapPin className="w-5 h-5 text-red-600" />
-              <span className="text-xs text-gray-600">Location</span>
+              <span className="text-sm text-gray-600">Location</span>
             </a>
           </Button>
         )}
@@ -173,7 +173,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
         >
           <div className="flex flex-col items-center justify-center h-full w-full gap-1">
             <Mail className="w-5 h-5 text-purple-600" />
-            <span className="text-xs text-gray-600">Email</span>
+            <span className="text-sm text-gray-600">Email</span>
           </div>
         </Button>
 
@@ -192,7 +192,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
         >
           <div className="flex flex-col items-center justify-center h-full w-full gap-1">
             <ExternalLink className="w-5 h-5 text-blue-600" />
-            <span className="text-xs text-gray-600">Website</span>
+            <span className="text-sm text-gray-600">Website</span>
           </div>
         </Button>
       </div>

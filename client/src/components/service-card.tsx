@@ -135,7 +135,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           >
             <a href={`tel:${service.phone}`} className="flex flex-col items-center">
               <Phone className="w-6 h-6 text-green-600 mb-1" />
-              <span className="text-xs text-gray-600">Call</span>
+              <span className="text-sm text-gray-600">Call</span>
             </a>
           </Button>
 
@@ -149,7 +149,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
             >
               <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center">
                 <MapPin className="w-6 h-6 text-red-600 mb-1" />
-                <span className="text-xs text-gray-600">Maps</span>
+                <span className="text-sm text-gray-600">Maps</span>
               </a>
             </Button>
           )}
@@ -164,7 +164,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
             >
               <a href={`mailto:${service.email}`} className="flex flex-col items-center">
                 <Mail className="w-6 h-6 text-purple-600 mb-1" />
-                <span className="text-xs text-gray-600">Email</span>
+                <span className="text-sm text-gray-600">Email</span>
               </a>
             </Button>
           )}
@@ -179,7 +179,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
             >
               <a href={service.website} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center">
                 <ExternalLink className="w-6 h-6 text-blue-600 mb-1" />
-                <span className="text-xs text-gray-600">Website</span>
+                <span className="text-sm text-gray-600">Website</span>
               </a>
             </Button>
           )}
