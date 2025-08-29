@@ -75,7 +75,7 @@ export default function EnhancedSearchBar() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full pl-12 sm:pl-14 pr-4 py-4 sm:py-6 text-base sm:text-lg border-none bg-transparent focus:ring-0 focus:outline-none"
+            className="w-full pl-12 sm:pl-14 pr-4 py-4 sm:py-6 text-base sm:text-lg border-none bg-transparent focus:ring-0 focus:outline-none text-black"
             data-testid="search-input"
           />
           <div 
