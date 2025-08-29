@@ -148,7 +148,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
               asChild
               variant="ghost"
               size="sm"
-              className="p-3 hover:bg-gray-100 rounded-full"
+              className="p-3 hover:bg-gray-100"
               data-testid={`service-maps-${service.id}`}
             >
               <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center">
@@ -163,7 +163,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
               asChild
               variant="ghost"
               size="sm"
-              className="p-3 hover:bg-gray-100 rounded-full"
+              className="p-3 hover:bg-gray-100"
               data-testid={`service-email-${service.id}`}
             >
               <a href={`mailto:${service.email}`} className="flex flex-col items-center">
@@ -178,7 +178,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
               asChild
               variant="ghost"
               size="sm"
-              className="p-3 hover:bg-gray-100 rounded-full"
+              className="p-3 hover:bg-gray-100"
               data-testid={`service-website-${service.id}`}
             >
               <a href={service.website} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center">
