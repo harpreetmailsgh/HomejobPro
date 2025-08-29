@@ -195,8 +195,8 @@ export default function Search() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex flex-col lg:flex-row gap-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
           {/* Filters Sidebar */}
           <FiltersSidebar
             filters={filters}
@@ -206,10 +206,10 @@ export default function Search() {
           />
           
           {/* Results Grid */}
-          <main className="lg:w-3/4">
+          <main className="lg:w-3/4 w-full">
             {/* Results Header */}
             <div className="mb-6">
-              <div className="flex justify-between items-start mb-2">
+              <div className="flex flex-col sm:flex-row justify-between items-start mb-2 gap-2">
                 <div>
                   <h2 className="text-2xl font-semibold text-gray-800" data-testid="results-title">
                     {pageTitle}
@@ -219,9 +219,9 @@ export default function Search() {
                   </p>
                 </div>
               </div>
-              <div className="flex justify-end items-center space-x-4">
+              <div className="flex flex-col sm:flex-row justify-end items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
                 {/* View Mode Toggle */}
-                <div className="flex items-center border rounded-lg p-1">
+                <div className="flex items-center border rounded-lg p-1 w-full sm:w-auto justify-center">
                   <Button
                     variant={viewMode === 'grid' ? 'default' : 'ghost'}
                     size="sm"
@@ -243,7 +243,7 @@ export default function Search() {
                 </div>
                 
                 <Select value={filters.sortBy} onValueChange={handleSortChange}>
-                  <SelectTrigger className="w-48" data-testid="sort-select">
+                  <SelectTrigger className="w-full sm:w-48" data-testid="sort-select">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>

@@ -74,10 +74,10 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
 
   return (
     <aside className="lg:w-1/4">
-      <div className="bg-white rounded-lg shadow-md p-6 sticky top-4">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">{filterTitle}</h3>
-          <Button variant="outline" size="sm" onClick={clearFilters}>
+      <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 lg:sticky lg:top-4 mb-6 lg:mb-0">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-800">{filterTitle}</h3>
+          <Button variant="outline" size="sm" onClick={clearFilters} className="w-full sm:w-auto">
             Clear All
           </Button>
         </div>

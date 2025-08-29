@@ -164,9 +164,15 @@
   
   /* Ensure hero section is visible */
   .hero-section {
-    min-height: 500px;
+    min-height: 400px;
     display: flex;
     align-items: center;
+  }
+  
+  @media (min-width: 640px) {
+    .hero-section {
+      min-height: 500px;
+    }
   }
   
   /* Responsive grid improvements - 3 cards per row */
@@ -212,6 +218,17 @@
     .results-grid > * {
       max-width: 100%;
     }
+    
+    /* Better mobile text sizing */
+    h1, h2, h3 {
+      line-height: 1.2;
+    }
+    
+    /* Improved mobile padding/spacing */
+    .hero-section {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
   }
   
   @media (max-width: 480px) {
@@ -222,6 +239,17 @@
     
     .results-grid > * {
       max-width: 100%;
+    }
+    
+    /* Mobile-specific text adjustments */
+    body {
+      font-size: 14px;
+    }
+    
+    /* Ensure minimum tap target sizes */
+    button, a[role="button"], [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
     }
   }
   
@@ -250,8 +278,15 @@
   }
   
   .featured-service-card {
-    width: 320px;
-    min-width: 320px;
+    width: 280px;
+    min-width: 280px;
+  }
+  
+  @media (min-width: 640px) {
+    .featured-service-card {
+      width: 320px;
+      min-width: 320px;
+    }
   }
   
   .animate-scroll {

@@ -56,17 +56,17 @@ export default function FeaturedServices({
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-12 sm:py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">{sectionTitle}</h2>
-          <p className="text-xl text-gray-600">{sectionSubtitle}</p>
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">{sectionTitle}</h2>
+          <p className="text-lg sm:text-xl text-gray-600">{sectionSubtitle}</p>
         </div>
 
         <div className="featured-services-container overflow-hidden">
           <div className="featured-services-track animate-scroll">
             {[...services, ...services, ...services].map((service, index) => (
-              <div key={`${service.id}-${index}`} className="featured-service-card flex-shrink-0 bg-white rounded-lg shadow-md p-6 mx-4 w-80">
+              <div key={`${service.id}-${index}`} className="featured-service-card flex-shrink-0 bg-white rounded-lg shadow-md p-4 sm:p-6 mx-2 sm:mx-4 w-72 sm:w-80">
                 <div className="flex items-center mb-4">
                   <div className="text-4xl mr-4">{service.image}</div>
                   <div>

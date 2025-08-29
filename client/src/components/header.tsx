@@ -1,11 +1,12 @@
 import { Link } from "wouter";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { useState } from "react";
 import Logo from './logo';
 
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <header className="bg-white shadow-sm border-b">
@@ -18,6 +19,15 @@ export default function Header() {
               </div>
             </Link>
           </div>
+          {/* Mobile menu button */}
+          <button
+            className="md:hidden p-2 rounded-md text-gray-600 hover:text-blue-grey hover:bg-gray-100"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            data-testid="mobile-menu-button"
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+
           <nav className="hidden md:flex space-x-8">
             <Link href="/search">
               <span className="text-gray-600 hover:text-blue-grey transition-colors cursor-pointer" data-testid="nav-browse-services">
@@ -103,13 +113,76 @@ export default function Header() {
         </div>
       </div>
 
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-white border-t border-gray-200">
+          <div className="px-4 py-2 space-y-1">
+            <Link href="/search">
+              <span 
+                className="block px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer"
+                onClick={() => setIsMobileMenuOpen(false)}
+                data-testid="mobile-nav-browse-services"
+              >
+                Browse Services
+              </span>
+            </Link>
+            <Link href="/faq">
+              <span 
+                className="block px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer"
+                onClick={() => setIsMobileMenuOpen(false)}
+                data-testid="mobile-nav-faqs"
+              >
+                FAQs
+              </span>
+            </Link>
+            <Link href="/home-jobs-guide">
+              <span 
+                className="block px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer"
+                onClick={() => setIsMobileMenuOpen(false)}
+                data-testid="mobile-nav-home-jobs-guide"
+              >
+                Home Jobs Guide
+              </span>
+            </Link>
+            <Link href="/about">
+              <span 
+                className="block px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer"
+                onClick={() => setIsMobileMenuOpen(false)}
+                data-testid="mobile-nav-about-us"
+              >
+                About Us
+              </span>
+            </Link>
+            <Link href="/list-business">
+              <span 
+                className="block px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer"
+                onClick={() => setIsMobileMenuOpen(false)}
+                data-testid="mobile-nav-list-business"
+              >
+                List your Business
+              </span>
+            </Link>
+            <Link href="/renew-business">
+              <span 
+                className="block px-3 py-2 text-gray-600 hover:text-blue-grey hover:bg-gray-50 rounded-md cursor-pointer"
+                onClick={() => setIsMobileMenuOpen(false)}
+                data-testid="mobile-nav-renew-business"
+              >
+                Renew Your Business Listing
+              </span>
+            </Link>
+          </div>
+        </div>
+      )}
+
       {/* Backdrop to close dropdown when clicking outside */}
-      {(isDropdownOpen || isBusinessDropdownOpen) && (
+      {(isDropdownOpen || isBusinessDropdownOpen || isMobileMenuOpen) && (
         <div 
           className="fixed inset-0 z-40" 
           onClick={() => {
             setIsDropdownOpen(false);
             setIsBusinessDropdownOpen(false);
+            setIsMobileMenuOpen(false);
           }}
         />
       )}

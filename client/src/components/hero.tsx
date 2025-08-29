@@ -71,11 +71,11 @@ export default function Hero() {
 
   return (
     <section 
-      className="hero-section bg-gradient-to-br from-blue-grey to-blue-grey-800 text-white py-20"
+      className="hero-section bg-gradient-to-br from-blue-grey to-blue-grey-800 text-white py-12 sm:py-16 md:py-20"
       style={heroStyle}
     >
       <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl md:text-6xl font-bold mb-8 animate-fade-in-up whitespace-nowrap">
+        <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-6 sm:mb-8 animate-fade-in-up">
           {heroTitle}{' '}
           <span 
             className={`rotating-text text-orange-primary drop-animation ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}
@@ -84,7 +84,7 @@ export default function Hero() {
             {services[currentServiceIndex]}
           </span>
         </h2>
-        <p className="text-xl md:text-2xl mb-12 text-blue-grey-100 animate-fade-in-up">
+        <p className="text-lg sm:text-xl md:text-2xl mb-8 sm:mb-12 text-blue-grey-100 animate-fade-in-up">
           {heroSubtitle}
         </p>
         
