@@ -125,12 +125,12 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
       </div>
 
       {/* Action Icons */}
-      <div className="grid grid-cols-2 gap-2 w-full max-w-[200px] mx-auto sm:mx-0 flex-shrink-0">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full sm:max-w-none mx-auto sm:mx-0 flex-shrink-0">
         <Button
           asChild
           variant="ghost"
           size="sm"
-          className={`p-0 h-16 px-4 ${
+          className={`p-0 h-16 px-4 rounded-none ${
             isFeatured 
               ? 'bg-red-600 text-white hover:bg-red-700 shadow-lg border border-red-700' 
               : 'hover:bg-gray-100'
@@ -148,7 +148,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
             asChild
             variant="ghost"
             size="sm"
-            className="p-0 hover:bg-gray-100 h-16 px-4"
+            className="p-0 hover:bg-gray-100 h-16 px-4 rounded-none"
             data-testid={`service-list-maps-${service.id}`}
           >
             <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center h-full px-2 gap-1">
@@ -160,7 +160,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
           <Button
             variant="ghost"
             size="sm"
-            className="p-0 hover:bg-gray-100 h-16 px-4 opacity-50 cursor-not-allowed"
+            className="p-0 hover:bg-gray-100 h-16 px-4 rounded-none opacity-50 cursor-not-allowed"
             disabled
           >
             <div className="flex flex-col items-center justify-center h-full px-2 gap-1">
@@ -173,7 +173,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
         <Button
           variant="ghost"
           size="sm"
-          className="p-0 hover:bg-gray-100 h-16 px-4"
+          className="p-0 hover:bg-gray-100 h-16 px-4 rounded-none"
           data-testid={`service-list-email-${service.id}`}
           onClick={() => {
             if (service.email) {
@@ -192,7 +192,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
         <Button
           variant="ghost"
           size="sm"
-          className="p-0 hover:bg-gray-100 h-16 px-4"
+          className="p-0 hover:bg-gray-100 h-16 px-4 rounded-none"
           data-testid={`service-list-website-${service.id}`}
           onClick={() => {
             if (service.website) {
