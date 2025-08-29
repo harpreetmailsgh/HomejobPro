@@ -115,7 +115,7 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200">
+        <div className="md:hidden bg-white border-t border-gray-200 relative z-50">
           <div className="px-4 py-2 space-y-1">
             <Link href="/search">
               <span 
