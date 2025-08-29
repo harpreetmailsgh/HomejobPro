@@ -81,21 +81,21 @@ export default function About() {
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
         <div className="relative z-10 flex items-center justify-center h-full text-center text-white">
-          <div className="max-w-4xl mx-auto px-4">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">About Homejobspro.com</h1>
-            <p className="text-xl md:text-2xl mb-8">Connecting homeowners with trusted local service professionals</p>
-            <div className="flex flex-wrap justify-center gap-4 text-lg">
-              <div className="flex items-center bg-white bg-opacity-20 rounded-full px-4 py-2">
-                <CheckCircle className="w-5 h-5 mr-2" />
-                <span>Verified Professionals</span>
+          <div className="max-w-4xl mx-auto px-4 sm:px-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">About Homejobspro.com</h1>
+            <p className="text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8 leading-relaxed">Connecting homeowners with trusted local service professionals</p>
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-4 text-sm sm:text-base md:text-lg">
+              <div className="flex items-center bg-white bg-opacity-20 rounded-full px-3 sm:px-4 py-2">
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
+                <span className="whitespace-nowrap">Verified Professionals</span>
               </div>
-              <div className="flex items-center bg-white bg-opacity-20 rounded-full px-4 py-2">
-                <Star className="w-5 h-5 mr-2" />
-                <span>Quality Guaranteed</span>
+              <div className="flex items-center bg-white bg-opacity-20 rounded-full px-3 sm:px-4 py-2">
+                <Star className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
+                <span className="whitespace-nowrap">Quality Guaranteed</span>
               </div>
-              <div className="flex items-center bg-white bg-opacity-20 rounded-full px-4 py-2">
-                <Clock className="w-5 h-5 mr-2" />
-                <span>24/7 Support</span>
+              <div className="flex items-center bg-white bg-opacity-20 rounded-full px-3 sm:px-4 py-2">
+                <Clock className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
+                <span className="whitespace-nowrap">24/7 Support</span>
               </div>
             </div>
           </div>
