@@ -132,8 +132,8 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
           size="sm"
           className={`p-0 min-w-[80px] h-16 ${
             isFeatured 
-              ? 'bg-red-600 text-white hover:bg-red-700 shadow-lg border border-red-700 rounded-lg' 
-              : 'hover:bg-gray-100 rounded-lg'
+              ? 'bg-red-600 text-white hover:bg-red-700 shadow-lg border border-red-700' 
+              : 'hover:bg-gray-100'
           }`}
           data-testid={`service-list-phone-${service.id}`}
         >

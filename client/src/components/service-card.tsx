@@ -130,12 +130,16 @@ export default function ServiceCard({ service }: ServiceCardProps) {
             asChild
             variant="ghost"
             size="sm"
-            className="p-3 hover:bg-gray-100 rounded-full"
+            className={`p-3 ${
+              isFeatured 
+                ? 'bg-red-600 text-white hover:bg-red-700 shadow-lg border border-red-700' 
+                : 'hover:bg-gray-100'
+            }`}
             data-testid={`service-phone-${service.id}`}
           >
             <a href={`tel:${service.phone}`} className="flex flex-col items-center">
-              <Phone className="w-6 h-6 text-green-600 mb-1" />
-              <span className="text-sm text-gray-600">Call</span>
+              <Phone className={`w-6 h-6 mb-1 ${isFeatured ? 'text-white' : 'text-green-600'}`} />
+              <span className={`text-sm ${isFeatured ? 'text-white font-medium' : 'text-gray-600'}`}>Call</span>
             </a>
           </Button>
 
