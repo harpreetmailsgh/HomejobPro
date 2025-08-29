@@ -76,12 +76,10 @@ export default function Hero() {
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-6 sm:mb-8 animate-fade-in-up text-center">
-          <div className="text-center">
-            {heroTitle}
-          </div>
-          <div className="text-center">
+          <div className="flex flex-col items-center justify-center text-center">
+            <span className="block">{heroTitle}</span>
             <span
-              className={`rotating-text text-orange-primary drop-animation ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}
+              className={`block text-orange-primary drop-animation ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}
               data-testid="rotating-service"
             >
               {services[currentServiceIndex]}
