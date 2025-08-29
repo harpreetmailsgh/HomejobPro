@@ -148,7 +148,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
               asChild
               variant="ghost"
               size="sm"
-              className="p-0 hover:bg-gray-100 h-16 px-3 rounded-none w-full"
+              className="p-0 hover:bg-gray-100 h-16 px-3 rounded-none w-auto sm:w-full"
               data-testid={`service-maps-${service.id}`}
             >
               <a href={service.googleMapsLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center h-full px-2 gap-1">
@@ -173,7 +173,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           <Button
             variant="ghost"
             size="sm"
-            className="p-0 hover:bg-gray-100 h-16 px-3 rounded-none w-full"
+            className="p-0 hover:bg-gray-100 h-16 px-3 rounded-none w-auto sm:w-full"
             data-testid={`service-email-${service.id}`}
             onClick={() => {
               if (service.email) {
@@ -192,7 +192,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           <Button
             variant="ghost"
             size="sm"
-            className="p-0 hover:bg-gray-100 h-16 px-3 rounded-none w-full"
+            className="p-0 hover:bg-gray-100 h-16 px-3 rounded-none w-auto sm:w-full"
             data-testid={`service-website-${service.id}`}
             onClick={() => {
               if (service.website) {
