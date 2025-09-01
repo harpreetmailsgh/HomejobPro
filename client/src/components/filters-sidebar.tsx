@@ -74,30 +74,29 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
 
   return (
     <aside className="lg:w-1/4">
-      <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 lg:sticky lg:top-4 mb-6 lg:mb-0">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
-          <h3 className="text-base sm:text-lg font-semibold text-gray-800">{filterTitle}</h3>
-          <Button variant="outline" size="sm" onClick={clearFilters} className="w-full sm:w-auto">
+      <div className="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border border-gray-100 p-6 lg:sticky lg:top-4 mb-6 lg:mb-0">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
+          <h3 className="text-xl font-bold text-gray-800 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{filterTitle}</h3>
+          <Button variant="outline" size="sm" onClick={clearFilters} className="w-full sm:w-auto hover:bg-red-50 hover:border-red-300 hover:text-red-600 transition-all duration-200">
             Clear All
           </Button>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           {/* Industry Filter */}
-          <div>
-            <Label className="block text-sm font-medium mb-2">Industry</Label>
+          <div className="group">
             <Select
               value={localFilters.industry || 'all'}
               onValueChange={(value) => handleFilterChange('industry', value)}
             >
-              <SelectTrigger data-testid="industry-filter">
-                <SelectValue placeholder="All Industries" />
+              <SelectTrigger data-testid="industry-filter" className="border-2 border-gray-200 hover:border-blue-400 focus:border-blue-500 transition-all duration-200 bg-white shadow-sm">
+                <SelectValue placeholder="🏢 All Industries" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Industries</SelectItem>
+                <SelectItem value="all">🏢 All Industries</SelectItem>
                 {industries.map((industry) => (
                   <SelectItem key={industry} value={industry}>
-                    {industry}
+                    {industry === 'Plumber' ? '🔧' : industry === 'Electrician' ? '⚡' : industry === 'HVAC Technician' ? '🌡️' : '🏠'} {industry}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -105,20 +104,19 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
           </div>
 
           {/* City Filter */}
-          <div>
-            <Label className="block text-sm font-medium mb-2">City</Label>
+          <div className="group">
             <Select
               value={localFilters.city || 'all'}
               onValueChange={(value) => handleFilterChange('city', value)}
             >
-              <SelectTrigger data-testid="city-filter">
-                <SelectValue placeholder="All Cities" />
+              <SelectTrigger data-testid="city-filter" className="border-2 border-gray-200 hover:border-blue-400 focus:border-blue-500 transition-all duration-200 bg-white shadow-sm">
+                <SelectValue placeholder="📍 All Cities" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Cities</SelectItem>
+                <SelectItem value="all">📍 All Cities</SelectItem>
                 {cities.map((city) => (
                   <SelectItem key={city} value={city}>
-                    {city}
+                    📍 {city}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -126,11 +124,10 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
           </div>
 
           {/* Post Code Filter */}
-          <div>
-            <Label className="block text-sm font-medium mb-2">Post Code</Label>
+          <div className="group">
             <Input
               type="text"
-              placeholder="Enter Canadian postal code"
+              placeholder="📮 Canadian postal code"
               value={localFilters.postCode || ""}
               onChange={(e) => {
                 const value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
@@ -141,52 +138,54 @@ export default function FiltersSidebar({ filters, onFiltersChange, industries, c
               }}
               pattern="[A-Z]\d[A-Z] ?\d[A-Z]\d"
               data-testid="postcode-filter"
+              className="border-2 border-gray-200 hover:border-blue-400 focus:border-blue-500 transition-all duration-200 bg-white shadow-sm"
             />
           </div>
 
           {/* Company Name Filter */}
-          <div>
-            <Label htmlFor="companyName" className="block text-sm font-medium mb-2">
-              Company Name
-            </Label>
+          <div className="group">
             <Input
               id="companyName"
               value={localFilters.companyName || ''}
               onChange={(e) => handleFilterChange('companyName', e.target.value)}
-              placeholder="Search by company name..."
+              placeholder="🏢 Search by company name"
               data-testid="company-name-filter"
+              className="border-2 border-gray-200 hover:border-blue-400 focus:border-blue-500 transition-all duration-200 bg-white shadow-sm"
             />
           </div>
 
           {/* Phone Number Filter */}
-          <div>
-            <Label className="block text-sm font-medium mb-2">Phone Number</Label>
+          <div className="group">
             <Input
               type="text"
-              placeholder="Search by phone number"
+              placeholder="📞 Search by phone number"
               value={localFilters.phone || ""}
               onChange={(e) => handleFilterChange('phone', e.target.value || undefined)}
               data-testid="phone-filter"
+              className="border-2 border-gray-200 hover:border-blue-400 focus:border-blue-500 transition-all duration-200 bg-white shadow-sm"
             />
           </div>
 
           {/* Rating Filter */}
-          <div>
-            <Label className="block text-sm font-medium mb-2">
-              Minimum Rating: {localFilters.minRating || 0}
-            </Label>
-            <Slider
-              value={[localFilters.minRating || 0]}
-              onValueChange={([value]) => handleFilterChange('minRating', value)}
-              max={5}
-              min={0}
-              step={0.1}
-              className="w-full"
-              data-testid="rating-filter"
-            />
-            <div className="flex justify-between text-xs text-gray-500 mt-1">
-              <span>0</span>
-              <span>5</span>
+          <div className="group">
+            <div className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg p-4 border border-yellow-200">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm font-medium text-gray-700">⭐ Minimum Rating</span>
+                <span className="text-lg font-bold text-yellow-600">{(localFilters.minRating || 0).toFixed(1)}</span>
+              </div>
+              <Slider
+                value={[localFilters.minRating || 0]}
+                onValueChange={([value]) => handleFilterChange('minRating', value)}
+                max={5}
+                min={0}
+                step={0.1}
+                className="w-full"
+                data-testid="rating-filter"
+              />
+              <div className="flex justify-between text-xs text-gray-500 mt-2">
+                <span>0⭐</span>
+                <span>5⭐</span>
+              </div>
             </div>
           </div>
         </div>

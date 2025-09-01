@@ -17,7 +17,7 @@ import { useSEO } from "../hooks/use-seo";
 export default function Search() {
   const [location] = useLocation();
   const urlParams = new URLSearchParams(location.split('?')[1] || '');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   
   // Search page content states
   const [pageTitle, setPageTitle] = useState("Search Results");
